@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    
+<server>
+    <port>3307</port>
+    <database>database</database>
+    <user>admin</user>
+    <password>123456</password>
+</server>
+
