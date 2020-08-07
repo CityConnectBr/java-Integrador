@@ -1,8 +1,10 @@
 package br.com.cityconnect.integrador_sa_transportes.service;
 
+import org.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.Gson;
@@ -14,69 +16,57 @@ public class PermissionarioService extends ServiceMain {
 	private final String url = super.urlBase + "/integracao/permissionarios";
 
 	private RestTemplate restTemplate = new RestTemplate();
+	private Gson gson = new Gson();
 
-	public String send(Permissionario permicionario) {
+	public void sendUpdate(Permissionario permissionario) {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
-		
-		StringBuilder permissionarioJson = new StringBuilder();
-		permissionarioJson.append("{");
-		permissionarioJson.append(toJsonField("id_permissionario_integracao", permicionario.getId()));
-		permissionarioJson.append(",");
-		permissionarioJson.append(toJsonField("nome", permicionario.getNome()));
-		permissionarioJson.append(",");
-		permissionarioJson.append(toJsonField("tipo", permicionario.getTipo()));
-		permissionarioJson.append(",");
-		permissionarioJson.append(toJsonField("CNPJ", permicionario.getCNPJ()));
-		permissionarioJson.append(",");
-		permissionarioJson.append(toJsonField("RG", permicionario.getRG()));
-		permissionarioJson.append(",");
-		permissionarioJson.append(toJsonField("inscricao_municipal", permicionario.getInscricaoMunicipal()));
-		permissionarioJson.append(",");
-		permissionarioJson.append(toJsonField("CEP", permicionario.getCEP()));
-		permissionarioJson.append(",");
-		permissionarioJson.append(toJsonField("endereco", permicionario.getEndereco()));
-		permissionarioJson.append(",");
-		permissionarioJson.append(toJsonField("numero", permicionario.getNumero()));
-		permissionarioJson.append(",");
-		permissionarioJson.append(toJsonField("complemento", permicionario.getComplemento()));
-		permissionarioJson.append(",");
-		permissionarioJson.append(toJsonField("bairro", permicionario.getBairro()));
-		permissionarioJson.append(",");
-		permissionarioJson.append(toJsonField("municipio", permicionario.getMunicipio()));
-		permissionarioJson.append(",");
-		permissionarioJson.append(toJsonField("UF", permicionario.getUF()));
-		permissionarioJson.append(",");
-		permissionarioJson.append(toJsonField("DDD", permicionario.getDDD()));
-		permissionarioJson.append(",");
-		permissionarioJson.append(toJsonField("telefone", permicionario.getTelefone()));
-		permissionarioJson.append(",");
-		permissionarioJson.append(toJsonField("celular", permicionario.getCelular()));
-		permissionarioJson.append(",");
-		permissionarioJson.append(toJsonField("telefone2", permicionario.getTelefone2()));
-		permissionarioJson.append(",");
-		permissionarioJson.append(toJsonField("email", permicionario.getEmail()));
-		permissionarioJson.append(",");
-		permissionarioJson.append(toJsonField("modalidade_transporte", permicionario.getModalidadeTransporte()));
-		permissionarioJson.append(",");
-		permissionarioJson.append(toJsonField("data_nascimento", permicionario.getDataNascimento()));
-		permissionarioJson.append(",");
-		permissionarioJson.append(toJsonField("naturalidade", permicionario.getNaturalidade()));
-		permissionarioJson.append(",");
-		permissionarioJson.append(toJsonField("nacionalidade", permicionario.getNaturalidade()));
-		permissionarioJson.append(",");
-		permissionarioJson.append(toJsonField("CNH", permicionario.getCNH()));
-		permissionarioJson.append(",");
-		permissionarioJson.append(toJsonField("categoria_CNH", permicionario.getCategoriaCNH()));
-		permissionarioJson.append(",");
-		permissionarioJson.append(toJsonField("vencimento_CNH", permicionario.getVencimentoCNH()));
-		permissionarioJson.append("}");	
-		
-		System.out.println(permissionarioJson);
-		
-		HttpEntity<String> entity = new HttpEntity<String>(permissionarioJson.toString(), headers);
+		String permissionarioJson = gson.toJson(permissionario);
 
-		return restTemplate.postForObject(url, entity, String.class);
+		System.out.println(url + "/" + permissionario.getIdIntegracao());
+		restTemplate.put(url + "/" + permissionario.getIdIntegracao(), new HttpEntity<String>(permissionarioJson.toString(), headers),
+				String.class);
+	}
+
+	public String send(Permissionario permissionario) {
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		String permissionarioJson = gson.toJson(permissionario);
+
+		return new JSONObject(restTemplate.postForObject(url,
+				new HttpEntity<String>(permissionarioJson.toString(), headers), String.class)).get("id").toString();
+	}
+
+	public Permissionario get(Integer codigo) {
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+
+		try {
+			return jsonToPermissionario(new JSONObject(restTemplate.getForObject(url + "/" + codigo, String.class)));
+		} catch (HttpClientErrorException e) {
+			if (e.getMessage().contains("404")) {
+				return null;
+			}
+
+			throw e;
+		}
+
+	}
+
+	private Permissionario jsonToPermissionario(JSONObject jsonObject) {
+		// tratando endereco
+		if (jsonObject.has("endereco")) {
+			JSONObject jsonEndereco = jsonObject.getJSONObject("endereco");
+			jsonObject.remove("endereco");
+			jsonEndereco.keySet().stream().filter(key -> !key.toString().equals("id"))
+					.forEach(key -> jsonObject.put(key, jsonEndereco.get(key)));
+		}
+		// tratando modalidade
+		JSONObject jsonModalidade = jsonObject.getJSONObject("modalidade");
+		jsonObject.remove("modalidade");
+		jsonObject.put("modalidade_transporte", jsonModalidade.get("identificador").toString().toUpperCase());
+
+		return gson.fromJson(jsonObject.toString(), Permissionario.class);
 	}
 
 }
