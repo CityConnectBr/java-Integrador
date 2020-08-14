@@ -68,7 +68,7 @@ public class PermissionarioController {
 				}
 			}
 			System.out.println("\n");
-			break;
+			//break;
 		}
 
 	}

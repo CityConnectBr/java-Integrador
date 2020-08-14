@@ -3,7 +3,9 @@ package br.com.cityconnect.integrador_sa_transportes.service;
 import org.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
@@ -17,20 +19,24 @@ public class PermissionarioService extends ServiceMain {
 
 	private RestTemplate restTemplate = new RestTemplate();
 	private Gson gson = new Gson();
+	private HttpHeaders headers = new HttpHeaders();
+
+	public PermissionarioService() {
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		headers.add("token", super.token);
+	}
 
 	public void sendUpdate(Permissionario permissionario) {
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_JSON);
-		String permissionarioJson = gson.toJson(permissionario);
 
+		String permissionarioJson = gson.toJson(permissionario);
+		
 		System.out.println(url + "/" + permissionario.getIdIntegracao());
-		restTemplate.put(url + "/" + permissionario.getIdIntegracao(), new HttpEntity<String>(permissionarioJson.toString(), headers),
-				String.class);
+		restTemplate.put(url + "/" + permissionario.getIdIntegracao(),
+				new HttpEntity<String>(permissionarioJson.toString(), headers), String.class);
 	}
 
 	public String send(Permissionario permissionario) {
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_JSON);
+
 		String permissionarioJson = gson.toJson(permissionario);
 
 		return new JSONObject(restTemplate.postForObject(url,
@@ -38,11 +44,13 @@ public class PermissionarioService extends ServiceMain {
 	}
 
 	public Permissionario get(Integer codigo) {
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_JSON);
 
 		try {
-			return jsonToPermissionario(new JSONObject(restTemplate.getForObject(url + "/" + codigo, String.class)));
+			ResponseEntity<String> response = restTemplate.exchange(url + "/" + codigo, HttpMethod.GET,
+					new HttpEntity(headers), String.class);
+
+			return jsonToPermissionario(new JSONObject(response.getBody()));
+
 		} catch (HttpClientErrorException e) {
 			if (e.getMessage().contains("404")) {
 				return null;
@@ -54,6 +62,7 @@ public class PermissionarioService extends ServiceMain {
 	}
 
 	private Permissionario jsonToPermissionario(JSONObject jsonObject) {
+
 		// tratando endereco
 		if (jsonObject.has("endereco")) {
 			JSONObject jsonEndereco = jsonObject.getJSONObject("endereco");

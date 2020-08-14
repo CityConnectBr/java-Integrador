@@ -18,7 +18,8 @@ public class Teste3 {
 		while (true) {
 			mc.sincronizar();
 
-			TimeUnit.SECONDS.sleep(5);
+			break;
+			//TimeUnit.SECONDS.sleep(5);
 		}
 		
 		//motoristaDAO.getAll().forEach(m -> System.out.println(m));
