@@ -7,29 +7,27 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 
-import br.com.cityconnect.integrador_sa_transportes.entity.Permissionario;
+import br.com.cityconnect.integrador_sa_transportes.entity.CorVeiculo;
 
-public class PermissionarioService extends ServiceMain<Permissionario> {
+public class CorVeiculoService extends ServiceMain<CorVeiculo> {
 
-	public PermissionarioService() {
+	public CorVeiculoService() {
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		headers.add("token", super.token);
-		url = super.urlBase + "/integracao/permissionarios";
+		url = super.urlBase + "/integracao/coresveiculos";
 	}
 
-	public void sendUpdate(Permissionario permissionario) {
+	public void sendUpdate(CorVeiculo obj) {
 
-		String permissionarioJson = gson.toJson(permissionario);
-		
-		System.out.println(url + "/" + permissionario.getIdIntegracao());
-		restTemplate.put(url + "/" + permissionario.getIdIntegracao(),
+		String permissionarioJson = gson.toJson(obj);
+
+		System.out.println(url + "/" + obj.getIdIntegracao());
+		restTemplate.put(url + "/" + obj.getIdIntegracao(),
 				new HttpEntity<String>(permissionarioJson.toString(), headers), String.class);
 	}
 
-	
-
 	@Override
-	public Permissionario get(Integer codigo) {
+	public CorVeiculo get(Integer codigo) {
 
 		try {
 			ResponseEntity<String> response = restTemplate.exchange(url + "/" + codigo, HttpMethod.GET,
@@ -47,7 +45,7 @@ public class PermissionarioService extends ServiceMain<Permissionario> {
 
 	}
 
-	private Permissionario jsonToPermissionario(JSONObject jsonObject) {
+	private CorVeiculo jsonToPermissionario(JSONObject jsonObject) {
 
 		// tratando endereco
 		if (jsonObject.has("endereco")) {
@@ -61,7 +59,7 @@ public class PermissionarioService extends ServiceMain<Permissionario> {
 		jsonObject.remove("modalidade");
 		jsonObject.put("modalidade_transporte", jsonModalidade.get("identificador").toString().toUpperCase());
 
-		return gson.fromJson(jsonObject.toString(), Permissionario.class);
+		return gson.fromJson(jsonObject.toString(), CorVeiculo.class);
 	}
 
 }

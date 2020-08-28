@@ -6,7 +6,7 @@ import br.com.cityconnect.integrador_sa_transportes.service.PermissionarioServic
 import br.com.cityconnect.integrador_sa_transportes.util.Logger;
 import br.com.cityconnect.integrador_sa_transportes.util.Util;
 
-public class PermissionarioController {
+public class CorVeiculoController {
 
 	private Util util = new Util();
 
@@ -60,7 +60,7 @@ public class PermissionarioController {
 				contErros = 0;
 			} catch (Exception e) {
 				System.err.println(e);
-				Logger.sendLog(PermissionarioController.class, Logger.ERROR, e);
+				Logger.sendLog(CorVeiculoController.class, Logger.ERROR, e);
 
 				contErros++;
 				if (contErros > 3) {
