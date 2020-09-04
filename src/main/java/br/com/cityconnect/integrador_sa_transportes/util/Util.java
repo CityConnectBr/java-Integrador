@@ -41,7 +41,7 @@ public class Util {
 					valor1 = String.valueOf(f.get(obj1));
 					valor2 = String.valueOf(f.get(obj2));
 				}
-				// System.out.println(f.getName()+"--"+valor1 + " - " + valor2);
+				//System.out.println(f.getName()+"--"+valor1 + " - " + valor2+" - "+isEquals(valor1, valor2));
 
 				if (!isEquals(valor1, valor2)) {
 					return Boolean.FALSE;

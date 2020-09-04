@@ -13,7 +13,7 @@ public class Logger {
         try {
             org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(c);
             
-            PropertyConfigurator.configure(Logger.class.getResource("/log4j_logger.properties"));
+            PropertyConfigurator.configure(Logger.class.getResource("/log4j.properties"));
 
             switch (type) {
                 case INFO:

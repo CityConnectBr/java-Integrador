@@ -25,10 +25,6 @@ public class Veiculo implements Serializable {
 	@SerializedName(value = "id_integracao")
 	@Column(name = "Placa")
 	private String id;
-
-	@SerializedName(value = "id")
-	@Column(name = "id_integracao")
-	private Long idIntegracao;
 	
 	@SerializedName(value = "cod_renavam")
 	@Column(name = "CodRenavam")
@@ -86,9 +82,5 @@ public class Veiculo implements Serializable {
 
 	@Column(name = "versao", columnDefinition = "INT DEFAULT 0")
 	private Integer versao;
-
-	@UpdateTimestamp
-	@Column(name = "data_hora_alteracao_integracao")
-	private Date dataHoraAlteracaoIntegracao;
 
 }

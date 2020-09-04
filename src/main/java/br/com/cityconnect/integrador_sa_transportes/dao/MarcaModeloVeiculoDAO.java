@@ -2,15 +2,15 @@ package br.com.cityconnect.integrador_sa_transportes.dao;
 
 import java.util.List;
 
-import br.com.cityconnect.integrador_sa_transportes.entity.AgenteFiscalizacao;
+import br.com.cityconnect.integrador_sa_transportes.entity.MarcaModeloVeiculo;
 
-public class MarcaModeloVeiculoDAO extends GenericDao<AgenteFiscalizacao, Long> {
+public class MarcaModeloVeiculoDAO extends GenericDao<MarcaModeloVeiculo, Long> {
 
 	public MarcaModeloVeiculoDAO() {
 		super();
 	}
 	
-	public List<AgenteFiscalizacao> findAll() {
+	public List<MarcaModeloVeiculo> findAll() {
 		return super.findAll();
 	}
 

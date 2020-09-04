@@ -13,5 +13,6 @@ public class TipoVeiculoDAO extends GenericDao<TipoVeiculo, Long> {
 	public List<TipoVeiculo> findAll() {
 		return super.findAll();
 	}
+	
 
 }

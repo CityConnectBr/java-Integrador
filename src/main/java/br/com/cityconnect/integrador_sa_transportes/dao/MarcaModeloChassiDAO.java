@@ -9,7 +9,7 @@ public class MarcaModeloChassiDAO extends GenericDao<MarcaModeloChassi, Long> {
 	public MarcaModeloChassiDAO() {
 		super();
 	}
-	
+
 	public List<MarcaModeloChassi> findAll() {
 		return super.findAll();
 	}

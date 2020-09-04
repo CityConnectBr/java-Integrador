@@ -21,11 +21,7 @@ public class CorVeiculo implements Serializable {
 	@Id
 	@SerializedName(value = "id_integracao")
 	@Column(name = "Codigo")
-	private Integer id;
-
-	@SerializedName(value = "id")
-	@Column(name = "id_integracao")
-	private Long idIntegracao;
+	private Long id;
 
 	@Column(name = "Descricao")
 	private String descricao;

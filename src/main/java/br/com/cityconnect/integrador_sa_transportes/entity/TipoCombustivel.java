@@ -13,7 +13,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "marcasmodelosveiculos")
+@Table(name = "tiposcombustiveis")
 public class TipoCombustivel implements Serializable {
 
 	private static final long serialVersionUID = 1934910641955849910L;
@@ -21,11 +21,7 @@ public class TipoCombustivel implements Serializable {
 	@Id
 	@SerializedName(value = "id_integracao")
 	@Column(name = "CODIGO")
-	private Integer id;
-
-	@SerializedName(value = "id")
-	@Column(name = "id_integracao")
-	private Long idIntegracao;
+	private Long id;
 
 	@Column(name = "DESCRICAO")
 	private String descricao;

@@ -1,6 +1,7 @@
 package br.com.cityconnect.integrador_sa_transportes.dao;
 
 import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.List;
@@ -274,8 +275,11 @@ public abstract class GenericDao<T extends Serializable, PK> {
 		}
     }
     
-    //esta protected pois e uma funcao muito sensivel precisando ser  analisada antes da atualizacao
-    protected boolean update(T entity)  {
+    public boolean update(Object obj)  {
+    	return this.update((T) obj);
+    }
+    
+    public boolean update(T entity)  {
     	EntityManager em = null;
     	try {
     		em  = factory.createEntityManager();
@@ -293,6 +297,14 @@ public abstract class GenericDao<T extends Serializable, PK> {
 			close(em);
 		}
     }
+    
+	public boolean setVersao(Long id, Integer versao) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+		T obj = this.findById(id.toString());
+
+		obj.getClass().getMethod("setVersao", Integer.class).invoke(obj, versao);
+
+		return update(obj);
+	}
 
     public boolean delete(T entity)  {
     	EntityManager em = null;

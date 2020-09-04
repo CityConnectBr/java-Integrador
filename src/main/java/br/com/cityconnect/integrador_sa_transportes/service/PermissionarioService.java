@@ -1,54 +1,19 @@
 package br.com.cityconnect.integrador_sa_transportes.service;
 
 import org.json.JSONObject;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.HttpClientErrorException;
 
 import br.com.cityconnect.integrador_sa_transportes.entity.Permissionario;
 
-public class PermissionarioService extends ServiceMain<Permissionario> {
+public class PermissionarioService extends MainService<Permissionario> {
 
 	public PermissionarioService() {
-		headers.setContentType(MediaType.APPLICATION_JSON);
-		headers.add("token", super.token);
-		url = super.urlBase + "/integracao/permissionarios";
+		super("/integracao/permissionarios");
 	}
-
-	public void sendUpdate(Permissionario permissionario) {
-
-		String permissionarioJson = gson.toJson(permissionario);
-		
-		System.out.println(url + "/" + permissionario.getIdIntegracao());
-		restTemplate.put(url + "/" + permissionario.getIdIntegracao(),
-				new HttpEntity<String>(permissionarioJson.toString(), headers), String.class);
-	}
-
-	
 
 	@Override
-	public Permissionario get(Integer codigo) {
-
-		try {
-			ResponseEntity<String> response = restTemplate.exchange(url + "/" + codigo, HttpMethod.GET,
-					new HttpEntity(headers), String.class);
-
-			return jsonToPermissionario(new JSONObject(response.getBody()));
-
-		} catch (HttpClientErrorException e) {
-			if (e.getMessage().contains("404")) {
-				return null;
-			}
-
-			throw e;
-		}
-
-	}
-
-	private Permissionario jsonToPermissionario(JSONObject jsonObject) {
-
+	protected Permissionario jsonToObj(String json) {		
+		JSONObject jsonObject = new JSONObject(json);
+		
 		// tratando endereco
 		if (jsonObject.has("endereco")) {
 			JSONObject jsonEndereco = jsonObject.getJSONObject("endereco");
@@ -63,5 +28,12 @@ public class PermissionarioService extends ServiceMain<Permissionario> {
 
 		return gson.fromJson(jsonObject.toString(), Permissionario.class);
 	}
+	
+	@Override
+	protected Permissionario[] jsonListToObjList(String json) {
+		return null;
+	}
+
+	
 
 }

@@ -19,20 +19,4 @@ public class PermissionarioDAO extends GenericDao<Permissionario, Long> {
 		return super.update((Permissionario) new Util().copy(permissionario, findById(permissionario.getId())));
 	}
 
-	public boolean setVersao(Long id, Integer versao) {
-		Permissionario permissionario = findById(id);
-
-		permissionario.setVersao(versao);
-
-		return super.update(permissionario);
-	}
-
-	public boolean setIdIntegracao(Long id, Long idIntegracao) {
-		Permissionario permissionario = findById(id);
-
-		permissionario.setIdIntegracao(idIntegracao);
-
-		return super.update(permissionario);
-	}
-
 }

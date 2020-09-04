@@ -1,22 +1,15 @@
 package br.com.cityconnect.integrador_sa_transportes.testes;
 
-import java.util.concurrent.TimeUnit;
-
-import br.com.cityconnect.integrador_sa_transportes.controller.PermissionarioController;
-import br.com.cityconnect.integrador_sa_transportes.dao.PermissionarioDAO;
-import br.com.cityconnect.integrador_sa_transportes.service.PermissionarioService;
+import br.com.cityconnect.integrador_sa_transportes.controller.MarcaModeloCarroceriaController;
 
 public class Teste3 {
 
 	public static void main(String[] args) throws Exception {
-
-		PermissionarioDAO permissionarioDAO = new PermissionarioDAO();
-		PermissionarioService permissionarioService = new PermissionarioService();
 		
-		PermissionarioController mc = new PermissionarioController();
+		MarcaModeloCarroceriaController mc = new MarcaModeloCarroceriaController();
 		
 		while (true) {
-			mc.sincronizar();
+			//mc.sincronizar();
 
 			break;
 			//TimeUnit.SECONDS.sleep(5);

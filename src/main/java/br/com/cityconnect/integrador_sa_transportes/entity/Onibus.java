@@ -25,10 +25,6 @@ public class Onibus implements Serializable {
 	@SerializedName(value = "id_integracao")
 	@Column(name = "CodRenavam")
 	private String id;
-
-	@SerializedName(value = "id")
-	@Column(name = "id_integracao")
-	private Long idIntegracao;
 	
 	@SerializedName(value = "placa")
 	@Column(name = "Placa")
@@ -69,9 +65,5 @@ public class Onibus implements Serializable {
 
 	@Column(name = "versao", columnDefinition = "INT DEFAULT 0")
 	private Integer versao;
-
-	@UpdateTimestamp
-	@Column(name = "data_hora_alteracao_integracao")
-	private Date dataHoraAlteracaoIntegracao;
-
+	
 }

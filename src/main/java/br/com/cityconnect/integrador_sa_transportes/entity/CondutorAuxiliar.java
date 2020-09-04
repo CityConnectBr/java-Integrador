@@ -26,10 +26,6 @@ public class CondutorAuxiliar implements Serializable {
 	@Column(name = "CPF")
 	private Long id;// NumeroCadastro
 
-	@SerializedName(value = "id")
-	@Column(name = "id_integracao")
-	private Long idIntegracao;
-
 	@Column(name = "Nome")
 	private String nome;// Nome
 	
@@ -91,9 +87,5 @@ public class CondutorAuxiliar implements Serializable {
 
 	@Column(name = "versao", columnDefinition = "INT DEFAULT 0")
 	private Integer versao;
-
-	@UpdateTimestamp
-	@Column(name = "data_hora_alteracao_integracao")
-	private Date dataHoraAlteracaoIntegracao;
 
 }
