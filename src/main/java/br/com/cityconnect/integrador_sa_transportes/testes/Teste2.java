@@ -1,26 +1,68 @@
 package br.com.cityconnect.integrador_sa_transportes.testes;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.lang.reflect.InvocationTargetException;
-import java.sql.SQLException;
-import java.util.Properties;
+import java.util.Observable;
+import java.util.Observer;
 
-public class Teste2 {
+import br.com.cityconnect.integrador_sa_transportes.controller.CorVeiculoController;
+import br.com.cityconnect.integrador_sa_transportes.controller.MainController;
+import br.com.cityconnect.integrador_sa_transportes.dao.CorVeiculoDAO;
+import br.com.cityconnect.integrador_sa_transportes.util.PropertiesUtil;
+import br.com.cityconnect.integrador_sa_transportes.view.ControleJFrame;
+import br.com.cityconnect.integrador_sa_transportes.view.PropertiesJFrame;
+
+public class Teste2 implements Observer{
 	
-	public static void main(String args[]) throws SQLException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+	public static void main(String args[]) throws Exception {
 		
-		Properties properties = new Properties();
-		try(OutputStream outputStream = new FileOutputStream("teste.properties")){  
-		    properties.setProperty("prop1", "Value1");
-		    properties.setProperty("prop2", "Value2");
-		    properties.store(outputStream, null);
-		} catch (IOException e) {
-		    e.printStackTrace();
-		} 
+		//PropertiesUtil pu = new PropertiesUtil();
+		
+		//System.out.println((2F/13F)*100);
+		
+		//new PropertiesJFrame();
+
+		//ObservableDemo observable = new ObservableDemo(null);
+		
+		CorVeiculoDAO d = new CorVeiculoDAO();
+		
+		System.out.println(d.findAllIDs().size());
 		
 		
 	}
 
+	private ObservableDemo weatherUpdate ;
+	 
+    @Override
+    public void update(Observable observable, Object arg)
+    {
+    	MainController mainC = (MainController) observable;
+    	
+            System.out.println(mainC.getPosAtual()+"/"+mainC.getTotal());
+            //System.out.println(arg);
+    }
+ 
+
+}
+
+class ObservableDemo extends Observable
+{
+    private String weather;
+ 
+    public ObservableDemo(String weather)
+    {
+            this.weather = weather;
+    }
+ 
+    public String getWeather()
+    {
+        return weather;
+    }
+ 
+    public void setWeather(String weather)
+    {
+        this.weather = weather;
+        setChanged();
+        notifyObservers();
+    }
+ 
+ 
 }

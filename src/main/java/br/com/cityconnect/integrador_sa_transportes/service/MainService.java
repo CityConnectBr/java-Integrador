@@ -1,5 +1,6 @@
 package br.com.cityconnect.integrador_sa_transportes.service;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -13,18 +14,30 @@ import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.Gson;
 
+import br.com.cityconnect.integrador_sa_transportes.util.PropertiesUtil;
+
 public abstract class MainService<T extends Serializable> {
 
 	public MainService(String endPoint) {
+		try {
+			PropertiesUtil pu = new PropertiesUtil();
+
+			this.urlBase = pu.getValue(PropertiesUtil.KEY_URL_API);
+			this.token = pu.getValue(PropertiesUtil.KEY_API_TOKEN);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 		url = urlBase + endPoint;
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		headers.add("token", token);
 	}
 
-	protected final String urlBase = "http://192.168.1.30:8000/";
+	protected String urlBase = null;//"http://192.168.15.80:8000/";
 	// protected final String urlBase =
 	// "https://api.santo-andre-transporte.cityconnect.com.br/";
-	protected final String token = "$2y$10$3.Cnop0hlPRgK1GA.RVR2uN1pZgpBrd.vCHWrERLiECPMaBF6UWzi";
+	protected String token = null;//"$2y$10$3.Cnop0hlPRgK1GA.RVR2uN1pZgpBrd.vCHWrERLiECPMaBF6UWzi";
 
 	protected RestTemplate restTemplate = new RestTemplate();
 	protected Gson gson = new Gson();

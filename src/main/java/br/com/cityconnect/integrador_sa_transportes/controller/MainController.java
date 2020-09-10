@@ -1,17 +1,42 @@
 package br.com.cityconnect.integrador_sa_transportes.controller;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Observable;
+import java.util.concurrent.TimeUnit;
 
 import br.com.cityconnect.integrador_sa_transportes.util.Logger;
+import br.com.cityconnect.integrador_sa_transportes.util.PropertiesUtil;
 import br.com.cityconnect.integrador_sa_transportes.util.Util;
+import br.com.cityconnect.integrador_sa_transportes.view.ControleJFrame;
+import lombok.Getter;
 
-public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
+public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> extends Observable {
 
 	private Util util = new Util();
 
 	private T_DAO dao;
 	private T_SERVICE service;
+
+	private static Thread mainThread = null;
+
+	@Getter
+	private String status = "Iniciando...";
+	@Getter
+	private String acaoAtual;
+	@Getter
+	private String objStrAtual;
+	@Getter
+	private Integer posAtual;
+	@Getter
+	private Integer total;
+	@Getter
+	private Integer posAtualGeral;
+	@Getter
+	private static final Integer totalGeral = 10;
+
+	private static Integer refreshTime = 3600;// uma hora
 
 	MainController(T_SERVICE service, T_DAO dao) {
 		this.service = service;
@@ -25,9 +50,13 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 		//
 		// CADASTRO E ATUALIZACAO
 		//
-		for (T obj : (List<T>) dao.getClass().getMethod("findAll").invoke(dao, null)) {
-
+		List<T> objectList = (List<T>) dao.getClass().getMethod("findAll").invoke(dao, null);
+		this.setInit(objectList.size());
+		for (T obj : objectList) {
+			this.posAtual++;
 			try {
+				this.setAtual("Verificando", obj.toString());
+
 				String id = obj.getClass().getMethod("getId").invoke(obj, null).toString();
 				T objByService = (T) service.getClass().getMethod("get", String.class).invoke(service,
 						id.replace("/", "-"));
@@ -38,12 +67,16 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 					System.out.println(obj);
 					System.out.println(objByService);
 					if (!util.compareObjects(obj, objByService)) {
+						this.setAtual("Atualizando na API", obj.toString());
+
 						// atualizando service com dados do banco local
 						System.out.println("ATUALIZANDO API REMOTA");
 						service.getClass().getMethod("sendUpdate", Object.class, String.class).invoke(service, obj,
 								id.replace("/", "-"));
 					}
 				} else {
+					this.setAtual("Cadastrando na API", obj.toString());
+
 					String idIntegracao = (String) service.getClass().getMethod("send", Object.class).invoke(service,
 							obj);
 					if (idIntegracao != null && !idIntegracao.isEmpty()) {
@@ -75,6 +108,7 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 				String id = obj.getClass().getMethod("getId").invoke(obj, null).toString();
 				T objByDAO = (T) dao.getClass().getMethod("findById", String.class).invoke(dao, id);
 				if (objByDAO == null) {
+					this.setAtual("Deletando na API", obj.toString());
 					System.out.println("DELETANDO CADASTRO REMOTO");
 					System.out.println(obj);
 					service.getClass().getMethod("sendDelete", String.class).invoke(service, id.replace("/", "-"));
@@ -93,17 +127,26 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 
 		}
 
+		posAtualGeral++;
+		this.setAtual("Verificação Terminada: " + (this.getClass().getSimpleName()), null);
 	}
 
 	protected void sincFull() throws Exception {
 
 		int contErros = 0;
+		this.posAtual = 0;
 
 		//
 		// CADASTRO E ATUALIZACAO
 		//
-		for (T obj : (List<T>) dao.getClass().getMethod("findAll").invoke(dao, null)) {
+
+		List<T> objectList = (List<T>) dao.getClass().getMethod("findAll").invoke(dao, null);
+		this.setInit(objectList.size());
+		for (T obj : objectList) {
+			this.posAtual++;
 			try {
+				this.setAtual("Verificando", obj.toString());
+
 				String id = obj.getClass().getMethod("getId").invoke(obj, null).toString();
 				T objByService = (T) service.getClass().getMethod("get", String.class).invoke(service,
 						id.replace("/", "-"));
@@ -123,10 +166,12 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 
 						if (!versaoObj.equals(versaoObjByService)) {
 							// atualizar banco local com dados do service
+							this.setAtual("Atualizando no Banco Local", objByService.toString());
 							System.out.println("ATUALIZANDO BANCO LOCAL");
 							dao.getClass().getMethod("update", Object.class).invoke(dao, objByService);
 						} else {
 							// atualizando service com dados do banco local
+							this.setAtual("Atualizando na API", obj.toString());
 							System.out.println("ATUALIZANDO API REMOTA");
 							service.getClass().getMethod("sendUpdate", Object.class, String.class).invoke(service, obj,
 									id.replace("/", "-"));
@@ -139,6 +184,7 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 
 					if (!util.compareObjects(obj, objByService)) {
 						// atualizando service com dados do banco local
+						this.setAtual("Atualizando na API", obj.toString());
 						System.out.println("ATUALIZANDO API REMOTA");
 						service.getClass().getMethod("sendUpdate", Object.class, String.class).invoke(service, obj,
 								id.replace("/", "-"));
@@ -147,8 +193,10 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 					String idIntegracao = (String) service.getClass().getMethod("send", Object.class).invoke(service,
 							obj);
 					if (idIntegracao != null && !idIntegracao.isEmpty()) {
+						this.setAtual("Cadastro inicial na API", obj.toString());
 						System.out.println("CADASTRO REMOTO INICIAL");
 					} else {
+						this.setAtual("Cadastro inicial na API não realizado", obj.toString());
 						System.out.println("CADASTRO REMOTO NÃO REALIZADO");
 					}
 					System.out.println(obj);
@@ -166,8 +214,123 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 			System.out.println("\n");
 		}
 
+		posAtualGeral++;
+		this.setAtual("Verificação Terminada: " + (this.getClass().getSimpleName()), null);
+	}
+
+	private void setInit(Integer listSize) {
+		this.posAtual = 0;
+		this.total = listSize;
+		setChanged();
+		notifyObservers();
+	}
+
+	private void setAtual(String acaoAtual, String objAtual) {
+		this.acaoAtual = acaoAtual;
+		this.objStrAtual = objAtual != null ? objAtual : "";
+		setChanged();
+		notifyObservers();
 	}
 
 	public abstract void sinc() throws Exception;
+
+	public static void sincAll() {
+		if (mainThread != null) {
+			System.err.println("Thread ja em execução");
+		} else {
+			ControleJFrame controleJFrame = (ControleJFrame) ControleJFrame.newControleJFrame(false);
+
+			mainThread = new Thread() {
+
+				@Override
+				public void run() {
+					while (true) {
+						try {
+							while (true) {
+								try {
+									new PropertiesUtil().getValue(PropertiesUtil.KEY_REFRESH_TIME);
+								} catch (IOException e) {
+									refreshTime = 3600;// uma hora
+									e.printStackTrace();
+								}
+
+								MainController controller = new CorVeiculoController();
+								controller.posAtualGeral = 0;
+								controller.addObserver(controleJFrame);
+								controller.sinc();
+
+								controller = new MarcaModeloCarroceriaController();
+								controller.posAtualGeral = 1;
+								controller.addObserver(controleJFrame);
+								controller.sinc();
+
+								controller = new MarcaModeloChassiController();
+								controller.posAtualGeral = 2;
+								controller.addObserver(controleJFrame);
+								controller.sinc();
+
+								controller = new TipoCombustivelController();
+								controller.posAtualGeral = 3;
+								controller.addObserver(controleJFrame);
+								controller.sinc();
+
+								controller = new TipoVeiculoController();
+								controller.posAtualGeral = 4;
+								controller.addObserver(controleJFrame);
+								controller.sinc();
+
+								controller = new MarcaModeloVeiculoController();
+								controller.posAtualGeral = 5;
+								controller.addObserver(controleJFrame);
+								controller.sinc();
+
+								controller = new PermissionarioController();
+								controller.posAtualGeral = 6;
+								controller.addObserver(controleJFrame);
+								controller.sinc();
+
+								controller = new CondutorAuxuliarController();
+								controller.posAtualGeral = 7;
+								controller.addObserver(controleJFrame);
+								controller.sinc();
+
+								controller = new OnibusController();
+								controller.posAtualGeral = 8;
+								controller.addObserver(controleJFrame);
+								controller.sinc();
+
+								controller = new VeiculoController();
+								controller.posAtualGeral = 9;
+								controller.addObserver(controleJFrame);
+								controller.sinc();
+
+								// break;
+								TimeUnit.SECONDS.sleep(refreshTime);
+							}
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+						try {
+							TimeUnit.SECONDS.sleep(60 * 5);// 5 minutos para tentar novamente
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
+
+				}
+			};
+			mainThread.start();
+		}
+	}
+
+	public static void stopMainThread() {
+		mainThread.interrupt();
+		mainThread = null;
+	}
+
+	public static void restartMainThread() {
+		stopMainThread();
+		sincAll();
+	}
 
 }
