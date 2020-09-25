@@ -19,5 +19,10 @@ public class TipoVeiculoService extends MainService<TipoVeiculo> {
 		return gson.fromJson(json.toString(), TipoVeiculo[].class);
 
 	}
+	
+	@Override
+	public TipoVeiculo[] getAll() throws Exception {
+		return new TipoVeiculo[0];
+	}
 
 }

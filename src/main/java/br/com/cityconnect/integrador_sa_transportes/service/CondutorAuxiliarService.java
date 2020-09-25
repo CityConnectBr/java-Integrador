@@ -22,13 +22,20 @@ public class CondutorAuxiliarService extends MainService<CondutorAuxiliar> {
 			jsonEndereco.keySet().stream().filter(key -> !key.toString().equals("id"))
 					.forEach(key -> jsonObject.put(key, jsonEndereco.get(key)));
 		}
+		
+		// tratando permissionario
+		if (jsonObject.has("permissionario")) {
+			JSONObject jsonPermissionario = jsonObject.getJSONObject("permissionario");
+			jsonObject.remove("permissionario");
+			jsonObject.put("permissionario_id", jsonPermissionario.get("id_integracao"));
+		}
 
 		return gson.fromJson(jsonObject.toString(), CondutorAuxiliar.class);
 	}
 
 	@Override
 	protected CondutorAuxiliar[] jsonListToObjList(String json) {
-		return null;
+		return gson.fromJson(json.toString(), CondutorAuxiliar[].class);
 	}
 
 }

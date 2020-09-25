@@ -9,9 +9,13 @@ public class OnibusDAO extends GenericDao<Onibus, Long> {
 	public OnibusDAO() {
 		super();
 	}
-	
+
 	public List<Onibus> findAll() {
 		return super.findAll();
+	}
+
+	public Onibus saveReturningEntity(Onibus entity) {
+		return super.saveReturningEntity(entity);
 	}
 
 }

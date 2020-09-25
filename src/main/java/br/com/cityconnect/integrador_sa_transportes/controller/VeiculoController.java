@@ -12,7 +12,7 @@ public class VeiculoController extends MainController<Veiculo, VeiculoDAO, Veicu
 
 	@Override
 	public void sinc() throws Exception {
-		super.sincFull();
+		super.sincOnlyRemote();
 	}
 
 }

@@ -162,7 +162,7 @@ public abstract class GenericDao<T extends Serializable, PK> {
     	try {
     		if(pk!=null && pk.isEmpty()==false){
     			em  = factory.createEntityManager();    		
-    			return (T) em.find(this.clazz, new Long(pk));
+    			return (T) em.find(this.clazz, pk);
     		}else{
     			return null;
     		}
@@ -237,7 +237,7 @@ public abstract class GenericDao<T extends Serializable, PK> {
 		}        
 	}
     
-    public boolean save(T entity)  {
+    public boolean save(Object entity)  {
     	EntityManager em = null;
     	try {
     		em  = factory.createEntityManager();
@@ -256,7 +256,7 @@ public abstract class GenericDao<T extends Serializable, PK> {
 		}
     }
     
-    public T saveReturningEntity(T entity)  {
+    public T saveReturningEntity(Object entity)  {
     	EntityManager em = null;
     	try {
     		em  = factory.createEntityManager();
@@ -265,7 +265,7 @@ public abstract class GenericDao<T extends Serializable, PK> {
             em.persist(entity);
             commit(em);
             
-            return entity;
+            return (T) entity;
 	    }catch (Exception e) {
 			Logger.sendLog(this.clazz, Logger.ERROR, e);
 			rollBack(em);
@@ -298,7 +298,7 @@ public abstract class GenericDao<T extends Serializable, PK> {
 		}
     }
     
-	public boolean setVersao(Long id, Integer versao) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+	public boolean setVersao(Object id, Integer versao) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 		T obj = this.findById(id.toString());
 
 		obj.getClass().getMethod("setVersao", Integer.class).invoke(obj, versao);

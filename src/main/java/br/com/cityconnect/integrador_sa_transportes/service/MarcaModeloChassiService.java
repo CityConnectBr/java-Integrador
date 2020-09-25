@@ -20,4 +20,9 @@ public class MarcaModeloChassiService extends MainService<MarcaModeloChassi> {
 
 	}
 
+	@Override
+	public MarcaModeloChassi[] getAll() throws Exception {
+		return new MarcaModeloChassi[0];
+	}
+
 }

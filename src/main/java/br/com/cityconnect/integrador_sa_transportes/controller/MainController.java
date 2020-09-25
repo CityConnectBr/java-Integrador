@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.concurrent.TimeUnit;
 
+import br.com.cityconnect.integrador_sa_transportes.entity.CondutorAuxiliar;
 import br.com.cityconnect.integrador_sa_transportes.util.Logger;
 import br.com.cityconnect.integrador_sa_transportes.util.PropertiesUtil;
 import br.com.cityconnect.integrador_sa_transportes.util.Util;
@@ -32,7 +33,7 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> e
 	@Getter
 	private Integer total;
 	@Getter
-	private Integer posAtualGeral;
+	private Integer posAtualGeral = 0;
 	@Getter
 	private static final Integer totalGeral = 10;
 
@@ -43,7 +44,8 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> e
 		this.dao = dao;
 	}
 
-	protected void sincHalf() throws Exception {
+	// sincroniza croniza sem vercionamento, sobreescreve o conteudo remoto
+	protected void sincOnlyRemote() throws Exception {
 
 		int contErros = 0;
 
@@ -131,10 +133,46 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> e
 		this.setAtual("Verificação Terminada: " + (this.getClass().getSimpleName()), null);
 	}
 
+	// sincroniza croniza o remoto e o local levando em consideracao a versao e
+	// conteudo
 	protected void sincFull() throws Exception {
 
 		int contErros = 0;
 		this.posAtual = 0;
+
+		//
+		// Cadastro Inicial(Objeto sem objetos adicionais(endereco e etc...)) Local
+		//
+
+		for (T obj : (T[]) service.getClass().getMethod("getAll").invoke(service, null)) {
+			try {
+				if (obj != null && obj.getClass().getMethod("getId").invoke(obj, null) == null) {
+					this.setAtual("Cadastrando Local", obj.toString());
+					System.out.println("CADASTRANDO LOCAL");
+					System.out.println(obj);
+
+					if (obj instanceof CondutorAuxiliar) {
+						obj.getClass().getMethod("setId", String.class).invoke(obj,
+								obj.getClass().getMethod("getCPF").invoke(obj, null));
+					}
+					System.out.println(obj);
+					T newObj = (T) dao.getClass().getMethod("saveReturningEntity", obj.getClass()).invoke(dao, obj);
+					service.getClass().getMethod("sendUpdate", Object.class, String.class).invoke(service, obj,
+							newObj.getClass().getMethod("getId").invoke(newObj, null).toString().replace("/", "-"));
+					System.out.println("\n");
+				}
+
+				contErros = 0;
+			} catch (Exception e) {
+				Logger.sendLog(MainController.class, Logger.ERROR, e);
+
+				contErros++;
+				if (contErros > 3) {
+					throw e;
+				}
+			}
+
+		}
 
 		//
 		// CADASTRO E ATUALIZACAO
@@ -148,8 +186,13 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> e
 				this.setAtual("Verificando", obj.toString());
 
 				String id = obj.getClass().getMethod("getId").invoke(obj, null).toString();
+				if (!id.equals("08643560804")) {// 08024153858
+					// continue;
+				}
+
 				T objByService = (T) service.getClass().getMethod("get", String.class).invoke(service,
 						id.replace("/", "-"));
+
 				if (objByService != null) {
 
 					System.out.println("CADASTRO REMOTO ENCONTRADO");
@@ -176,19 +219,19 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> e
 							service.getClass().getMethod("sendUpdate", Object.class, String.class).invoke(service, obj,
 									id.replace("/", "-"));
 
-							dao.getClass().getMethod("setVersao", Long.class, Integer.class).invoke(dao, new Long(id),
+							dao.getClass().getMethod("setVersao", Object.class, Integer.class).invoke(dao, id,
 									versaoObj + 1);
 
 						}
 					}
 
-					if (!util.compareObjects(obj, objByService)) {
-						// atualizando service com dados do banco local
-						this.setAtual("Atualizando na API", obj.toString());
-						System.out.println("ATUALIZANDO API REMOTA");
-						service.getClass().getMethod("sendUpdate", Object.class, String.class).invoke(service, obj,
-								id.replace("/", "-"));
-					}
+//					if (!util.compareObjects(obj, objByService)) {
+//						// atualizando service com dados do banco local
+//						this.setAtual("Atualizando na API", obj.toString());
+//						System.out.println("ATUALIZANDO API REMOTA");
+//						service.getClass().getMethod("sendUpdate", Object.class, String.class).invoke(service, obj,
+//								id.replace("/", "-"));
+//					}
 				} else {
 					String idIntegracao = (String) service.getClass().getMethod("send", Object.class).invoke(service,
 							obj);
@@ -204,6 +247,8 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> e
 
 				contErros = 0;
 			} catch (Exception e) {
+				System.err.println(obj);
+
 				Logger.sendLog(MainController.class, Logger.ERROR, e);
 
 				contErros++;
@@ -279,17 +324,17 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> e
 								controller.addObserver(controleJFrame);
 								controller.sinc();
 
-								controller = new MarcaModeloVeiculoController();
+								controller = new PermissionarioController();
 								controller.posAtualGeral = 5;
 								controller.addObserver(controleJFrame);
 								controller.sinc();
 
-								controller = new PermissionarioController();
+								controller = new CondutorAuxuliarController();
 								controller.posAtualGeral = 6;
 								controller.addObserver(controleJFrame);
 								controller.sinc();
 
-								controller = new CondutorAuxuliarController();
+								controller = new MarcaModeloVeiculoController();
 								controller.posAtualGeral = 7;
 								controller.addObserver(controleJFrame);
 								controller.sinc();

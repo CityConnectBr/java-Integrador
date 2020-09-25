@@ -12,7 +12,7 @@ public class MarcaModeloVeiculoController extends MainController<MarcaModeloVeic
 	
 	@Override
 	public void sinc() throws Exception {
-		super.sincHalf();
+		super.sincOnlyRemote();
 	}
 
 }

@@ -13,6 +13,6 @@ public class TipoCombustivelController
 
 	@Override
 	public void sinc() throws Exception {
-		super.sincHalf();
+		super.sincOnlyRemote();
 	}
 }

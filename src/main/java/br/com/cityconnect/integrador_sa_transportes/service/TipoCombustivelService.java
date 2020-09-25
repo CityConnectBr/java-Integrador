@@ -19,5 +19,10 @@ public class TipoCombustivelService extends MainService<TipoCombustivel> {
 		return gson.fromJson(json.toString(), TipoCombustivel[].class);
 
 	}
+	
+	@Override
+	public TipoCombustivel[] getAll() throws Exception {
+		return new TipoCombustivel[0];
+	}
 
 }

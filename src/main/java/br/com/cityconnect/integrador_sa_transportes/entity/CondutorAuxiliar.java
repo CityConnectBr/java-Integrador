@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -24,8 +25,12 @@ public class CondutorAuxiliar implements Serializable {
 	@Id
 	@SerializedName(value = "id_integracao")
 	@Column(name = "CPF")
-	private Long id;// NumeroCadastro
+	private String id;// NumeroCadastro
 
+	@SerializedName(value = "cpf")
+	@Transient
+	private String CPF;
+	
 	@Column(name = "Nome")
 	private String nome;// Nome
 	
@@ -85,6 +90,10 @@ public class CondutorAuxiliar implements Serializable {
 	@Column(name = "VencimentoCNH")
 	private String vencimentoCNH;// VencimentoCNH
 
+	@SerializedName(value = "permissionario_id")
+	@Column(name = "NumCadastroPermissionario")
+	private Integer permissionarioId;// NumCadastroPermissionario
+	
 	@Column(name = "versao", columnDefinition = "INT DEFAULT 0")
 	private Integer versao;
 

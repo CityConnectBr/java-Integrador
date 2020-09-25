@@ -12,7 +12,7 @@ public class CorVeiculoController extends MainController<CorVeiculo, CorVeiculoD
 
 	@Override
 	public void sinc() throws Exception {
-		super.sincHalf();
+		super.sincOnlyRemote();
 	}
 
 	

@@ -13,5 +13,9 @@ public class VeiculoDAO extends GenericDao<Veiculo, Long> {
 	public List<Veiculo> findAll() {
 		return super.findAll();
 	}
+	
+	public Veiculo saveReturningEntity(Veiculo entity)  {
+    	return super.saveReturningEntity(entity);
+    }
 
 }

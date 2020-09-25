@@ -1,6 +1,7 @@
 package br.com.cityconnect.integrador_sa_transportes.service;
 
 import br.com.cityconnect.integrador_sa_transportes.entity.CorVeiculo;
+import br.com.cityconnect.integrador_sa_transportes.entity.MarcaModeloCarroceria;
 
 public class CorVeiculoService extends MainService<CorVeiculo> {
 
@@ -17,7 +18,11 @@ public class CorVeiculoService extends MainService<CorVeiculo> {
 	@Override
 	protected CorVeiculo[] jsonListToObjList(String json) {
 		return gson.fromJson(json.toString(), CorVeiculo[].class);
-
+	}
+	
+	@Override
+	public CorVeiculo[] getAll() throws Exception {
+		return new CorVeiculo[0];
 	}
 
 }

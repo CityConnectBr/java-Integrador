@@ -34,7 +34,7 @@ public final class DAOFactory {
 				e.printStackTrace();
 			}
 
-			entityManagerFactory = Persistence.createEntityManagerFactory("satransportesPU", addedOrOverridenProperties);
+			entityManagerFactory = Persistence.createEntityManagerFactory("satransportesPU");
 		}
 
 		return entityManagerFactory;

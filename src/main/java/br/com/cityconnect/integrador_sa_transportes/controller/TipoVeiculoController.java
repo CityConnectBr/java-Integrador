@@ -12,6 +12,6 @@ public class TipoVeiculoController extends MainController<TipoVeiculo, TipoVeicu
 
 	@Override
 	public void sinc() throws Exception {
-		super.sincHalf();
+		super.sincOnlyRemote();
 	}
 }

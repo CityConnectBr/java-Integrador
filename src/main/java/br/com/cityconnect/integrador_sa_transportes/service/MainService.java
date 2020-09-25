@@ -95,7 +95,7 @@ public abstract class MainService<T extends Serializable> {
 		try {
 			ResponseEntity<String> response = restTemplate.exchange(url + "/", HttpMethod.GET, new HttpEntity(headers),
 					String.class);
-
+			
 			return jsonListToObjList(response.getBody());
 		} catch (Exception e) {
 			if (e.getMessage().contains("404")) {

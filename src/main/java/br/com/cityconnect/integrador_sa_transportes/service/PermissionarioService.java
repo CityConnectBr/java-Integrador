@@ -34,6 +34,9 @@ public class PermissionarioService extends MainService<Permissionario> {
 		return null;
 	}
 
-	
+	@Override
+	public Permissionario[] getAll() throws Exception {
+		return new Permissionario[0];
+	}
 
 }

@@ -13,5 +13,9 @@ public class CondutoreAuxiliareDAO extends GenericDao<CondutorAuxiliar, Long> {
 	public List<CondutorAuxiliar> findAll() {
 		return super.findAll();
 	}
+	
+	public CondutorAuxiliar saveReturningEntity(CondutorAuxiliar entity)  {
+    	return super.saveReturningEntity(entity);
+    }
 
 }
