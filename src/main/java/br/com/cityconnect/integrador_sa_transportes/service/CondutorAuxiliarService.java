@@ -1,9 +1,9 @@
 package br.com.cityconnect.integrador_sa_transportes.service;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import br.com.cityconnect.integrador_sa_transportes.entity.CondutorAuxiliar;
-
 
 public class CondutorAuxiliarService extends MainService<CondutorAuxiliar> {
 
@@ -22,9 +22,10 @@ public class CondutorAuxiliarService extends MainService<CondutorAuxiliar> {
 			jsonEndereco.keySet().stream().filter(key -> !key.toString().equals("id"))
 					.forEach(key -> jsonObject.put(key, jsonEndereco.get(key)));
 		}
-		
+
 		// tratando permissionario
 		if (jsonObject.has("permissionario")) {
+
 			JSONObject jsonPermissionario = jsonObject.getJSONObject("permissionario");
 			jsonObject.remove("permissionario");
 			jsonObject.put("permissionario_id", jsonPermissionario.get("id_integracao"));
@@ -35,7 +36,18 @@ public class CondutorAuxiliarService extends MainService<CondutorAuxiliar> {
 
 	@Override
 	protected CondutorAuxiliar[] jsonListToObjList(String json) {
-		return gson.fromJson(json.toString(), CondutorAuxiliar[].class);
+
+		JSONArray jsonArray = new JSONArray(json);
+
+		CondutorAuxiliar[] condutorAuxiliarList = new CondutorAuxiliar[jsonArray.length()];
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			if (jsonArray.get(i) != null) {
+				condutorAuxiliarList[i] = (jsonToObj(jsonArray.get(i).toString()));
+			}
+		}
+
+		return condutorAuxiliarList;
 	}
 
 }

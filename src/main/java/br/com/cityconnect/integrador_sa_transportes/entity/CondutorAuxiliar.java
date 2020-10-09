@@ -31,6 +31,10 @@ public class CondutorAuxiliar implements Serializable {
 	@Transient
 	private String CPF;
 	
+	@SerializedName(value = "id")
+	@Transient
+	private String idIntegracao;//originario da API
+	
 	@Column(name = "Nome")
 	private String nome;// Nome
 	

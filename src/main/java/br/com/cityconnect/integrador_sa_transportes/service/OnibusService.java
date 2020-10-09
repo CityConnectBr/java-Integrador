@@ -3,6 +3,7 @@ package br.com.cityconnect.integrador_sa_transportes.service;
 import org.json.JSONObject;
 
 import br.com.cityconnect.integrador_sa_transportes.entity.Onibus;
+import br.com.cityconnect.integrador_sa_transportes.entity.Veiculo;
 
 
 public class OnibusService extends MainService<Onibus> {
@@ -48,7 +49,7 @@ public class OnibusService extends MainService<Onibus> {
 
 	@Override
 	protected Onibus[] jsonListToObjList(String json) {
-		return null;
+		return gson.fromJson(json.toString(), Onibus[].class);
 	}
 
 }

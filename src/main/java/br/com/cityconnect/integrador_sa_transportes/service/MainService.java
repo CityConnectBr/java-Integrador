@@ -11,6 +11,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.google.gson.Gson;
 
@@ -64,6 +65,19 @@ public abstract class MainService<T extends Serializable> {
 		restTemplate.put(url + "/" + id, new HttpEntity<String>(permissionarioJson.toString(), headers),
 				String.class);
 	}
+	
+	public void sendUpdateWithRealId(Object obj, String id) {
+
+		String permissionarioJson = gson.toJson(obj);
+		
+		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url);
+		builder.pathSegment(id);
+		builder.queryParam("id_real", true);
+
+		System.out.println(builder.toUriString());
+		restTemplate.put(builder.toUriString(), new HttpEntity<String>(permissionarioJson.toString(), headers),
+				String.class);
+	}
 
 	public String send(Object obj) {
 
@@ -80,6 +94,23 @@ public abstract class MainService<T extends Serializable> {
 					new HttpEntity(headers), String.class);
 
 			return jsonToObj(response.getBody());
+		} catch (Exception e) {
+			if (e.getMessage().contains("404")) {
+				return null;
+			}
+
+			throw e;
+		}
+
+	}
+
+	public T[] getAllNews() throws Exception {
+
+		try {
+			ResponseEntity<String> response = restTemplate.exchange(url + "/news", HttpMethod.GET, new HttpEntity(headers),
+					String.class);
+			
+			return jsonListToObjList(response.getBody());
 		} catch (Exception e) {
 			if (e.getMessage().contains("404")) {
 				return null;

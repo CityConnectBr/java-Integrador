@@ -1,12 +1,14 @@
 package br.com.cityconnect.integrador_sa_transportes.controller;
 
+import java.io.IOException;
+
 import br.com.cityconnect.integrador_sa_transportes.dao.TipoVeiculoDAO;
 import br.com.cityconnect.integrador_sa_transportes.entity.TipoVeiculo;
 import br.com.cityconnect.integrador_sa_transportes.service.TipoVeiculoService;
 
 public class TipoVeiculoController extends MainController<TipoVeiculo, TipoVeiculoDAO, TipoVeiculoService> {
 
-	public TipoVeiculoController() {
+	public TipoVeiculoController() throws NumberFormatException {
 		super(new TipoVeiculoService(), new TipoVeiculoDAO());
 	}
 

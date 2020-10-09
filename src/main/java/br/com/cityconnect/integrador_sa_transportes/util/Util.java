@@ -25,12 +25,18 @@ public class Util {
 			}
 
 			for (Field f : obj1.getClass().getDeclaredFields()) {
-				
-				//pulando campos com UpdateTimestamp
-				if(Arrays.asList(f.getDeclaredAnnotations()).stream().filter(a -> a.toString().contains("UpdateTimestamp")).count()>0) {
+
+				if(f.getName().equals("idIntegracao")) {
 					continue;
 				}
 				
+				// pulando campos com anotacao UpdateTimestamp
+				if (Arrays.asList(f.getDeclaredAnnotations()).stream()
+						.filter(a -> a.toString().contains("UpdateTimestamp")).count() > 0) {
+					System.out.println("IF AKI");
+					continue;
+				}
+
 				f.setAccessible(true);// setando private como acessivel
 				String valor1 = null, valor2 = null;
 
@@ -41,7 +47,8 @@ public class Util {
 					valor1 = String.valueOf(f.get(obj1));
 					valor2 = String.valueOf(f.get(obj2));
 				}
-				//System.out.println(f.getName()+"--"+valor1 + " - " + valor2+" - "+isEquals(valor1, valor2));
+				// System.out.println(f.getName()+"--"+valor1 + " - " + valor2+" -
+				// "+isEquals(valor1, valor2));
 
 				if (!isEquals(valor1, valor2)) {
 					return Boolean.FALSE;
@@ -55,7 +62,7 @@ public class Util {
 		}
 		return Boolean.TRUE;
 	}
-	
+
 	public Object copy(Object obj1, Object obj2) {
 		try {
 			if (obj1 == null || obj2 == null) {
@@ -65,12 +72,13 @@ public class Util {
 			}
 
 			for (Field f : obj1.getClass().getDeclaredFields()) {
-				
-				//pulando campos com UpdateTimestamp
-				if(Arrays.asList(f.getDeclaredAnnotations()).stream().filter(a -> a.toString().contains("UpdateTimestamp")).count()>0) {
+
+				// pulando campos com UpdateTimestamp
+				if (Arrays.asList(f.getDeclaredAnnotations()).stream()
+						.filter(a -> a.toString().contains("UpdateTimestamp")).count() > 0) {
 					continue;
 				}
-				
+
 				f.setAccessible(true);// setando private como acessivel
 				Object valor1 = null, valor2 = null;
 
@@ -82,7 +90,7 @@ public class Util {
 					valor2 = f.get(obj2);
 				}
 				// System.out.println(f.getName()+"--"+valor1 + " - " + valor2);
-				
+
 				if (!isEquals(valor1, valor2)) {
 					f.set(obj2, valor1);
 				}
@@ -95,7 +103,6 @@ public class Util {
 		}
 		return obj2;
 	}
-
 
 	public String setNullIfEmpty(String txt) {
 		return txt != null ? (txt.replace(" ", "").isEmpty() ? null : txt) : null;

@@ -17,34 +17,34 @@ public class Teste3 {
 	public static void main(String[] args) throws Exception {
 		
 		MainController controller = new CorVeiculoController();
-		controller.sinc();
+		//controller.sinc();
 
 		controller = new MarcaModeloCarroceriaController();
-		controller.sinc();
+		//controller.sinc();
 
 		controller = new MarcaModeloChassiController();
-		controller.sinc();
+		//controller.sinc();
 
 		controller = new TipoCombustivelController();
-		controller.sinc();
+		//controller.sinc();
 
 		controller = new TipoVeiculoController();
-		controller.sinc();
+		//controller.sinc();
 
 		controller = new MarcaModeloVeiculoController();
-		controller.sinc();
+		//controller.sinc();
 
 		controller = new PermissionarioController();
 		//controller.sinc();
 
 		controller = new CondutorAuxuliarController();
-		//controller.sinc();
+		controller.sinc();
 
 		controller = new OnibusController();
-		controller.sinc();
+		//controller.sinc();
 
 		controller = new VeiculoController();
-		controller.sinc();
+		//controller.sinc();
 	}
 
 }

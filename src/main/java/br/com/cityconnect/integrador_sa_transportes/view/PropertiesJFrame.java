@@ -66,7 +66,7 @@ public class PropertiesJFrame {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 568, 327);
+		frame.setBounds(100, 100, 568, 339);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 

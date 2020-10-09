@@ -39,9 +39,17 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> e
 
 	private static Integer refreshTime = 3600;// uma hora
 
-	MainController(T_SERVICE service, T_DAO dao) {
+	public MainController(T_SERVICE service, T_DAO dao) throws NumberFormatException {
 		this.service = service;
 		this.dao = dao;
+		try {
+			this.refreshTime = new Integer(new PropertiesUtil().getValue(PropertiesUtil.KEY_REFRESH_TIME));
+		} catch (Exception e) {
+			this.refreshTime = 3600;
+		}
+	}
+
+	private MainController() {
 	}
 
 	// sincroniza croniza sem vercionamento, sobreescreve o conteudo remoto
@@ -144,34 +152,38 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> e
 		// Cadastro Inicial(Objeto sem objetos adicionais(endereco e etc...)) Local
 		//
 
-		for (T obj : (T[]) service.getClass().getMethod("getAll").invoke(service, null)) {
-			try {
-				if (obj != null && obj.getClass().getMethod("getId").invoke(obj, null) == null) {
-					this.setAtual("Cadastrando Local", obj.toString());
-					System.out.println("CADASTRANDO LOCAL");
-					System.out.println(obj);
+		Object objList = service.getClass().getMethod("getAllNews").invoke(service, null);
+		if (objList != null) {
+			for (T obj : (T[]) objList) {
+				try {
+					if (obj != null && obj.getClass().getMethod("getId").invoke(obj, null) == null) {
+						this.setAtual("Cadastrando Local", obj.toString());
+						System.out.println("CADASTRANDO LOCAL");
+						System.out.println(obj);
 
-					if (obj instanceof CondutorAuxiliar) {
-						obj.getClass().getMethod("setId", String.class).invoke(obj,
-								obj.getClass().getMethod("getCPF").invoke(obj, null));
+						if (obj instanceof CondutorAuxiliar) {
+							obj.getClass().getMethod("setId", String.class).invoke(obj,
+									obj.getClass().getMethod("getCPF").invoke(obj, null));
+						}
+						System.out.println(obj);
+						T newObj = (T) dao.getClass().getMethod("saveReturningEntity", obj.getClass()).invoke(dao, obj);
+						service.getClass().getMethod("sendUpdateWithRealId", Object.class, String.class).invoke(service,
+								obj, newObj.getClass().getMethod("getIdIntegracao").invoke(newObj, null).toString()
+										.replace("/", "-"));
+						System.out.println("\n");
 					}
-					System.out.println(obj);
-					T newObj = (T) dao.getClass().getMethod("saveReturningEntity", obj.getClass()).invoke(dao, obj);
-					service.getClass().getMethod("sendUpdate", Object.class, String.class).invoke(service, obj,
-							newObj.getClass().getMethod("getId").invoke(newObj, null).toString().replace("/", "-"));
-					System.out.println("\n");
+
+					contErros = 0;
+				} catch (Exception e) {
+					Logger.sendLog(MainController.class, Logger.ERROR, e);
+
+					contErros++;
+					if (contErros > 3) {
+						throw e;
+					}
 				}
 
-				contErros = 0;
-			} catch (Exception e) {
-				Logger.sendLog(MainController.class, Logger.ERROR, e);
-
-				contErros++;
-				if (contErros > 3) {
-					throw e;
-				}
 			}
-
 		}
 
 		//
@@ -225,13 +237,6 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> e
 						}
 					}
 
-//					if (!util.compareObjects(obj, objByService)) {
-//						// atualizando service com dados do banco local
-//						this.setAtual("Atualizando na API", obj.toString());
-//						System.out.println("ATUALIZANDO API REMOTA");
-//						service.getClass().getMethod("sendUpdate", Object.class, String.class).invoke(service, obj,
-//								id.replace("/", "-"));
-//					}
 				} else {
 					String idIntegracao = (String) service.getClass().getMethod("send", Object.class).invoke(service,
 							obj);
@@ -300,66 +305,67 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> e
 								}
 
 								MainController controller = new CorVeiculoController();
-								controller.posAtualGeral = 0;
-								controller.addObserver(controleJFrame);
-								controller.sinc();
-
-								controller = new MarcaModeloCarroceriaController();
-								controller.posAtualGeral = 1;
-								controller.addObserver(controleJFrame);
-								controller.sinc();
-
-								controller = new MarcaModeloChassiController();
-								controller.posAtualGeral = 2;
-								controller.addObserver(controleJFrame);
-								controller.sinc();
-
-								controller = new TipoCombustivelController();
-								controller.posAtualGeral = 3;
-								controller.addObserver(controleJFrame);
-								controller.sinc();
-
-								controller = new TipoVeiculoController();
-								controller.posAtualGeral = 4;
-								controller.addObserver(controleJFrame);
-								controller.sinc();
-
-								controller = new PermissionarioController();
-								controller.posAtualGeral = 5;
-								controller.addObserver(controleJFrame);
-								controller.sinc();
+//								controller.posAtualGeral = 0;
+//								controller.addObserver(controleJFrame);
+//								controller.sinc();
+//
+//								controller = new MarcaModeloCarroceriaController();
+//								controller.posAtualGeral = 1;
+//								controller.addObserver(controleJFrame);
+//								controller.sinc();
+//
+//								controller = new MarcaModeloChassiController();
+//								controller.posAtualGeral = 2;
+//								controller.addObserver(controleJFrame);
+//								controller.sinc();
+//
+//								controller = new TipoCombustivelController();
+//								controller.posAtualGeral = 3;
+//								controller.addObserver(controleJFrame);
+//								controller.sinc();
+//
+//								controller = new TipoVeiculoController();
+//								controller.posAtualGeral = 4;
+//								controller.addObserver(controleJFrame);
+//								controller.sinc();
+//
+//								controller = new PermissionarioController();
+//								controller.posAtualGeral = 5;
+//								controller.addObserver(controleJFrame);
+//								controller.sinc();
 
 								controller = new CondutorAuxuliarController();
 								controller.posAtualGeral = 6;
 								controller.addObserver(controleJFrame);
 								controller.sinc();
 
-								controller = new MarcaModeloVeiculoController();
-								controller.posAtualGeral = 7;
-								controller.addObserver(controleJFrame);
-								controller.sinc();
+//								controller = new MarcaModeloVeiculoController();
+//								controller.posAtualGeral = 7;
+//								controller.addObserver(controleJFrame);
+//								controller.sinc();
 
-								controller = new OnibusController();
-								controller.posAtualGeral = 8;
-								controller.addObserver(controleJFrame);
-								controller.sinc();
+//								controller = new OnibusController();
+//								controller.posAtualGeral = 8;
+//								controller.addObserver(controleJFrame);
+//								controller.sinc();
 
-								controller = new VeiculoController();
-								controller.posAtualGeral = 9;
-								controller.addObserver(controleJFrame);
-								controller.sinc();
+//								controller = new VeiculoController();
+//								controller.posAtualGeral = 9;
+//								controller.addObserver(controleJFrame);
+//								controller.sinc();
 
 								// break;
 								TimeUnit.SECONDS.sleep(refreshTime);
 							}
 						} catch (Exception e) {
 							e.printStackTrace();
+							try {
+								TimeUnit.SECONDS.sleep(60 * 5);// 5 minutos para tentar novamente
+							} catch (InterruptedException interruptedException) {
+								interruptedException.printStackTrace();
+							}
 						}
-						try {
-							TimeUnit.SECONDS.sleep(60 * 5);// 5 minutos para tentar novamente
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
+
 					}
 
 				}

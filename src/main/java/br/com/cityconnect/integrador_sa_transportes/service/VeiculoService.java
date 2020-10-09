@@ -2,6 +2,7 @@ package br.com.cityconnect.integrador_sa_transportes.service;
 
 import org.json.JSONObject;
 
+import br.com.cityconnect.integrador_sa_transportes.entity.CondutorAuxiliar;
 import br.com.cityconnect.integrador_sa_transportes.entity.Veiculo;
 
 
@@ -49,7 +50,7 @@ public class VeiculoService extends MainService<Veiculo> {
 
 	@Override
 	protected Veiculo[] jsonListToObjList(String json) {
-		return null;
+		return gson.fromJson(json.toString(), Veiculo[].class);
 	}
 
 }
