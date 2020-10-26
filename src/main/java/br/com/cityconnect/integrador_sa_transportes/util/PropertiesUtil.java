@@ -16,6 +16,7 @@ public class PropertiesUtil {
 	public static final String KEY_DB_USER = "db_user";
 	public static final String KEY_DB_PASS = "db_pass";
 	public static final String KEY_REFRESH_TIME = "refresh_time";
+	public static final String KEY_SINC_ALL = "sinc_all";
 
 	private File filePropertie = null;
 	private Properties properties;

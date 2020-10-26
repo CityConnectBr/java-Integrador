@@ -80,7 +80,4 @@ public class Veiculo implements Serializable {
 	@Column(name = "NumCadastroPermissionario")
 	private Integer permissionarioId;
 
-	@Column(name = "versao", columnDefinition = "INT DEFAULT 0")
-	private Integer versao;
-
 }

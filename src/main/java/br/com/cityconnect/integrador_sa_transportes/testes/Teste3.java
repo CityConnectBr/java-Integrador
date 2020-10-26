@@ -1,6 +1,6 @@
 package br.com.cityconnect.integrador_sa_transportes.testes;
 
-import br.com.cityconnect.integrador_sa_transportes.controller.CondutorAuxuliarController;
+import br.com.cityconnect.integrador_sa_transportes.controller.CondutorAuxiliarController;
 import br.com.cityconnect.integrador_sa_transportes.controller.CorVeiculoController;
 import br.com.cityconnect.integrador_sa_transportes.controller.MainController;
 import br.com.cityconnect.integrador_sa_transportes.controller.MarcaModeloCarroceriaController;
@@ -17,34 +17,9 @@ public class Teste3 {
 	public static void main(String[] args) throws Exception {
 		
 		MainController controller = new CorVeiculoController();
-		//controller.sinc();
-
-		controller = new MarcaModeloCarroceriaController();
-		//controller.sinc();
-
-		controller = new MarcaModeloChassiController();
-		//controller.sinc();
-
-		controller = new TipoCombustivelController();
-		//controller.sinc();
-
-		controller = new TipoVeiculoController();
-		//controller.sinc();
-
-		controller = new MarcaModeloVeiculoController();
-		//controller.sinc();
-
-		controller = new PermissionarioController();
-		//controller.sinc();
-
-		controller = new CondutorAuxuliarController();
-		controller.sinc();
-
-		controller = new OnibusController();
-		//controller.sinc();
-
-		controller = new VeiculoController();
-		//controller.sinc();
+		//controller.sincAll(false);
+		
+		controller.startMainThreadSinc();
 	}
 
 }

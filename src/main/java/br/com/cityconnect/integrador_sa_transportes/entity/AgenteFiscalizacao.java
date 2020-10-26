@@ -1,14 +1,11 @@
 package br.com.cityconnect.integrador_sa_transportes.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.UpdateTimestamp;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -69,8 +66,5 @@ public class AgenteFiscalizacao implements Serializable {
 
 	@Column(name = "Cargo")
 	private String cargo;// Celular
-
-	@Column(name = "versao", columnDefinition = "INT DEFAULT 0")
-	private Integer versao;
 
 }

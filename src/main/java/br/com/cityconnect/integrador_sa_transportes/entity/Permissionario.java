@@ -116,8 +116,4 @@ public class Permissionario implements Serializable {
 	@Column(name = "VencimentoCNH")
 	private String vencimentoCNH;// VencimentoCNH
 
-	@Column(name = "versao", columnDefinition = "INT DEFAULT 0")
-	private Integer versao;
-
-
 }

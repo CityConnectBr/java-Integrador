@@ -161,9 +161,10 @@ public class PropertiesJFrame {
 						pu.setValue(PropertiesUtil.KEY_DB_USER, textFieldDBUser.getText());
 						pu.setValue(PropertiesUtil.KEY_DB_PASS, textFieldDBPass.getText());
 						pu.setValue(PropertiesUtil.KEY_REFRESH_TIME, textFieldRefreshTime.getText());
+						pu.setValue(PropertiesUtil.KEY_SINC_ALL, "false");
 
 						if (firstConfig) {
-							MainController.sincAll();
+							MainController.sincAll(Boolean.TRUE);
 						}
 
 						frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));

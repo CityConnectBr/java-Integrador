@@ -28,7 +28,7 @@ public class Teste5 {
 		
 		//veiculoDAO.findAll();
 		
-		c.sinc();
+//		c.sinc();
 		// c.sinc();
 
 	}
