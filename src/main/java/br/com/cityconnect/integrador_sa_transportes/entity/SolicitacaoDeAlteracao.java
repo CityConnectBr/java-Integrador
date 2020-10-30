@@ -1,11 +1,13 @@
 package br.com.cityconnect.integrador_sa_transportes.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -25,9 +27,18 @@ public class SolicitacaoDeAlteracao implements Serializable {
 	@Column(name = "referencia_id")
 	private String referenciaId;
 
-	private Boolean sincronizado;
+	//private Boolean sincronizado;
 
-	private String status;
+	private Boolean sincronizadoComAPI = Boolean.FALSE;
+
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+	private Date dataHoraSincronizadoComAPI;
+
+	private String status;// A-ACEITO,R-RECUSADO,C-CANCELADO,NULL-AGUARDANDO
+
+	@SerializedName(value = "motivo_recusado")
+	@Column(name = "motivo_recusado")
+	private String motivoRecusado;
 
 	private String campo1;
 
@@ -72,6 +83,5 @@ public class SolicitacaoDeAlteracao implements Serializable {
 	@SerializedName(value = "tipo_solicitacao_id")
 	@Column(name = "tipo_solicitacao_id")
 	private String tipoSolicitacaoId;
-	
 
 }

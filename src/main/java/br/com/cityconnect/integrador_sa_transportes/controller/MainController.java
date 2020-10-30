@@ -21,12 +21,15 @@ import br.com.cityconnect.integrador_sa_transportes.dao.MarcaModeloChassiDAO;
 import br.com.cityconnect.integrador_sa_transportes.dao.MarcaModeloVeiculoDAO;
 import br.com.cityconnect.integrador_sa_transportes.dao.OnibusDAO;
 import br.com.cityconnect.integrador_sa_transportes.dao.PermissionarioDAO;
+import br.com.cityconnect.integrador_sa_transportes.dao.SolicitacaoDeAlteracaoDAO;
 import br.com.cityconnect.integrador_sa_transportes.dao.TipoCombustivelDAO;
 import br.com.cityconnect.integrador_sa_transportes.dao.TipoDeSolicitacaoDeAlteracaoDAO;
 import br.com.cityconnect.integrador_sa_transportes.dao.TipoVeiculoDAO;
 import br.com.cityconnect.integrador_sa_transportes.dao.VeiculoDAO;
 import br.com.cityconnect.integrador_sa_transportes.entity.HistoricoDeSincronizacao;
+import br.com.cityconnect.integrador_sa_transportes.entity.SolicitacaoDeAlteracao;
 import br.com.cityconnect.integrador_sa_transportes.entity.TipoDeSolicitacaoDeAlteracao;
+import br.com.cityconnect.integrador_sa_transportes.service.SolicitacaoDeAlteracapService;
 import br.com.cityconnect.integrador_sa_transportes.service.TipoDeSolicitacaoDeAlteracapService;
 import br.com.cityconnect.integrador_sa_transportes.util.Logger;
 import br.com.cityconnect.integrador_sa_transportes.util.PropertiesUtil;
@@ -56,7 +59,7 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> e
 	@Getter
 	private Integer posAtualGeral = 0;
 	@Getter
-	private static final Integer totalGeral = 11;
+	private static Integer totalGeral = 11;
 
 	private static Integer refreshTime = 3600;// uma hora
 
@@ -292,23 +295,68 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> e
 		} else {
 			ControleJFrame controleJFrame = (ControleJFrame) ControleJFrame.newControleJFrame(false);
 
+			totalGeral = 3;
+
 			mainThread = new Thread() {
+
+				SolicitacaoDeAlteracapService solicitacaoDeAlteracapService = new SolicitacaoDeAlteracapService();
+				SolicitacaoDeAlteracaoDAO solicitacaoDeAlteracaoDAO = new SolicitacaoDeAlteracaoDAO();
+
+				HistoricoDeSincronizacaoDAO historicoDeSincronizacaoDAO = new HistoricoDeSincronizacaoDAO();
 
 				@Override
 				public void run() {
 
 					while (true) {
 						try {
-							System.out.println("-------");
+							System.out.println("\n---------------------------");
+							System.out.println("\n------- INI SINC FROM API\n");
 
-							HistoricoDeSincronizacaoDAO historicoDeSincronizacaoDAO = new HistoricoDeSincronizacaoDAO();
+							///////////////////////////////////////
+							/////////////////////////////////////// SINC SOLICITACOES
+							///////////////////////////////////////
+
+							SolicitacaoDeAlteracao[] solicitacaoDeAlteracaoAuxArray = solicitacaoDeAlteracapService
+									.getAll();
+							System.out
+									.println(solicitacaoDeAlteracaoAuxArray.length + " novas solicitações encontradas");
+							
+							
+							// sincronizando do remoto para local
+							for (SolicitacaoDeAlteracao solicitacaoDeAlteracao : solicitacaoDeAlteracaoAuxArray) {
+								// salvando localmente
+								solicitacaoDeAlteracaoDAO.save(solicitacaoDeAlteracao);
+								// setando como remotamente como sincronizado
+								solicitacaoDeAlteracapService.setSinc(solicitacaoDeAlteracao.getId().toString());
+							}
+
+							List<SolicitacaoDeAlteracao> solicitacaoDeAlteracaoAuxList = solicitacaoDeAlteracaoDAO
+									.findNotSinc();
+							System.out.println(
+									solicitacaoDeAlteracaoAuxArray.length + " alterações encontradas em solicitações");
+
+							for (SolicitacaoDeAlteracao solicitacaoDeAlteracao : solicitacaoDeAlteracaoAuxList) {
+								// sincronizando com API
+								solicitacaoDeAlteracapService.setStatus(solicitacaoDeAlteracao);
+								// setando como sincronizado
+								solicitacaoDeAlteracaoDAO.setSincronizado(solicitacaoDeAlteracao);
+
+							}
+
+							///////////////////////////////////////
+							/////////////////////////////////////// SINC POR HISTORICO
+							///////////////////////////////////////
+
+							System.out.println("\n------- INI SINC TO API\n");
 
 							List<HistoricoDeSincronizacao> historicoDeSincronizacaoList = historicoDeSincronizacaoDAO
 									.finlAllNoSinc();
 
-							for (Object tabela : new HashSet<>(Arrays
-									.asList(historicoDeSincronizacaoList.stream().map(o -> o.getTabela()).toArray()))
-											.toArray()) {
+							System.out.println(historicoDeSincronizacaoList.size() + " novos históricos encontrados");
+
+							for (HistoricoDeSincronizacao historicoDeSincronizacao : historicoDeSincronizacaoList) {
+
+								Object tabela = historicoDeSincronizacao.getTabela();
 
 								System.out.println(tabela);
 
@@ -327,7 +375,8 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> e
 
 									controller.sincByChanges(daoMap.get(tabela.toString()).findByIdString(ids, null));
 
-									// marcar alteracoes como efetuadas
+									// marcando como sincronizadas
+									historicoDeSincronizacaoDAO.setSincronizado(historicoDeSincronizacao);
 
 								}
 
@@ -357,6 +406,8 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> e
 	public static void sincAll(boolean startMainThreadOnFinish) {
 
 		ControleJFrame controleJFrame = (ControleJFrame) ControleJFrame.newControleJFrame(false);
+
+		totalGeral = 11;
 
 		new Thread() {
 
@@ -397,7 +448,7 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> e
 					controller = new CondutorAuxiliarController();
 					controller.posAtualGeral = 6;
 					controller.addObserver(controleJFrame);
-					// controller.sincAllIgnoreChanges();
+					controller.sincAllIgnoreChanges();
 
 					controller = new MarcaModeloVeiculoController();
 					controller.posAtualGeral = 7;

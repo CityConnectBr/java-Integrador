@@ -1,6 +1,6 @@
 package br.com.cityconnect.integrador_sa_transportes.testes;
 
-import br.com.cityconnect.integrador_sa_transportes.controller.TipoDeSolicitacaoDeAlteracaoController;
+import br.com.cityconnect.integrador_sa_transportes.service.SolicitacaoDeAlteracapService;
 
 public class Teste2 {
 
@@ -9,12 +9,9 @@ public class Teste2 {
 		//MainController.startMainThreadSinc();
 		
 		
-		TipoDeSolicitacaoDeAlteracaoController tipoDeSolicitacaoDeAlteracaoController = new TipoDeSolicitacaoDeAlteracaoController();
-		
-		tipoDeSolicitacaoDeAlteracaoController.sincAllIfNoEqual();
-		
-		
-		
+		SolicitacaoDeAlteracapService service = new SolicitacaoDeAlteracapService();
+				
+		//service.setStatus("1", "R", "teste 123");
 		
 
 	}

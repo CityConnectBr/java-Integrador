@@ -1,6 +1,7 @@
 package br.com.cityconnect.integrador_sa_transportes.dao;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import br.com.cityconnect.integrador_sa_transportes.entity.HistoricoDeSincronizacao;
@@ -36,6 +37,20 @@ public class HistoricoDeSincronizacaoDAO extends GenericDao<HistoricoDeSincroniz
 		} catch (Exception e) {
 			Logger.sendLog(this.getClass(), Logger.ERROR, e);
 			return new ArrayList();
+		}
+	}
+	
+	public Boolean setSincronizado(HistoricoDeSincronizacao historicoDeSincronizacao) {
+		try {
+			historicoDeSincronizacao = findById(historicoDeSincronizacao.getId());
+			historicoDeSincronizacao.setSincronizado(Boolean.TRUE);
+			historicoDeSincronizacao.setDataHoraSincronizacao(new Date());
+
+			return update(historicoDeSincronizacao);
+
+		} catch (Exception e) {
+			Logger.sendLog(this.getClass(), Logger.ERROR, e);
+			return Boolean.FALSE;
 		}
 	}
 
