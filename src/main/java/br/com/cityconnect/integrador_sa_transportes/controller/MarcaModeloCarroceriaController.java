@@ -10,4 +10,9 @@ public class MarcaModeloCarroceriaController extends MainController<MarcaModeloC
 		super(new MarcaModeloCarroceriaService(), new MarcaModeloCarroceriaDAO());
 	}
 
+	@Override
+	public void sincAll() throws Exception {
+		super.sincAllIgnoreChanges();
+	}
+
 }

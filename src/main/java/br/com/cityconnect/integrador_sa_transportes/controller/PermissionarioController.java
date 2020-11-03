@@ -10,4 +10,9 @@ public class PermissionarioController extends MainController<Permissionario, Per
 		super(new PermissionarioService(), new PermissionarioDAO());
 	}
 
+	@Override
+	public void sincAll() throws Exception {
+		super.sincAllIgnoreChanges();
+	}
+
 }

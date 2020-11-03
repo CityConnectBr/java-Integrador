@@ -10,4 +10,9 @@ public class TipoCombustivelController
 	public TipoCombustivelController() throws NumberFormatException {
 		super(new TipoCombustivelService(), new TipoCombustivelDAO());
 	}
+
+	@Override
+	public void sincAll() throws Exception {
+		super.sincAllIgnoreChanges();
+	}
 }

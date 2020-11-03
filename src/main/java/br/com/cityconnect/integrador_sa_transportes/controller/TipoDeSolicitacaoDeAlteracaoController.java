@@ -11,4 +11,9 @@ public class TipoDeSolicitacaoDeAlteracaoController extends
 		super(new TipoDeSolicitacaoDeAlteracapService(), new TipoDeSolicitacaoDeAlteracaoDAO());
 	}
 
+	@Override
+	public void sincAll() throws Exception {
+		super.sincAllIfNoEqual();
+	}
+
 }

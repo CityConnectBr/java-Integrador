@@ -10,4 +10,9 @@ public class CondutorAuxiliarController extends MainController<CondutorAuxiliar,
 		super(new CondutorAuxiliarService(), new CondutoreAuxiliareDAO());
 	}
 
+	@Override
+	public void sincAll() throws Exception {
+		super.sincAllIgnoreChanges();
+	}
+
 }

@@ -10,4 +10,9 @@ public class VeiculoController extends MainController<Veiculo, VeiculoDAO, Veicu
 		super(new VeiculoService(), new VeiculoDAO());
 	}
 
+	@Override
+	public void sincAll() throws Exception {
+		super.sincAllIgnoreChanges();
+	}
+
 }

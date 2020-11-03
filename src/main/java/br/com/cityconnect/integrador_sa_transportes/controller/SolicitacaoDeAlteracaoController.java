@@ -10,4 +10,9 @@ public class SolicitacaoDeAlteracaoController extends MainController<Solicitacao
 		super(new SolicitacaoDeAlteracapService(), new SolicitacaoDeAlteracaoDAO());
 	}
 
+	@Override
+	public void sincAll() throws Exception {
+		super.sincAllIgnoreChanges();
+	}
+
 }

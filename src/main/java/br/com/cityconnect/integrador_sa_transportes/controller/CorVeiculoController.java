@@ -10,4 +10,9 @@ public class CorVeiculoController extends MainController<CorVeiculo, CorVeiculoD
 		super(new CorVeiculoService(), new CorVeiculoDAO());
 	}
 
+	@Override
+	public void sincAll() throws Exception {
+		super.sincAllIgnoreChanges();
+	}
+
 }

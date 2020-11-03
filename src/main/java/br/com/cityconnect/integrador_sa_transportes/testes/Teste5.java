@@ -1,55 +1,36 @@
 package br.com.cityconnect.integrador_sa_transportes.testes;
 
-import javax.validation.Validator;
+import java.util.Observable;
+import java.util.Observer;
+import java.util.concurrent.TimeUnit;
 
-import com.google.gson.Gson;
-
-import br.com.cityconnect.integrador_sa_transportes.controller.CorVeiculoController;
-import br.com.cityconnect.integrador_sa_transportes.controller.MarcaModeloCarroceriaController;
-import br.com.cityconnect.integrador_sa_transportes.controller.MarcaModeloChassiController;
-import br.com.cityconnect.integrador_sa_transportes.controller.MarcaModeloVeiculoController;
-import br.com.cityconnect.integrador_sa_transportes.controller.OnibusController;
-import br.com.cityconnect.integrador_sa_transportes.controller.PermissionarioController;
-import br.com.cityconnect.integrador_sa_transportes.controller.TipoCombustivelController;
-import br.com.cityconnect.integrador_sa_transportes.controller.TipoVeiculoController;
-import br.com.cityconnect.integrador_sa_transportes.controller.VeiculoController;
-import br.com.cityconnect.integrador_sa_transportes.dao.OnibusDAO;
-import br.com.cityconnect.integrador_sa_transportes.dao.VeiculoDAO;
-import br.com.cityconnect.integrador_sa_transportes.entity.MarcaModeloChassi;
+import br.com.cityconnect.integrador_sa_transportes.util.SincProcessObservableUtil;
+import br.com.cityconnect.integrador_sa_transportes.view.ControleJFrame;
 
 public class Teste5 {
-	private static Validator validator;
 
 	public static void main(String[] args) throws Exception {
-				
-		sinc();
-		VeiculoDAO veiculoDAO = new VeiculoDAO();
-		VeiculoController c = new VeiculoController();
-		
-		//veiculoDAO.findAll();
-		
-//		c.sinc();
-		// c.sinc();
 
+		ControleJFrame controleJFrame = (ControleJFrame) ControleJFrame.newControleJFrame(true);
+		
 	}
+
+}
+
+class ObserverTeste implements Observer {
 	
-	public static void sinc() throws Exception {
-		MarcaModeloCarroceriaController marcaModeloCarroceriaController = new MarcaModeloCarroceriaController();
-		MarcaModeloChassiController marcaModeloChassiController = new MarcaModeloChassiController();
-		TipoCombustivelController tipoCombustivelController = new TipoCombustivelController();
-		CorVeiculoController corVeiculoController = new CorVeiculoController();
-		TipoVeiculoController tipoVeiculoController = new TipoVeiculoController();
-		MarcaModeloVeiculoController marcaModeloVeiculoController = new MarcaModeloVeiculoController();
-		PermissionarioController permissionarioController = new PermissionarioController();
-
-		//marcaModeloCarroceriaController.sinc();
-		//marcaModeloChassiController.sinc();
-		//tipoCombustivelController.sinc();
-		//corVeiculoController.sinc();
-		//tipoVeiculoController.sinc();
-		//marcaModeloVeiculoController.sinc();
-		//permissionarioController.sinc();
-		
+	public ObserverTeste(Observable observable) {
+		observable.addObserver(this);
 	}
 
+	@Override
+	public void update(Observable observable, Object arg1) {
+		
+		SincProcessObservableUtil sincProcessObservableUtil = (SincProcessObservableUtil) observable;
+		System.out.println("\n-----");
+		System.out.println("Process: "+sincProcessObservableUtil.getPosOfProcess()+"/"+sincProcessObservableUtil.getTotalOfProcess());
+		System.out.println("SubProcess: "+sincProcessObservableUtil.getActionOfSubProcess()+" - "+sincProcessObservableUtil.getPosOfSubProcess()+"/"+sincProcessObservableUtil.getTotalOfSubProcess());
+		
+		
+	}
 }

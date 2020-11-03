@@ -9,4 +9,9 @@ public class TipoVeiculoController extends MainController<TipoVeiculo, TipoVeicu
 	public TipoVeiculoController() throws NumberFormatException {
 		super(new TipoVeiculoService(), new TipoVeiculoDAO());
 	}
+
+	@Override
+	public void sincAll() throws Exception {
+		super.sincAllIgnoreChanges();
+	}
 }

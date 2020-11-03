@@ -10,4 +10,9 @@ public class OnibusController extends MainController<Onibus, OnibusDAO, OnibusSe
 		super(new OnibusService(), new OnibusDAO());
 	}
 
+	@Override
+	public void sincAll() throws Exception {
+		super.sincAllIgnoreChanges();
+	}
+
 }

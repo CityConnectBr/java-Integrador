@@ -9,5 +9,10 @@ public class MarcaModeloChassiController extends MainController<MarcaModeloChass
 	public MarcaModeloChassiController() throws NumberFormatException {
 		super(new MarcaModeloChassiService(), new MarcaModeloChassiDAO());
 	}
+
+	@Override
+	public void sincAll() throws Exception {
+		super.sincAllIgnoreChanges();
+	}
 	
 }
