@@ -27,7 +27,7 @@ public class SolicitacaoDeAlteracaoDAO extends GenericDao<SolicitacaoDeAlteracao
 		try {
 
 			List<SolicitacaoDeAlteracao> listResult = (List<SolicitacaoDeAlteracao>) super.executeQuery(
-					"from SolicitacaoDeAlteracao where status is not null and sincronizadoToAPI = false order by id");
+					"from SolicitacaoDeAlteracao where status is not null and sincronizadoComAPI = false order by id");
 
 			if (listResult != null && listResult.size() > 0) {
 				return listResult;

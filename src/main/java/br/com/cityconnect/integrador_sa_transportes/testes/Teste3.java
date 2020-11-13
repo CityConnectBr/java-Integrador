@@ -11,7 +11,8 @@ public class Teste3 {
 		ControleJFrame controleJFrame = (ControleJFrame) ControleJFrame.newControleJFrame(true);
 
 		MainController controller = new CorVeiculoController();
-		controller.sincAllMainThread(false);//.startMainThreadSinc();
+		//controller.sincAllMainThread(false);//.startMainThreadSinc();
+		controller.startMainThreadSinc();
 		
 //		controller.startMainThreadSinc();
 	}

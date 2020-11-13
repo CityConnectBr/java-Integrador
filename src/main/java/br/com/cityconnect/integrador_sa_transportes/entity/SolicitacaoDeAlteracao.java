@@ -21,7 +21,7 @@ public class SolicitacaoDeAlteracao implements Serializable {
 	private static final long serialVersionUID = 1934910641955849910L;
 
 	@Id
-	private Long id;
+	private Long id;//recebi mesmo ID do Obj vindo da API
 
 	@SerializedName(value = "referencia_id")
 	@Column(name = "referencia_id")

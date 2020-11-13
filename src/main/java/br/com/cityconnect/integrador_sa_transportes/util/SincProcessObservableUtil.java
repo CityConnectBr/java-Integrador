@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.JPopupMenu.Separator;
+
 import lombok.Getter;
 
 public class SincProcessObservableUtil extends Observable {
@@ -13,6 +15,12 @@ public class SincProcessObservableUtil extends Observable {
 	public static String STATUS_PROCURANDO_ATUALIZACOES = "procurando atualizações";
 	public static String STATUS_EM_PROCESSO = "em processo";
 	public static String STATUS_FINALIZADO = "finalizado";
+
+	public static String SEPARATOR_20TRACES = "\n--------------------\n";
+	public static String SEPARATOR_3TRACES = "\n---\n";
+	public static String SEPARATOR_BREAK_LINE = "\n";
+	public static String SEPARATOR_ARROW = "-->";
+	public static String SEPARATOR_20DOTS = "\n....................\n";
 
 	public SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy 'às' HH:mm:ss 'horas'");
 
@@ -28,6 +36,8 @@ public class SincProcessObservableUtil extends Observable {
 	private Integer posOfSubProcess = 0;
 	@Getter
 	private String actionOfSubProcess;
+	@Getter
+	private String separator = null;
 
 	@Getter
 	private static SincProcessObservableUtil sincProcessObservableUtil = null;
@@ -93,6 +103,13 @@ public class SincProcessObservableUtil extends Observable {
 		this.status = status;
 		setChanged();
 		notifyObservers();
+	}
+
+	public void addSeparator(String separator) {
+		this.separator = separator;
+		setChanged();
+		notifyObservers();
+		this.separator = null;
 	}
 
 }

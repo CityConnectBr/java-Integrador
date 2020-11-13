@@ -1,17 +1,15 @@
 package br.com.cityconnect.integrador_sa_transportes.testes;
 
-import br.com.cityconnect.integrador_sa_transportes.service.SolicitacaoDeAlteracapService;
+import br.com.cityconnect.integrador_sa_transportes.dao.SolicitacaoDeAlteracaoDAO;
+import br.com.cityconnect.integrador_sa_transportes.entity.SolicitacaoDeAlteracao;
 
 public class Teste2 {
 
 	public static void main(String args[]) throws Exception {
 
-		//MainController.startMainThreadSinc();
+		SolicitacaoDeAlteracaoDAO solicitacaoDeAlteracaoDAO = new SolicitacaoDeAlteracaoDAO();
 		
-		
-		SolicitacaoDeAlteracapService service = new SolicitacaoDeAlteracapService();
-				
-		//service.setStatus("1", "R", "teste 123");
+		solicitacaoDeAlteracaoDAO.save(new SolicitacaoDeAlteracao());
 		
 
 	}

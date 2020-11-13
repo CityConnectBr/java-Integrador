@@ -48,7 +48,7 @@ public class ControleJFrame implements Observer {
 		if (controleJFrame == null) {
 			controleJFrame = new ControleJFrame();
 		}
-		
+
 		if (show) {
 			controleJFrame.show();
 		} else {
@@ -114,38 +114,43 @@ public class ControleJFrame implements Observer {
 	public void update(Observable o, Object arg) {
 		SincProcessObservableUtil sincObservable = (SincProcessObservableUtil) o;
 
-		if (sincObservable.getStatus().equals(SincProcessObservableUtil.STATUS_EM_PROCESSO)) {
-
-			Float fPercentTotal = (new Float(sincObservable.getPosOfProcess())
-					/ new Float(sincObservable.getTotalOfProcess())) * 100F;
-			Float fPercent = (new Float(sincObservable.getPosOfSubProcess())
-					/ new Float(sincObservable.getTotalOfSubProcess())) * 100F;
-
-			if (sincObservable.getActionOfSubProcess() != null) {
-
-				this.progressBarGeral.setValue(fPercentTotal.intValue());
-				this.progressBarParcial.setValue(fPercent.intValue());
-				this.labelDescAndamento
-						.setText(sincObservable.getPosOfSubProcess() + "/" + sincObservable.getTotalOfSubProcess());
-				this.labelAcao.setText(sincObservable.getActionOfSubProcess());
-				// this.labelObjeto.setText(flogObservable.getObjStrAtual());
-
-				if (!lastSbTxtArea.equals(sincObservable.getActionOfSubProcess())) {
-					lastSbTxtArea = sincObservable.getActionOfSubProcess();
-					this.sbTxArea.append(sincObservable.getActionOfSubProcess() + "\n");
-					// this.sbTxArea.append(flogObservable.getObjStrAtual() + "\n");
-				}
-
-				if (this.sbTxArea.length() > 100000) {
-					this.sbTxArea = new StringBuilder();
-				}
-
-				this.textArea.setText(this.sbTxArea.toString());
-			}
+		if (sincObservable.getSeparator()!=null) {
+			this.sbTxArea.append(sincObservable.getSeparator());
+			this.textArea.setText(this.sbTxArea.toString());
 		} else {
-			this.labelAcao.setText(sincObservable.getStatus());
-			this.labelDescAndamento.setText("");
-			this.progressBarGeral.setValue(0);
+			if (sincObservable.getStatus().equals(SincProcessObservableUtil.STATUS_EM_PROCESSO)) {
+
+				Float fPercentTotal = (new Float(sincObservable.getPosOfProcess())
+						/ new Float(sincObservable.getTotalOfProcess())) * 100F;
+				Float fPercent = (new Float(sincObservable.getPosOfSubProcess())
+						/ new Float(sincObservable.getTotalOfSubProcess())) * 100F;
+
+				if (sincObservable.getActionOfSubProcess() != null) {
+
+					this.progressBarGeral.setValue(fPercentTotal.intValue());
+					this.progressBarParcial.setValue(fPercent.intValue());
+					this.labelDescAndamento
+							.setText(sincObservable.getPosOfSubProcess() + "/" + sincObservable.getTotalOfSubProcess());
+					this.labelAcao.setText(sincObservable.getActionOfSubProcess());
+					// this.labelObjeto.setText(flogObservable.getObjStrAtual());
+
+					if (!lastSbTxtArea.equals(sincObservable.getActionOfSubProcess())) {
+						lastSbTxtArea = sincObservable.getActionOfSubProcess();
+						this.sbTxArea.append(sincObservable.getActionOfSubProcess() + "\n");
+						// this.sbTxArea.append(flogObservable.getObjStrAtual() + "\n");
+					}
+
+					if (this.sbTxArea.length() > 100000) {
+						this.sbTxArea = new StringBuilder();
+					}
+
+					this.textArea.setText(this.sbTxArea.toString());
+				}
+			} else {
+				this.labelAcao.setText(sincObservable.getStatus());
+				this.labelDescAndamento.setText("");
+				this.progressBarGeral.setValue(0);
+			}
 		}
 
 	}

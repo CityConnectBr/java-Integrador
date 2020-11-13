@@ -42,7 +42,7 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 
 	private static Thread mainThread = null;
 
-	private static Integer refreshTime = 60;//3600;// uma hora
+	private static Integer refreshTime = 60;// 3600;// uma hora
 
 	public MainController(T_SERVICE service, T_DAO dao) throws NumberFormatException {
 		this.service = service;
@@ -263,7 +263,7 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 		if (mainThread != null) {
 			System.err.println("Thread ja em execução");
 		} else {
-			ControleJFrame controleJFrame = (ControleJFrame) ControleJFrame.newControleJFrame(false);
+			ControleJFrame controleJFrame = (ControleJFrame) ControleJFrame.newControleJFrame(true);
 
 			mainThread = new Thread() {
 
@@ -280,6 +280,7 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 							SincProcessObservableUtil sincProcessObservableUtil = SincProcessObservableUtil
 									.newProcess(3, controleJFrame);
 
+							sincProcessObservableUtil.addSeparator(SincProcessObservableUtil.SEPARATOR_20TRACES);
 							System.out.println("\n---------------------------");
 							System.out.println("\n------- INI SINC FROM API\n");
 
@@ -287,6 +288,7 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 							/////////////////////////////////////// SINC SOLICITACOES
 							///////////////////////////////////////
 
+							//NOVOS REGISTROS DE SOLICITACOES DE ALTERACAO
 							SolicitacaoDeAlteracao[] solicitacaoDeAlteracaoAuxArray = solicitacaoDeAlteracapService
 									.getAll();
 							System.out
@@ -296,8 +298,10 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 
 							// sincronizando do remoto para local
 							for (SolicitacaoDeAlteracao solicitacaoDeAlteracao : solicitacaoDeAlteracaoAuxArray) {
-								sincProcessObservableUtil.nextOfSubProcess("Solicitação de Alteração (da API): "
-										+ solicitacaoDeAlteracao.getReferenciaId());
+								sincProcessObservableUtil.addSeparator(SincProcessObservableUtil.SEPARATOR_ARROW);
+
+								sincProcessObservableUtil.nextOfSubProcess(
+										"Solicitação de Alteração (da API): " + solicitacaoDeAlteracao);
 
 								// salvando localmente
 								solicitacaoDeAlteracaoDAO.save(solicitacaoDeAlteracao);
@@ -305,6 +309,7 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 								solicitacaoDeAlteracapService.setSinc(solicitacaoDeAlteracao.getId().toString());
 							}
 
+							//ALTERANAO NO REGISTRO DE SOLICACOES
 							List<SolicitacaoDeAlteracao> solicitacaoDeAlteracaoAuxList = solicitacaoDeAlteracaoDAO
 									.findNotSinc();
 							System.out.println(
@@ -313,8 +318,10 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 									"Solicitações de Alteração(para API)");
 
 							for (SolicitacaoDeAlteracao solicitacaoDeAlteracao : solicitacaoDeAlteracaoAuxList) {
-								sincProcessObservableUtil.nextOfSubProcess("Solicitação de Alteração (para API): "
-										+ solicitacaoDeAlteracao.getReferenciaId());
+								sincProcessObservableUtil.addSeparator(SincProcessObservableUtil.SEPARATOR_ARROW);
+
+								sincProcessObservableUtil.nextOfSubProcess(
+										"Solicitação de Alteração (para API): " + solicitacaoDeAlteracao);
 
 								// sincronizando com API
 								solicitacaoDeAlteracapService.setStatus(solicitacaoDeAlteracao);
@@ -337,6 +344,8 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 									"Histórico de Alteração");
 
 							for (HistoricoDeSincronizacao historicoDeSincronizacao : historicoDeSincronizacaoList) {
+								sincProcessObservableUtil.addSeparator(SincProcessObservableUtil.SEPARATOR_ARROW);
+
 								sincProcessObservableUtil.nextOfSubProcess(
 										"Histórico de Sincronização / " + historicoDeSincronizacao.getTabela());
 
@@ -388,7 +397,7 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 	// feita no inicio de tudo, quando a api nao apresenta dados
 	public static void sincAllMainThread(boolean startMainThreadOnFinish) {
 
-		ControleJFrame controleJFrame = (ControleJFrame) ControleJFrame.newControleJFrame(false);
+		ControleJFrame controleJFrame = (ControleJFrame) ControleJFrame.newControleJFrame(true);
 
 		SincProcessObservableUtil sincProcessObservableUtil = SincProcessObservableUtil.newProcess(controllerMap.size(),
 				controleJFrame);
