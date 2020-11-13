@@ -9,12 +9,20 @@ import java.util.concurrent.TimeUnit;
 
 import javax.swing.JOptionPane;
 
+import br.com.cityconnect.integrador_sa_transportes.dao.AgenteFiscalizacaoDAO;
 import br.com.cityconnect.integrador_sa_transportes.dao.CondutoreAuxiliareDAO;
+import br.com.cityconnect.integrador_sa_transportes.dao.CorVeiculoDAO;
 import br.com.cityconnect.integrador_sa_transportes.dao.GenericDao;
 import br.com.cityconnect.integrador_sa_transportes.dao.HistoricoDeSincronizacaoDAO;
+import br.com.cityconnect.integrador_sa_transportes.dao.MarcaModeloCarroceriaDAO;
+import br.com.cityconnect.integrador_sa_transportes.dao.MarcaModeloChassiDAO;
+import br.com.cityconnect.integrador_sa_transportes.dao.MarcaModeloVeiculoDAO;
+import br.com.cityconnect.integrador_sa_transportes.dao.MonitorDAO;
 import br.com.cityconnect.integrador_sa_transportes.dao.OnibusDAO;
+import br.com.cityconnect.integrador_sa_transportes.dao.PermissionarioDAO;
 import br.com.cityconnect.integrador_sa_transportes.dao.SolicitacaoDeAlteracaoDAO;
 import br.com.cityconnect.integrador_sa_transportes.dao.TipoCombustivelDAO;
+import br.com.cityconnect.integrador_sa_transportes.dao.TipoVeiculoDAO;
 import br.com.cityconnect.integrador_sa_transportes.dao.VeiculoDAO;
 import br.com.cityconnect.integrador_sa_transportes.entity.HistoricoDeSincronizacao;
 import br.com.cityconnect.integrador_sa_transportes.entity.SolicitacaoDeAlteracao;
@@ -51,34 +59,34 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 
 	private static Map<String, GenericDao> daoMap = new LinkedHashMap<String, GenericDao>() {
 		{
-//			put(HistoricoDeSincronizacaoDAO.AGENTES_FISCALIZACAO_TABLE, new AgenteFiscalizacaoDAO());
-//			put(HistoricoDeSincronizacaoDAO.CORES_VEICULOS_TABLE, new CorVeiculoDAO());
-//			put(HistoricoDeSincronizacaoDAO.MARCAS_MODELOS_CARROCERIAS_TABLE, new MarcaModeloCarroceriaDAO());
-//			put(HistoricoDeSincronizacaoDAO.MARCAS_MODELOS_CHASSIS_TABLE, new MarcaModeloChassiDAO());
-//			put(HistoricoDeSincronizacaoDAO.MARCAS_MODELOS_VEICULOS_TABLE, new MarcaModeloVeiculoDAO());
-//			put(HistoricoDeSincronizacaoDAO.TIPOSVEICULOS_TABLE, new TipoVeiculoDAO());
-//			put(HistoricoDeSincronizacaoDAO.ONIBUS_TABLE, new OnibusDAO());
-//			put(HistoricoDeSincronizacaoDAO.PERMISSIONARIOS_TABLE, new PermissionarioDAO());
-//			put(HistoricoDeSincronizacaoDAO.MONITORES_TABLE, new MonitorDAO());
-//			put(HistoricoDeSincronizacaoDAO.CONDUTOR_TABLE, new CondutoreAuxiliareDAO());
-//			put(HistoricoDeSincronizacaoDAO.TIPOSCOMBUSTIVEIS_TABLE, new TipoCombustivelDAO());
+			put(HistoricoDeSincronizacaoDAO.AGENTES_FISCALIZACAO_TABLE, new AgenteFiscalizacaoDAO());
+			put(HistoricoDeSincronizacaoDAO.CORES_VEICULOS_TABLE, new CorVeiculoDAO());
+			put(HistoricoDeSincronizacaoDAO.MARCAS_MODELOS_CARROCERIAS_TABLE, new MarcaModeloCarroceriaDAO());
+			put(HistoricoDeSincronizacaoDAO.MARCAS_MODELOS_CHASSIS_TABLE, new MarcaModeloChassiDAO());
+			put(HistoricoDeSincronizacaoDAO.MARCAS_MODELOS_VEICULOS_TABLE, new MarcaModeloVeiculoDAO());
+			put(HistoricoDeSincronizacaoDAO.TIPOSVEICULOS_TABLE, new TipoVeiculoDAO());
+			put(HistoricoDeSincronizacaoDAO.ONIBUS_TABLE, new OnibusDAO());
+			put(HistoricoDeSincronizacaoDAO.PERMISSIONARIOS_TABLE, new PermissionarioDAO());
+			put(HistoricoDeSincronizacaoDAO.MONITORES_TABLE, new MonitorDAO());
+			put(HistoricoDeSincronizacaoDAO.CONDUTOR_TABLE, new CondutoreAuxiliareDAO());
+			put(HistoricoDeSincronizacaoDAO.TIPOSCOMBUSTIVEIS_TABLE, new TipoCombustivelDAO());
 			put(HistoricoDeSincronizacaoDAO.VEICULOS_TABLE, new VeiculoDAO());
 		}
 	};
 
 	private static Map<String, MainController> controllerMap = new LinkedHashMap<String, MainController>() {
 		{
-//			put(HistoricoDeSincronizacaoDAO.AGENTES_FISCALIZACAO_TABLE, new AgenteFiscalizacaoController());
-//			put(HistoricoDeSincronizacaoDAO.CORES_VEICULOS_TABLE, new CorVeiculoController());
-//			put(HistoricoDeSincronizacaoDAO.MARCAS_MODELOS_CARROCERIAS_TABLE, new MarcaModeloCarroceriaController());
-//			put(HistoricoDeSincronizacaoDAO.MARCAS_MODELOS_CHASSIS_TABLE, new MarcaModeloChassiController());
-//			put(HistoricoDeSincronizacaoDAO.MARCAS_MODELOS_VEICULOS_TABLE, new MarcaModeloVeiculoController());
-//			put(HistoricoDeSincronizacaoDAO.TIPOSVEICULOS_TABLE, new TipoVeiculoController());
-//			put(HistoricoDeSincronizacaoDAO.ONIBUS_TABLE, new OnibusController());
-//			put(HistoricoDeSincronizacaoDAO.PERMISSIONARIOS_TABLE, new PermissionarioController());
-//			put(HistoricoDeSincronizacaoDAO.MONITORES_TABLE, new MonitorController());
-//			put(HistoricoDeSincronizacaoDAO.CONDUTOR_TABLE, new CondutorAuxiliarController());
-//			put(HistoricoDeSincronizacaoDAO.TIPOSCOMBUSTIVEIS_TABLE, new TipoCombustivelController());
+			put(HistoricoDeSincronizacaoDAO.AGENTES_FISCALIZACAO_TABLE, new AgenteFiscalizacaoController());
+			put(HistoricoDeSincronizacaoDAO.CORES_VEICULOS_TABLE, new CorVeiculoController());
+			put(HistoricoDeSincronizacaoDAO.MARCAS_MODELOS_CARROCERIAS_TABLE, new MarcaModeloCarroceriaController());
+			put(HistoricoDeSincronizacaoDAO.MARCAS_MODELOS_CHASSIS_TABLE, new MarcaModeloChassiController());
+			put(HistoricoDeSincronizacaoDAO.MARCAS_MODELOS_VEICULOS_TABLE, new MarcaModeloVeiculoController());
+			put(HistoricoDeSincronizacaoDAO.TIPOSVEICULOS_TABLE, new TipoVeiculoController());
+			put(HistoricoDeSincronizacaoDAO.ONIBUS_TABLE, new OnibusController());
+			put(HistoricoDeSincronizacaoDAO.PERMISSIONARIOS_TABLE, new PermissionarioController());
+			put(HistoricoDeSincronizacaoDAO.MONITORES_TABLE, new MonitorController());
+			put(HistoricoDeSincronizacaoDAO.CONDUTOR_TABLE, new CondutorAuxiliarController());
+			put(HistoricoDeSincronizacaoDAO.TIPOSCOMBUSTIVEIS_TABLE, new TipoCombustivelController());
 			put(HistoricoDeSincronizacaoDAO.VEICULOS_TABLE, new VeiculoController());
 		}
 	};
