@@ -62,8 +62,5 @@ public class Onibus implements Serializable {
 
 	@Column(name = "Prefixo")
 	private String prefixo;
-
-	@Column(name = "versao", columnDefinition = "INT DEFAULT 0")
-	private Integer versao;
 	
 }

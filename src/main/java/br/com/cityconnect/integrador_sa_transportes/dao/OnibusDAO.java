@@ -10,9 +10,29 @@ public class OnibusDAO extends GenericDao<Onibus, Long> {
 		super();
 	}
 
+	@Override
 	public List<Onibus> findAll() {
 		return super.findAll();
 	}
+	
+//	@Override
+//	public List<Onibus> findAll() {
+//		try {
+//
+//			List<Onibus> listResult = (List<Onibus>) super.executeQuery(
+//					"from Onibus v where (select count(*) from Permissionario p where p.id = v.permissionarioId) > 0");
+//
+//			if (listResult != null && listResult.size() > 0) {
+//				return listResult;
+//			} else {
+//				return new ArrayList<>();
+//			}
+//
+//		} catch (Exception e) {
+//			Logger.sendLog(VeiculoDAO.class, Logger.ERROR, e);
+//			return new ArrayList<>();
+//		}
+//	}
 
 	public Onibus saveReturningEntity(Onibus entity) {
 		return super.saveReturningEntity(entity);

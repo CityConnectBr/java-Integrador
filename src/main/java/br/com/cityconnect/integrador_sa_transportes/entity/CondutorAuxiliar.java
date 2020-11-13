@@ -97,8 +97,5 @@ public class CondutorAuxiliar implements Serializable {
 	@SerializedName(value = "permissionario_id")
 	@Column(name = "NumCadastroPermissionario")
 	private Integer permissionarioId;// NumCadastroPermissionario
-	
-	@Column(name = "versao", columnDefinition = "INT DEFAULT 0")
-	private Integer versao;
 
 }

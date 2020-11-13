@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -13,23 +14,39 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "agentesfiscalizacao")
-public class AgenteFiscalizacao implements Serializable {
+@Table(name = "monitores")
+public class Monitor implements Serializable {
 
-	private static final long serialVersionUID = 1934910641955849910L;
+	private static final long serialVersionUID = -5871614660370049931L;
 
 	@Id
 	@SerializedName(value = "id_integracao")
-	@Column(name = "Codigo")
-	private Long id;// NumeroCadastro
-
+	@Column(name = "RG")
+	private String id;// NumeroCadastro
+	
+	@SerializedName(value = "rg")
+	@Transient
+	private String RG;
+	
+	@SerializedName(value = "id")
+	@Transient
+	private String idIntegracao;//originario da API
+	
 	@Column(name = "Nome")
 	private String nome;// Nome
-
+	
 	@SerializedName(value = "cpf")
 	@Column(name = "CPF")
-	private String CPF;
-	
+	private String CPF;// CPF
+
+	@SerializedName(value = "situacao")
+	@Column(name = "Situacao")
+	private String situacao;// I, A, C
+
+	@SerializedName(value = "cep")
+	@Column(name = "CEP")
+	private String CEP;// CEP
+
 	@Column(name = "Endereco")
 	private String endereco;// Endereco
 
@@ -45,26 +62,22 @@ public class AgenteFiscalizacao implements Serializable {
 	@Column(name = "Municipio")
 	private String municipio;// Municipio
 
-	//@Pattern(regexp = "\\d{8}", message = "Campo inválido")
-	@SerializedName(value = "cep")
-	@Column(name = "CEP")
-	private String CEP;// CEP
-	
 	@SerializedName(value = "uf")
 	@Column(name = "UF")
 	private String UF;// UF
 
-	@SerializedName(value = "ddd")
-	@Column(name = "DDD")
-	private String DDD;// DDD
-
 	@Column(name = "Telefone")
-	private String telefone;// Telefone
+	private String telefone;// Telefone (SEM DDD)
 
 	@Column(name = "Email")
 	private String email;// Email
 
-	@Column(name = "Cargo")
-	private String cargo;// Celular
+	@SerializedName(value = "data_nascimento")
+	@Column(name = "DataNascimento")
+	private String dataNascimento;// DataNascimento
+
+	@SerializedName(value = "permissionario_id")
+	@Column(name = "NumCadastroPermissionario")
+	private Integer permissionarioId;// NumCadastroPermissionario
 
 }

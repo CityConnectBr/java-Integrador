@@ -35,7 +35,14 @@ public class Main {
 						"Erro", JOptionPane.WARNING_MESSAGE);
 				new PropertiesJFrame(Boolean.TRUE);
 			} else {
-				MainController.sincAll();
+				String sincAll = pu.getValue(PropertiesUtil.KEY_SINC_ALL);
+
+				if (sincAll != null && sincAll.equals("true")) {
+					MainController.sincAllMainThread(Boolean.TRUE);
+				} else {
+					MainController.startMainThreadSinc();
+				}
+
 			}
 
 		} catch (Exception e) {

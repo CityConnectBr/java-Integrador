@@ -12,7 +12,7 @@ import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import br.com.cityconnect.integrador_sa_transportes.controller.MainController;
+import br.com.cityconnect.integrador_sa_transportes.util.SincProcessObservableUtil;
 
 public class ControleJFrame implements Observer {
 
@@ -26,6 +26,7 @@ public class ControleJFrame implements Observer {
 	private JLabel labelDescAndamento;
 	private JTextArea textArea;
 	private JScrollPane jscrollPane;
+	private String lastSbTxtArea = "";
 
 	private StringBuilder sbTxArea = new StringBuilder();
 
@@ -46,14 +47,15 @@ public class ControleJFrame implements Observer {
 	public static Object newControleJFrame(boolean show) {
 		if (controleJFrame == null) {
 			controleJFrame = new ControleJFrame();
+
+			if (show) {
+				controleJFrame.show();
+			} else {
+				controleJFrame.hide();
+			}
+
 		}
 
-		if (show) {
-			controleJFrame.show();
-		}else {
-			controleJFrame.hide();
-		}
-		
 		return controleJFrame;
 	}
 
@@ -111,30 +113,40 @@ public class ControleJFrame implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		MainController mainController = (MainController) o;
+		SincProcessObservableUtil sincObservable = (SincProcessObservableUtil) o;
 
-		Float fPercentTotal = (new Float(mainController.getPosAtualGeral()) / new Float(mainController.getTotalGeral()))
-				* 100F;
-		Float fPercent = (new Float(mainController.getPosAtual()) / new Float(mainController.getTotal())) * 100F;
+		if (sincObservable.getStatus().equals(SincProcessObservableUtil.STATUS_EM_PROCESSO)) {
 
-		if (mainController.getAcaoAtual() != null) {
+			Float fPercentTotal = (new Float(sincObservable.getPosOfProcess())
+					/ new Float(sincObservable.getTotalOfProcess())) * 100F;
+			Float fPercent = (new Float(sincObservable.getPosOfSubProcess())
+					/ new Float(sincObservable.getTotalOfSubProcess())) * 100F;
 
-			this.progressBarGeral.setValue(fPercentTotal.intValue());
-			this.progressBarParcial.setValue(fPercent.intValue());
-			this.labelDescAndamento.setText(mainController.getPosAtual() + "/" + mainController.getTotal());
-			this.labelAcao.setText(mainController.getAcaoAtual());
-			this.labelObjeto.setText(mainController.getObjStrAtual());
+			if (sincObservable.getActionOfSubProcess() != null) {
 
-			this.sbTxArea.append(mainController.getAcaoAtual() + "\n");
-			this.sbTxArea.append(mainController.getObjStrAtual() + "\n");
+				this.progressBarGeral.setValue(fPercentTotal.intValue());
+				this.progressBarParcial.setValue(fPercent.intValue());
+				this.labelDescAndamento
+						.setText(sincObservable.getPosOfSubProcess() + "/" + sincObservable.getTotalOfSubProcess());
+				this.labelAcao.setText(sincObservable.getActionOfSubProcess());
+				// this.labelObjeto.setText(flogObservable.getObjStrAtual());
 
-			if (this.sbTxArea.length() > 10000) {
-				this.sbTxArea = new StringBuilder();
+				if (!lastSbTxtArea.equals(sincObservable.getActionOfSubProcess())) {
+					lastSbTxtArea = sincObservable.getActionOfSubProcess();
+					this.sbTxArea.append(sincObservable.getActionOfSubProcess() + "\n");
+					// this.sbTxArea.append(flogObservable.getObjStrAtual() + "\n");
+				}
+
+				if (this.sbTxArea.length() > 100000) {
+					this.sbTxArea = new StringBuilder();
+				}
+
+				this.textArea.setText(this.sbTxArea.toString());
 			}
-
-			this.textArea.setText(this.sbTxArea.toString());
 		} else {
-			this.labelAcao.setText(mainController.getStatus());
+			this.labelAcao.setText(sincObservable.getStatus());
+			this.labelDescAndamento.setText("");
+			this.progressBarGeral.setValue(0);
 		}
 
 	}

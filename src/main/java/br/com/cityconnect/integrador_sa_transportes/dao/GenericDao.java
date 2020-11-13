@@ -26,12 +26,12 @@ public abstract class GenericDao<T extends Serializable, PK> {
     // CONSTRUCTOR
     ///////////////////////////////////////////////////////////////////
     public GenericDao() {
-    	factory = DAOFactory.entityManagerFactorInstance();
+    	factory = EMFactory.entityManagerFactorInstance();
     	
     	this.clazz = (Class<?>) ((ParameterizedType) this.getClass()
                 .getGenericSuperclass()).getActualTypeArguments()[0];
     }
-
+    
 	///////////////////////////////////////////////////////////////////
     // CRUD Methods
     ///////////////////////////////////////////////////////////////////
@@ -156,25 +156,8 @@ public abstract class GenericDao<T extends Serializable, PK> {
 			close(em);
 		}
     }
-
-    public T findById(String pk) {
-    	EntityManager em = null;
-    	try {
-    		if(pk!=null && pk.isEmpty()==false){
-    			em  = factory.createEntityManager();    		
-    			return (T) em.find(this.clazz, pk);
-    		}else{
-    			return null;
-    		}
-    	}catch (Exception e) {
-    		Logger.sendLog(this.clazz, Logger.ERROR, e);
-    		rollBack(em);
-        	return null;
-		} finally{
-			close(em);
-		}
-    }
-    public T findById(PK pk) {
+ 
+    public T findById(Object pk) {
     	EntityManager em = null;
     	try {
     		em  = factory.createEntityManager();
@@ -189,7 +172,7 @@ public abstract class GenericDao<T extends Serializable, PK> {
 		}
     }
 
-    public List<T> findById(List<Long> ids, String orderField) {
+    public List<T> findByIdString(List<Object> ids, String orderField) {
 		EntityManager em = null;
     	try {
     		em = getEntityManager();   		
@@ -211,24 +194,6 @@ public abstract class GenericDao<T extends Serializable, PK> {
 			}
 		
 			return em.createQuery(criteria).getResultList();
-		}catch (Exception e) {
-			Logger.sendLog(this.getClass(), Logger.ERROR, e);
-	    	return new ArrayList<>();
-		} finally{
-			close(em);
-		}        
-	}
-    
-    public List<T> findByIdString(List<String> ids, String orderField) {
-		EntityManager em = null;
-    	try {
-    		
-    		List<Long> usuariosListAuxLong = new ArrayList<Long>();
-			for (String s : ids) {
-				usuariosListAuxLong.add(new Long(s));    		
-			}
-			
-			return findById(usuariosListAuxLong, orderField);
 		}catch (Exception e) {
 			Logger.sendLog(this.getClass(), Logger.ERROR, e);
 	    	return new ArrayList<>();
@@ -298,13 +263,13 @@ public abstract class GenericDao<T extends Serializable, PK> {
 		}
     }
     
-	public boolean setVersao(Object id, Integer versao) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
-		T obj = this.findById(id.toString());
-
-		obj.getClass().getMethod("setVersao", Integer.class).invoke(obj, versao);
-
-		return update(obj);
-	}
+//	public boolean setVersao(T id, Integer versao) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+//		T obj = this.findById(id);
+//
+//		obj.getClass().getMethod("setVersao", Integer.class).invoke(obj, versao);
+//
+//		return update(obj);
+//	}
 
     public boolean delete(T entity)  {
     	EntityManager em = null;

@@ -1,7 +1,5 @@
 package br.com.cityconnect.integrador_sa_transportes.controller;
 
-import java.io.IOException;
-
 import br.com.cityconnect.integrador_sa_transportes.dao.CorVeiculoDAO;
 import br.com.cityconnect.integrador_sa_transportes.entity.CorVeiculo;
 import br.com.cityconnect.integrador_sa_transportes.service.CorVeiculoService;
@@ -13,10 +11,8 @@ public class CorVeiculoController extends MainController<CorVeiculo, CorVeiculoD
 	}
 
 	@Override
-	public void sinc() throws Exception {
-		super.sincOnlyRemote();
+	public void sincAll() throws Exception {
+		super.sincAllIgnoreChanges();
 	}
-
-	
 
 }

@@ -9,9 +9,9 @@ import javax.persistence.Persistence;
 
 import br.com.cityconnect.integrador_sa_transportes.util.PropertiesUtil;
 
-public final class DAOFactory {
+public final class EMFactory {
 
-	private DAOFactory() {
+	private EMFactory() {
 	}
 
 	// /////////////////////////////////////////////////////////////////

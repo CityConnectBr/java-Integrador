@@ -1,7 +1,5 @@
 package br.com.cityconnect.integrador_sa_transportes.controller;
 
-import java.io.IOException;
-
 import br.com.cityconnect.integrador_sa_transportes.dao.MarcaModeloVeiculoDAO;
 import br.com.cityconnect.integrador_sa_transportes.entity.MarcaModeloVeiculo;
 import br.com.cityconnect.integrador_sa_transportes.service.MarcaModeloVeiculoService;
@@ -11,10 +9,10 @@ public class MarcaModeloVeiculoController extends MainController<MarcaModeloVeic
 	public MarcaModeloVeiculoController() throws NumberFormatException {
 		super(new MarcaModeloVeiculoService(), new MarcaModeloVeiculoDAO());
 	}
-	
+
 	@Override
-	public void sinc() throws Exception {
-		super.sincOnlyRemote();
+	public void sincAll() throws Exception {
+		super.sincAllIgnoreChanges();
 	}
 
 }

@@ -1,7 +1,5 @@
 package br.com.cityconnect.integrador_sa_transportes.controller;
 
-import java.io.IOException;
-
 import br.com.cityconnect.integrador_sa_transportes.dao.OnibusDAO;
 import br.com.cityconnect.integrador_sa_transportes.entity.Onibus;
 import br.com.cityconnect.integrador_sa_transportes.service.OnibusService;
@@ -13,8 +11,8 @@ public class OnibusController extends MainController<Onibus, OnibusDAO, OnibusSe
 	}
 
 	@Override
-	public void sinc() throws Exception {
-		super.sincFull();
+	public void sincAll() throws Exception {
+		super.sincAllIgnoreChanges();
 	}
 
 }
