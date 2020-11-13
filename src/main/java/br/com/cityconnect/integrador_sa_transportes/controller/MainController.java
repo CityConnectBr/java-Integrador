@@ -42,7 +42,7 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 
 	private static Thread mainThread = null;
 
-	private static Integer refreshTime = 3600;// uma hora
+	private static Integer refreshTime = 60;//3600;// uma hora
 
 	public MainController(T_SERVICE service, T_DAO dao) throws NumberFormatException {
 		this.service = service;
@@ -366,7 +366,7 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 							sincProcessObservableUtil.endProcess();
 
 							// break;
-							TimeUnit.SECONDS.sleep(60/* refreshTime */);
+							TimeUnit.SECONDS.sleep(refreshTime);
 
 						} catch (Exception e) {
 							e.printStackTrace();

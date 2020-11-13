@@ -47,13 +47,12 @@ public class ControleJFrame implements Observer {
 	public static Object newControleJFrame(boolean show) {
 		if (controleJFrame == null) {
 			controleJFrame = new ControleJFrame();
-
-			if (show) {
-				controleJFrame.show();
-			} else {
-				controleJFrame.hide();
-			}
-
+		}
+		
+		if (show) {
+			controleJFrame.show();
+		} else {
+			controleJFrame.hide();
 		}
 
 		return controleJFrame;
