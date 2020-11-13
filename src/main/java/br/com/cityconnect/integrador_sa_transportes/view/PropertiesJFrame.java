@@ -164,7 +164,7 @@ public class PropertiesJFrame {
 						pu.setValue(PropertiesUtil.KEY_SINC_ALL, "false");
 
 						if (firstConfig) {
-							MainController.sincAll(Boolean.TRUE);
+							MainController.sincAllMainThread(Boolean.TRUE);
 						}
 
 						frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));

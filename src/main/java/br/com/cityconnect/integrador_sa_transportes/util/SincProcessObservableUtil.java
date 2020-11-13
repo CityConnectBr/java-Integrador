@@ -69,7 +69,7 @@ public class SincProcessObservableUtil extends Observable {
 
 		this.posOfSubProcess = 0;
 		this.totalOfSubProcess = listSize;
-		this.actionOfSubProcess = (action != null ? "" : action + ": ") + simpleDateFormat.format(new Date()) + ", com "
+		this.actionOfSubProcess = (action == null ? " >> " : action + ": ") + simpleDateFormat.format(new Date()) + ", com "
 				+ listSize + " novos itens encontrados.";
 		setChanged();
 		notifyObservers();

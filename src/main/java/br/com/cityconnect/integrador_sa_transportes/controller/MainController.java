@@ -2,28 +2,19 @@ package br.com.cityconnect.integrador_sa_transportes.controller;
 
 import java.io.Serializable;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Observable;
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.JOptionPane;
 
-import br.com.cityconnect.integrador_sa_transportes.dao.AgenteFiscalizacaoDAO;
 import br.com.cityconnect.integrador_sa_transportes.dao.CondutoreAuxiliareDAO;
-import br.com.cityconnect.integrador_sa_transportes.dao.CorVeiculoDAO;
 import br.com.cityconnect.integrador_sa_transportes.dao.GenericDao;
 import br.com.cityconnect.integrador_sa_transportes.dao.HistoricoDeSincronizacaoDAO;
-import br.com.cityconnect.integrador_sa_transportes.dao.MarcaModeloCarroceriaDAO;
-import br.com.cityconnect.integrador_sa_transportes.dao.MarcaModeloChassiDAO;
-import br.com.cityconnect.integrador_sa_transportes.dao.MarcaModeloVeiculoDAO;
 import br.com.cityconnect.integrador_sa_transportes.dao.OnibusDAO;
-import br.com.cityconnect.integrador_sa_transportes.dao.PermissionarioDAO;
 import br.com.cityconnect.integrador_sa_transportes.dao.SolicitacaoDeAlteracaoDAO;
 import br.com.cityconnect.integrador_sa_transportes.dao.TipoCombustivelDAO;
-import br.com.cityconnect.integrador_sa_transportes.dao.TipoVeiculoDAO;
 import br.com.cityconnect.integrador_sa_transportes.dao.VeiculoDAO;
 import br.com.cityconnect.integrador_sa_transportes.entity.HistoricoDeSincronizacao;
 import br.com.cityconnect.integrador_sa_transportes.entity.SolicitacaoDeAlteracao;
@@ -33,7 +24,6 @@ import br.com.cityconnect.integrador_sa_transportes.util.PropertiesUtil;
 import br.com.cityconnect.integrador_sa_transportes.util.SincProcessObservableUtil;
 import br.com.cityconnect.integrador_sa_transportes.util.Util;
 import br.com.cityconnect.integrador_sa_transportes.view.ControleJFrame;
-import lombok.Getter;
 
 public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 
@@ -61,43 +51,35 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 
 	private static Map<String, GenericDao> daoMap = new LinkedHashMap<String, GenericDao>() {
 		{
-			// put(HistoricoDeSincronizacaoDAO.AGENTES_FISCALIZACAO_TABLE, new
-			// AgenteFiscalizacaoDAO());
-			put(HistoricoDeSincronizacaoDAO.CORES_VEICULOS_TABLE, new CorVeiculoDAO());
-			// put(HistoricoDeSincronizacaoDAO.MARCAS_MODELOS_CARROCERIAS_TABLE, new
-			// MarcaModeloCarroceriaDAO());
-			// put(HistoricoDeSincronizacaoDAO.MARCAS_MODELOS_CHASSIS_TABLE, new
-			// MarcaModeloChassiDAO());
-			// put(HistoricoDeSincronizacaoDAO.MARCAS_MODELOS_VEICULOS_TABLE, new
-			// MarcaModeloVeiculoDAO());
-			// put(HistoricoDeSincronizacaoDAO.MONITORES_TABLE, new Moni);
-			// put(HistoricoDeSincronizacaoDAO.TIPOSVEICULOS_TABLE, new TipoVeiculoDAO());
-			// put(HistoricoDeSincronizacaoDAO.ONIBUS_TABLE, new OnibusDAO());
-			put(HistoricoDeSincronizacaoDAO.PERMISSIONARIOS_TABLE, new PermissionarioDAO());
-			put(HistoricoDeSincronizacaoDAO.CONDUTOR_TABLE, new CondutoreAuxiliareDAO());
-			put(HistoricoDeSincronizacaoDAO.TIPOSCOMBUSTIVEIS_TABLE, new TipoCombustivelDAO());
-			// put(HistoricoDeSincronizacaoDAO.VEICULOS_TABLE, new VeiculoDAO());
+//			put(HistoricoDeSincronizacaoDAO.AGENTES_FISCALIZACAO_TABLE, new AgenteFiscalizacaoDAO());
+//			put(HistoricoDeSincronizacaoDAO.CORES_VEICULOS_TABLE, new CorVeiculoDAO());
+//			put(HistoricoDeSincronizacaoDAO.MARCAS_MODELOS_CARROCERIAS_TABLE, new MarcaModeloCarroceriaDAO());
+//			put(HistoricoDeSincronizacaoDAO.MARCAS_MODELOS_CHASSIS_TABLE, new MarcaModeloChassiDAO());
+//			put(HistoricoDeSincronizacaoDAO.MARCAS_MODELOS_VEICULOS_TABLE, new MarcaModeloVeiculoDAO());
+//			put(HistoricoDeSincronizacaoDAO.TIPOSVEICULOS_TABLE, new TipoVeiculoDAO());
+//			put(HistoricoDeSincronizacaoDAO.ONIBUS_TABLE, new OnibusDAO());
+//			put(HistoricoDeSincronizacaoDAO.PERMISSIONARIOS_TABLE, new PermissionarioDAO());
+//			put(HistoricoDeSincronizacaoDAO.MONITORES_TABLE, new MonitorDAO());
+//			put(HistoricoDeSincronizacaoDAO.CONDUTOR_TABLE, new CondutoreAuxiliareDAO());
+//			put(HistoricoDeSincronizacaoDAO.TIPOSCOMBUSTIVEIS_TABLE, new TipoCombustivelDAO());
+			put(HistoricoDeSincronizacaoDAO.VEICULOS_TABLE, new VeiculoDAO());
 		}
 	};
 
 	private static Map<String, MainController> controllerMap = new LinkedHashMap<String, MainController>() {
 		{
-			// put(HistoricoDeSincronizacaoDAO.AGENTES_FISCALIZACAO_TABLE, new Agente));
-			put(HistoricoDeSincronizacaoDAO.CORES_VEICULOS_TABLE, new CorVeiculoController());
-			// put(HistoricoDeSincronizacaoDAO.MARCAS_MODELOS_CARROCERIAS_TABLE, new
-			// MarcaModeloCarroceriaController());
-			// put(HistoricoDeSincronizacaoDAO.MARCAS_MODELOS_CHASSIS_TABLE, new
-			// MarcaModeloChassiController());
-			// put(HistoricoDeSincronizacaoDAO.MARCAS_MODELOS_VEICULOS_TABLE, new
-			// MarcaModeloVeiculoController());
-			// put(HistoricoDeSincronizacaoDAO.MONITORES_TABLE, new Moni);
-			// put(HistoricoDeSincronizacaoDAO.TIPOSVEICULOS_TABLE, new
-			// TipoVeiculoController());
-			// put(HistoricoDeSincronizacaoDAO.ONIBUS_TABLE, new OnibusController());
-			put(HistoricoDeSincronizacaoDAO.PERMISSIONARIOS_TABLE, new PermissionarioController());
-			put(HistoricoDeSincronizacaoDAO.CONDUTOR_TABLE, new CondutorAuxiliarController());
-			put(HistoricoDeSincronizacaoDAO.TIPOSCOMBUSTIVEIS_TABLE, new TipoCombustivelController());
-			// put(HistoricoDeSincronizacaoDAO.VEICULOS_TABLE, new VeiculoController());
+//			put(HistoricoDeSincronizacaoDAO.AGENTES_FISCALIZACAO_TABLE, new AgenteFiscalizacaoController());
+//			put(HistoricoDeSincronizacaoDAO.CORES_VEICULOS_TABLE, new CorVeiculoController());
+//			put(HistoricoDeSincronizacaoDAO.MARCAS_MODELOS_CARROCERIAS_TABLE, new MarcaModeloCarroceriaController());
+//			put(HistoricoDeSincronizacaoDAO.MARCAS_MODELOS_CHASSIS_TABLE, new MarcaModeloChassiController());
+//			put(HistoricoDeSincronizacaoDAO.MARCAS_MODELOS_VEICULOS_TABLE, new MarcaModeloVeiculoController());
+//			put(HistoricoDeSincronizacaoDAO.TIPOSVEICULOS_TABLE, new TipoVeiculoController());
+//			put(HistoricoDeSincronizacaoDAO.ONIBUS_TABLE, new OnibusController());
+//			put(HistoricoDeSincronizacaoDAO.PERMISSIONARIOS_TABLE, new PermissionarioController());
+//			put(HistoricoDeSincronizacaoDAO.MONITORES_TABLE, new MonitorController());
+//			put(HistoricoDeSincronizacaoDAO.CONDUTOR_TABLE, new CondutorAuxiliarController());
+//			put(HistoricoDeSincronizacaoDAO.TIPOSCOMBUSTIVEIS_TABLE, new TipoCombustivelController());
+			put(HistoricoDeSincronizacaoDAO.VEICULOS_TABLE, new VeiculoController());
 		}
 	};
 
@@ -174,12 +156,13 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 		//
 		// CADASTRO E ATUALIZACAO
 		//
+		System.out.println("\nSINCRONIZANDO: sincAllIgnoreChanges");
 
 		List<T> objectList = (List<T>) dao.getClass().getMethod("findAll").invoke(dao, null);
 		SincProcessObservableUtil.getSincProcessObservableUtil().startProcess(objectList.size(), null);
 		for (T obj : objectList) {
 			SincProcessObservableUtil.getSincProcessObservableUtil()
-					.nextOfSubProcess("Sinc para API -> "+this.getClass().getSimpleName() + ": " + obj.toString());
+					.nextOfSubProcess("Sinc para API -> " + this.getClass().getSimpleName() + ": " + obj.toString());
 			try {
 				sendToAPI(obj);
 
@@ -190,6 +173,8 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 				System.err.println(obj);
 
 				Logger.sendLog(MainController.class, Logger.ERROR, e);
+
+				SincProcessObservableUtil.getSincProcessObservableUtil().setStringInfo(e.getMessage());
 
 				contErros++;
 				if (contErros > 3) {
@@ -209,7 +194,7 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 		// CADASTRO E ATUALIZACAO
 		//
 
-		System.out.println("\nSINCRONIZANDO");
+		System.out.println("\nSINCRONIZANDO: sincAllIfNoEqual");
 
 		T[] objectList = (T[]) service.getClass().getMethod("getAll").invoke(service, null);
 
@@ -243,17 +228,19 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 			} catch (Exception e) {
 
 				SincProcessObservableUtil.getSincProcessObservableUtil().setStringInfo(e.toString());
-				
+
 				System.err.println(obj);
 
 				Logger.sendLog(MainController.class, Logger.ERROR, e);
+
+				SincProcessObservableUtil.getSincProcessObservableUtil().setStringInfo(e.getMessage());
 
 				contErros++;
 				if (contErros > 3) {
 					throw e;
 				}
 			}
-			
+
 			System.out.println("\n");
 		}
 
@@ -270,8 +257,6 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 		} else {
 			ControleJFrame controleJFrame = (ControleJFrame) ControleJFrame.newControleJFrame(false);
 
-			
-
 			mainThread = new Thread() {
 
 				SolicitacaoDeAlteracapService solicitacaoDeAlteracapService = new SolicitacaoDeAlteracapService();
@@ -284,22 +269,22 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 
 					while (true) {
 						try {
-							SincProcessObservableUtil sincProcessObservableUtil = SincProcessObservableUtil.newProcess(3,
-									controleJFrame);
-							
+							SincProcessObservableUtil sincProcessObservableUtil = SincProcessObservableUtil
+									.newProcess(3, controleJFrame);
+
 							System.out.println("\n---------------------------");
 							System.out.println("\n------- INI SINC FROM API\n");
-							
+
 							///////////////////////////////////////
 							/////////////////////////////////////// SINC SOLICITACOES
 							///////////////////////////////////////
 
-							
 							SolicitacaoDeAlteracao[] solicitacaoDeAlteracaoAuxArray = solicitacaoDeAlteracapService
 									.getAll();
 							System.out
 									.println(solicitacaoDeAlteracaoAuxArray.length + " novas solicitações encontradas");
-							sincProcessObservableUtil.startProcess(solicitacaoDeAlteracaoAuxArray.length, "Solicitações de Alteração(da API)");
+							sincProcessObservableUtil.startProcess(solicitacaoDeAlteracaoAuxArray.length,
+									"Solicitações de Alteração(da API)");
 
 							// sincronizando do remoto para local
 							for (SolicitacaoDeAlteracao solicitacaoDeAlteracao : solicitacaoDeAlteracaoAuxArray) {
@@ -316,7 +301,8 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 									.findNotSinc();
 							System.out.println(
 									solicitacaoDeAlteracaoAuxArray.length + " alterações encontradas em solicitações");
-							sincProcessObservableUtil.startProcess(solicitacaoDeAlteracaoAuxList.size(), "Solicitações de Alteração(para API)");
+							sincProcessObservableUtil.startProcess(solicitacaoDeAlteracaoAuxList.size(),
+									"Solicitações de Alteração(para API)");
 
 							for (SolicitacaoDeAlteracao solicitacaoDeAlteracao : solicitacaoDeAlteracaoAuxList) {
 								sincProcessObservableUtil.nextOfSubProcess("Solicitação de Alteração (para API): "
@@ -339,7 +325,8 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 									.finlAllNoSinc();
 
 							System.out.println(historicoDeSincronizacaoList.size() + " novos históricos encontrados");
-							sincProcessObservableUtil.startProcess(historicoDeSincronizacaoList.size(), "Histórico de Alteração");
+							sincProcessObservableUtil.startProcess(historicoDeSincronizacaoList.size(),
+									"Histórico de Alteração");
 
 							for (HistoricoDeSincronizacao historicoDeSincronizacao : historicoDeSincronizacaoList) {
 								sincProcessObservableUtil.nextOfSubProcess(
@@ -371,7 +358,7 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 							sincProcessObservableUtil.endProcess();
 
 							// break;
-							TimeUnit.SECONDS.sleep(5/* refreshTime */);
+							TimeUnit.SECONDS.sleep(60/* refreshTime */);
 
 						} catch (Exception e) {
 							e.printStackTrace();
@@ -391,7 +378,7 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 	}
 
 	// feita no inicio de tudo, quando a api nao apresenta dados
-	public static void sincAll(boolean startMainThreadOnFinish) {
+	public static void sincAllMainThread(boolean startMainThreadOnFinish) {
 
 		ControleJFrame controleJFrame = (ControleJFrame) ControleJFrame.newControleJFrame(false);
 

@@ -80,6 +80,16 @@ public class SolicitacaoDeAlteracao implements Serializable {
 
 	private String campo20;
 
+	private String campo21;
+
+	private String campo22;
+
+	private String campo23;
+
+	private String campo24;
+
+	private String campo25;
+
 	@SerializedName(value = "tipo_solicitacao_id")
 	@Column(name = "tipo_solicitacao_id")
 	private String tipoSolicitacaoId;

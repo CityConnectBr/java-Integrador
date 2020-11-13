@@ -38,7 +38,7 @@ public class Main {
 				String sincAll = pu.getValue(PropertiesUtil.KEY_SINC_ALL);
 
 				if (sincAll != null && sincAll.equals("true")) {
-					MainController.sincAll(Boolean.TRUE);
+					MainController.sincAllMainThread(Boolean.TRUE);
 				} else {
 					MainController.startMainThreadSinc();
 				}

@@ -103,5 +103,141 @@ public class TipoDeSolicitacaoDeAlteracao implements Serializable {
 	@SerializedName(value = "desc_campo20")
 	@Column(name = "desc_campo20")
 	private String descCampo20;
+	
+	@SerializedName(value = "desc_campo21")
+	@Column(name = "desc_campo21")
+	private String descCampo21;
+	
+	@SerializedName(value = "desc_campo22")
+	@Column(name = "desc_campo22")
+	private String descCampo22;
+	
+	@SerializedName(value = "desc_campo23")
+	@Column(name = "desc_campo23")
+	private String descCampo23;
+	
+	@SerializedName(value = "desc_campo24")
+	@Column(name = "desc_campo24")
+	private String descCampo24;
+	
+	@SerializedName(value = "desc_campo25")
+	@Column(name = "desc_campo25")
+	private String descCampo25;
+	
+	@SerializedName(value = "nome_campo1")
+	@Column(name = "nome_campo1")
+	private String nomeCampo1;
+	
+	@SerializedName(value = "nome_campo2")
+	@Column(name = "nome_campo2")
+	private String nomeCampo2;
+	
+	@SerializedName(value = "nome_campo3")
+	@Column(name = "nome_campo3")
+	private String nomeCampo3;
+	
+	@SerializedName(value = "nome_campo4")
+	@Column(name = "nome_campo4")
+	private String nomeCampo4;
+	
+	@SerializedName(value = "nome_campo5")
+	@Column(name = "nome_campo5")
+	private String nomeCampo5;
+	
+	@SerializedName(value = "nome_campo6")
+	@Column(name = "nome_campo6")
+	private String nomeCampo6;
+	
+	@SerializedName(value = "nome_campo7")
+	@Column(name = "nome_campo7")
+	private String nomeCampo7;
+	
+	@SerializedName(value = "nome_campo8")
+	@Column(name = "nome_campo8")
+	private String nomeCampo8;
+	
+	@SerializedName(value = "nome_campo9")
+	@Column(name = "nome_campo9")
+	private String nomeCampo9;
+	
+	@SerializedName(value = "nome_campo10")
+	@Column(name = "nome_campo10")
+	private String nomeCampo10;
+	
+	@SerializedName(value = "nome_campo11")
+	@Column(name = "nome_campo11")
+	private String nomeCampo11;
+	
+	@SerializedName(value = "nome_campo12")
+	@Column(name = "nome_campo12")
+	private String nomeCampo12;
+	
+	@SerializedName(value = "nome_campo13")
+	@Column(name = "nome_campo13")
+	private String nomeCampo13;
+	
+	@SerializedName(value = "nome_campo14")
+	@Column(name = "nome_campo14")
+	private String nomeCampo14;
+	
+	@SerializedName(value = "nome_campo15")
+	@Column(name = "nome_campo15")
+	private String nomeCampo15;
+	
+	@SerializedName(value = "nome_campo16")
+	@Column(name = "nome_campo16")
+	private String nomeCampo16;
+	
+	@SerializedName(value = "nome_campo17")
+	@Column(name = "nome_campo17")
+	private String nomeCampo17;
+	
+	@SerializedName(value = "nome_campo18")
+	@Column(name = "nome_campo18")
+	private String nomeCampo18;
+	
+	@SerializedName(value = "nome_campo19")
+	@Column(name = "nome_campo19")
+	private String nomeCampo19;
+	
+	@SerializedName(value = "nome_campo20")
+	@Column(name = "nome_campo20")
+	private String nomeCampo20;
+	
+	@SerializedName(value = "nome_campo21")
+	@Column(name = "nome_campo21")
+	private String nomeCampo21;
+	
+	@SerializedName(value = "nome_campo22")
+	@Column(name = "nome_campo22")
+	private String nomeCampo22;
+	
+	@SerializedName(value = "nome_campo23")
+	@Column(name = "nome_campo23")
+	private String nomeCampo23;
+	
+	@SerializedName(value = "nome_campo24")
+	@Column(name = "nome_campo24")
+	private String nomeCampo24;
+	
+	@SerializedName(value = "nome_campo25")
+	@Column(name = "nome_campo25")
+	private String nomeCampo25;
+	
+	@SerializedName(value = "desc_arquivo1")
+	@Column(name = "desc_arquivo1")
+	private String descArquivo1;
+	
+	@SerializedName(value = "desc_arquivo2")
+	@Column(name = "desc_arquivo2")
+	private String descArquivo2;
+	
+	@SerializedName(value = "desc_arquivo3")
+	@Column(name = "desc_arquivo3")
+	private String descArquivo3;
+	
+	@SerializedName(value = "desc_arquivo4")
+	@Column(name = "desc_arquivo4")
+	private String descArquivo4;
 
 }
