@@ -1,6 +1,7 @@
 package br.com.cityconnect.integrador_sa_transportes.entity;
 
 import java.io.Serializable;
+import java.sql.Blob;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -13,6 +14,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import com.google.gson.annotations.SerializedName;
 
+import br.com.cityconnect.integrador_sa_transportes.util.ScapeComparator;
 import lombok.Data;
 
 @Data
@@ -97,5 +99,13 @@ public class CondutorAuxiliar implements Serializable {
 	@SerializedName(value = "permissionario_id")
 	@Column(name = "NumCadastroPermissionario")
 	private Integer permissionarioId;// NumCadastroPermissionario
+
+	@ScapeComparator
+	@Column(name = "Foto")
+	private Blob foto;
+	
+	@SerializedName(value = "foto_url")
+	@Column(name = "foto_url")
+	private String fotoUrl;
 
 }

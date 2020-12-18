@@ -1,17 +1,17 @@
 package br.com.cityconnect.integrador_sa_transportes.entity;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Blob;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.UpdateTimestamp;
-
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import br.com.cityconnect.integrador_sa_transportes.util.ScapeComparator;
 import lombok.Data;
 
 @Data
@@ -115,5 +115,13 @@ public class Permissionario implements Serializable {
 	@SerializedName(value = "vencimento_cnh")
 	@Column(name = "VencimentoCNH")
 	private String vencimentoCNH;// VencimentoCNH
+	
+	@ScapeComparator
+	@Column(name = "Foto")
+	private Blob foto;
+	
+	@SerializedName(value = "foto_url")
+	@Column(name = "foto_url")
+	private String fotoUrl;
 
 }

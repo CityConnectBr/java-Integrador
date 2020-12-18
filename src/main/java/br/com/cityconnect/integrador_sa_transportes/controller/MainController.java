@@ -1,6 +1,9 @@
 package br.com.cityconnect.integrador_sa_transportes.controller;
 
+import java.io.File;
+import java.io.InputStream;
 import java.io.Serializable;
+import java.sql.Blob;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -24,7 +27,10 @@ import br.com.cityconnect.integrador_sa_transportes.dao.SolicitacaoDeAlteracaoDA
 import br.com.cityconnect.integrador_sa_transportes.dao.TipoCombustivelDAO;
 import br.com.cityconnect.integrador_sa_transportes.dao.TipoVeiculoDAO;
 import br.com.cityconnect.integrador_sa_transportes.dao.VeiculoDAO;
+import br.com.cityconnect.integrador_sa_transportes.entity.CondutorAuxiliar;
 import br.com.cityconnect.integrador_sa_transportes.entity.HistoricoDeSincronizacao;
+import br.com.cityconnect.integrador_sa_transportes.entity.Monitor;
+import br.com.cityconnect.integrador_sa_transportes.entity.Permissionario;
 import br.com.cityconnect.integrador_sa_transportes.entity.SolicitacaoDeAlteracao;
 import br.com.cityconnect.integrador_sa_transportes.service.SolicitacaoDeAlteracapService;
 import br.com.cityconnect.integrador_sa_transportes.util.Logger;
@@ -59,103 +65,43 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 
 	private static Map<String, GenericDao> daoMap = new LinkedHashMap<String, GenericDao>() {
 		{
-			put(HistoricoDeSincronizacaoDAO.AGENTES_FISCALIZACAO_TABLE, new AgenteFiscalizacaoDAO());
-			put(HistoricoDeSincronizacaoDAO.CORES_VEICULOS_TABLE, new CorVeiculoDAO());
-			put(HistoricoDeSincronizacaoDAO.MARCAS_MODELOS_CARROCERIAS_TABLE, new MarcaModeloCarroceriaDAO());
-			put(HistoricoDeSincronizacaoDAO.MARCAS_MODELOS_CHASSIS_TABLE, new MarcaModeloChassiDAO());
-			put(HistoricoDeSincronizacaoDAO.MARCAS_MODELOS_VEICULOS_TABLE, new MarcaModeloVeiculoDAO());
-			put(HistoricoDeSincronizacaoDAO.TIPOSVEICULOS_TABLE, new TipoVeiculoDAO());
-			put(HistoricoDeSincronizacaoDAO.ONIBUS_TABLE, new OnibusDAO());
-			put(HistoricoDeSincronizacaoDAO.PERMISSIONARIOS_TABLE, new PermissionarioDAO());
+//			put(HistoricoDeSincronizacaoDAO.AGENTES_FISCALIZACAO_TABLE, new AgenteFiscalizacaoDAO());
+//			put(HistoricoDeSincronizacaoDAO.CORES_VEICULOS_TABLE, new CorVeiculoDAO());
+//			put(HistoricoDeSincronizacaoDAO.MARCAS_MODELOS_CARROCERIAS_TABLE, new MarcaModeloCarroceriaDAO());
+//			put(HistoricoDeSincronizacaoDAO.MARCAS_MODELOS_CHASSIS_TABLE, new MarcaModeloChassiDAO());
+//			put(HistoricoDeSincronizacaoDAO.MARCAS_MODELOS_VEICULOS_TABLE, new MarcaModeloVeiculoDAO());
+//			put(HistoricoDeSincronizacaoDAO.TIPOSVEICULOS_TABLE, new TipoVeiculoDAO());
+//			put(HistoricoDeSincronizacaoDAO.TIPOSCOMBUSTIVEIS_TABLE, new TipoCombustivelDAO());
+//			put(HistoricoDeSincronizacaoDAO.ONIBUS_TABLE, new OnibusDAO());
+//			put(HistoricoDeSincronizacaoDAO.PERMISSIONARIOS_TABLE, new PermissionarioDAO());
 			put(HistoricoDeSincronizacaoDAO.MONITORES_TABLE, new MonitorDAO());
-			put(HistoricoDeSincronizacaoDAO.CONDUTOR_TABLE, new CondutoreAuxiliareDAO());
-			put(HistoricoDeSincronizacaoDAO.TIPOSCOMBUSTIVEIS_TABLE, new TipoCombustivelDAO());
-			put(HistoricoDeSincronizacaoDAO.VEICULOS_TABLE, new VeiculoDAO());
+//			put(HistoricoDeSincronizacaoDAO.CONDUTOR_TABLE, new CondutoreAuxiliareDAO());
+//			put(HistoricoDeSincronizacaoDAO.VEICULOS_TABLE, new VeiculoDAO());
 		}
 	};
 
 	private static Map<String, MainController> controllerMap = new LinkedHashMap<String, MainController>() {
 		{
-			put(HistoricoDeSincronizacaoDAO.AGENTES_FISCALIZACAO_TABLE, new AgenteFiscalizacaoController());
-			put(HistoricoDeSincronizacaoDAO.CORES_VEICULOS_TABLE, new CorVeiculoController());
-			put(HistoricoDeSincronizacaoDAO.MARCAS_MODELOS_CARROCERIAS_TABLE, new MarcaModeloCarroceriaController());
-			put(HistoricoDeSincronizacaoDAO.MARCAS_MODELOS_CHASSIS_TABLE, new MarcaModeloChassiController());
-			put(HistoricoDeSincronizacaoDAO.MARCAS_MODELOS_VEICULOS_TABLE, new MarcaModeloVeiculoController());
-			put(HistoricoDeSincronizacaoDAO.TIPOSVEICULOS_TABLE, new TipoVeiculoController());
-			put(HistoricoDeSincronizacaoDAO.ONIBUS_TABLE, new OnibusController());
-			put(HistoricoDeSincronizacaoDAO.PERMISSIONARIOS_TABLE, new PermissionarioController());
+//			put(HistoricoDeSincronizacaoDAO.AGENTES_FISCALIZACAO_TABLE, new AgenteFiscalizacaoController());
+//			put(HistoricoDeSincronizacaoDAO.CORES_VEICULOS_TABLE, new CorVeiculoController());
+//			put(HistoricoDeSincronizacaoDAO.MARCAS_MODELOS_CARROCERIAS_TABLE, new MarcaModeloCarroceriaController());
+//			put(HistoricoDeSincronizacaoDAO.MARCAS_MODELOS_CHASSIS_TABLE, new MarcaModeloChassiController());
+//			put(HistoricoDeSincronizacaoDAO.MARCAS_MODELOS_VEICULOS_TABLE, new MarcaModeloVeiculoController());
+//			put(HistoricoDeSincronizacaoDAO.TIPOSVEICULOS_TABLE, new TipoVeiculoController());
+//			put(HistoricoDeSincronizacaoDAO.TIPOSCOMBUSTIVEIS_TABLE, new TipoCombustivelController());
+//			put(HistoricoDeSincronizacaoDAO.ONIBUS_TABLE, new OnibusController());
+//			put(HistoricoDeSincronizacaoDAO.PERMISSIONARIOS_TABLE, new PermissionarioController());
 			put(HistoricoDeSincronizacaoDAO.MONITORES_TABLE, new MonitorController());
-			put(HistoricoDeSincronizacaoDAO.CONDUTOR_TABLE, new CondutorAuxiliarController());
-			put(HistoricoDeSincronizacaoDAO.TIPOSCOMBUSTIVEIS_TABLE, new TipoCombustivelController());
-			put(HistoricoDeSincronizacaoDAO.VEICULOS_TABLE, new VeiculoController());
+//			put(HistoricoDeSincronizacaoDAO.CONDUTOR_TABLE, new CondutorAuxiliarController());
+//			put(HistoricoDeSincronizacaoDAO.VEICULOS_TABLE, new VeiculoController());
 		}
 	};
 
 	public abstract void sincAll() throws Exception;
 
-	private void sendToAPI(T obj) throws Exception {
-
-		//
-		// CADASTRO E ATUALIZACAO
-		//
-
-		String id = obj.getClass().getMethod("getId").invoke(obj, null).toString();
-
-		T objByService = (T) service.getClass().getMethod("get", String.class).invoke(service, id.replace("/", "-"));
-
-		if (objByService != null) {
-
-			System.out.println("CADASTRO REMOTO ENCONTRADO");
-
-			System.out.println(obj);
-			System.out.println(objByService);
-
-			if (!util.compareObjects(obj, objByService)) {
-				// atualizando service com dados do banco local
-				System.out.println("ATUALIZANDO API REMOTA");
-				service.getClass().getMethod("sendUpdate", Object.class, String.class).invoke(service, obj,
-						id.replace("/", "-"));
-			}
-
-		} else {
-			String idIntegracao = (String) service.getClass().getMethod("send", Object.class).invoke(service, obj);
-			if (idIntegracao != null && !idIntegracao.isEmpty()) {
-				System.out.println("CADASTRO REMOTO INICIAL");
-			} else {
-				System.out.println("CADASTRO REMOTO NÃO REALIZADO");
-			}
-			System.out.println(obj);
-		}
-
-	}
-
-	// sincroniza croniza de acordo com o historico
-	private void sincByChanges(List<T> objectList) throws Exception {
-
-		int contErros = 0;
-
-		//
-		// CADASTRO E ATUALIZACAO
-		//
-
-		for (T obj : objectList) {
-			try {
-				sendToAPI(obj);
-				contErros = 0;
-			} catch (Exception e) {
-				System.err.println(obj);
-
-				Logger.sendLog(MainController.class, Logger.ERROR, e);
-
-				contErros++;
-				if (contErros > 3) {
-					throw e;
-				}
-			}
-			System.out.println("\n");
-		}
-
-	}
+	///////////////////////////
+	/////////////////////////// METODOS PRINCIPAIS
+	///////////////////////////
 
 	protected void sincAllIgnoreChanges() throws Exception {
 
@@ -288,7 +234,7 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 							/////////////////////////////////////// SINC SOLICITACOES
 							///////////////////////////////////////
 
-							//NOVOS REGISTROS DE SOLICITACOES DE ALTERACAO
+							// NOVOS REGISTROS DE SOLICITACOES DE ALTERACAO
 							SolicitacaoDeAlteracao[] solicitacaoDeAlteracaoAuxArray = solicitacaoDeAlteracapService
 									.getAll();
 							System.out
@@ -309,7 +255,7 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 								solicitacaoDeAlteracapService.setSinc(solicitacaoDeAlteracao.getId().toString());
 							}
 
-							//ALTERANAO NO REGISTRO DE SOLICACOES
+							// ALTERANAO NO REGISTRO DE SOLICACOES
 							List<SolicitacaoDeAlteracao> solicitacaoDeAlteracaoAuxList = solicitacaoDeAlteracaoDAO
 									.findNotSinc();
 							System.out.println(
@@ -427,6 +373,99 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 			}
 		}.start();
 
+	}
+
+	///////////////////////////
+	/////////////////////////// METODOS AUXILIARES
+	///////////////////////////
+
+	private void sendToAPI(T obj) throws Exception {
+
+		//
+		// CADASTRO E ATUALIZACAO
+		//
+
+		String id = obj.getClass().getMethod("getId").invoke(obj, null).toString();
+
+		T objByService = (T) service.getClass().getMethod("get", String.class).invoke(service, id.replace("/", "-"));
+
+		if (objByService != null) {
+
+			System.out.println("CADASTRO REMOTO ENCONTRADO");
+
+			System.out.println(obj);
+			System.out.println(objByService);
+
+			if (!util.compareObjects(obj, objByService)) {
+				// atualizando service com dados do banco local
+				System.out.println("ATUALIZANDO API REMOTA");
+				service.getClass().getMethod("sendUpdate", Object.class, String.class).invoke(service, obj,
+						id.replace("/", "-"));
+
+				// atualizando foto com a API
+				this.sendPhoto(obj);
+			}
+
+		} else {
+			String idIntegracao = (String) service.getClass().getMethod("send", Object.class).invoke(service, obj);
+			if (idIntegracao != null && !idIntegracao.isEmpty()) {
+				// atualizando foto com a API
+				this.sendPhoto(obj);
+
+				System.out.println("CADASTRO REMOTO INICIAL");
+			} else {
+				System.out.println("CADASTRO REMOTO NÃO REALIZADO");
+			}
+			System.out.println(obj);
+		}
+
+	}
+
+	// sincroniza croniza de acordo com o historico
+	private void sincByChanges(List<T> objectList) throws Exception {
+
+		int contErros = 0;
+
+		//
+		// CADASTRO E ATUALIZACAO
+		//
+
+		for (T obj : objectList) {
+			try {
+				sendToAPI(obj);
+				// atualizando foto com a API
+				this.sendPhoto(obj);
+
+				contErros = 0;
+			} catch (Exception e) {
+				System.err.println(obj);
+
+				Logger.sendLog(MainController.class, Logger.ERROR, e);
+
+				contErros++;
+				if (contErros > 3) {
+					throw e;
+				}
+			}
+			System.out.println("\n");
+		}
+
+	}
+
+	private void sendPhoto(T obj) throws Exception {
+
+		String id = obj.getClass().getMethod("getId").invoke(obj, null).toString();
+
+		// atualizando foto
+		if (obj instanceof Permissionario || obj instanceof Monitor || obj instanceof CondutorAuxiliar) {
+			Blob fotoBlob = (Blob) obj.getClass().getMethod("getFoto").invoke(obj, null);
+			if (fotoBlob != null && fotoBlob.length() > 0) {
+				System.out.println("ATUALIZANDO FOTO");
+
+				service.getClass().getMethod("sendUpdatePhoto", InputStream.class, String.class).invoke(service,
+						fotoBlob.getBinaryStream(), id.replace("/", "-"));
+			}
+		}
 	}
 
 }

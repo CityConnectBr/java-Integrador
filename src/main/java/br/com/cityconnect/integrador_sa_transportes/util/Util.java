@@ -1,8 +1,13 @@
 package br.com.cityconnect.integrador_sa_transportes.util;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Random;
 import java.util.regex.Pattern;
 
 public class Util {
@@ -26,14 +31,16 @@ public class Util {
 
 			for (Field f : obj1.getClass().getDeclaredFields()) {
 
-				if(f.getName().equals("idIntegracao")) {
+				if (f.getName().equals("idIntegracao")) {
 					continue;
 				}
-				
-				// pulando campos com anotacao UpdateTimestamp
+
+				// pulando campos com anotacao UpdateTimestamp e ScapeComparator
 				if (Arrays.asList(f.getDeclaredAnnotations()).stream()
-						.filter(a -> a.toString().contains("UpdateTimestamp")).count() > 0) {
-					System.out.println("IF AKI");
+						.filter(a -> a.toString().contains("UpdateTimestamp")).count() > 0
+						|| Arrays.asList(f.getDeclaredAnnotations()).stream()
+								.filter(a -> a.toString().contains("ScapeComparator")).count() > 0) {
+
 					continue;
 				}
 
@@ -73,9 +80,11 @@ public class Util {
 
 			for (Field f : obj1.getClass().getDeclaredFields()) {
 
-				// pulando campos com UpdateTimestamp
+				// pulando campos com UpdateTimestamp ou ScapeComparator
 				if (Arrays.asList(f.getDeclaredAnnotations()).stream()
-						.filter(a -> a.toString().contains("UpdateTimestamp")).count() > 0) {
+						.filter(a -> a.toString().contains("UpdateTimestamp")).count() > 0
+						|| Arrays.asList(f.getDeclaredAnnotations()).stream()
+								.filter(a -> a.toString().contains("ScapeComparator")).count() > 0) {
 					continue;
 				}
 
@@ -118,6 +127,57 @@ public class Util {
 		} catch (Exception e) {
 			return Boolean.FALSE;
 		}
+	}
+
+	public String getNumeroAleatorio(int qtd) {
+		Random random = new Random();
+		String numero = "";
+		for (int cont = 0; cont < qtd; cont++) {
+			Integer n = random.nextInt(9);
+			numero = numero + String.valueOf(n);
+		}
+		return numero;
+	}
+
+	public String getSenhaAleatorio(int qtd) {
+		Random random = new Random();
+		String string = "";
+		for (int cont = 0; cont < qtd; cont++) {
+			switch (random.nextInt(3)) {
+			case 0:
+				string = string + (char) (random.nextInt(9) + '1');
+				break;
+			case 1:
+				string = string + (char) (random.nextInt(26) + 'A');
+				break;
+			case 2:
+				string = string + (char) (random.nextInt(26) + 'a');
+				break;
+			}
+		}
+		return string;
+	}
+
+	public Boolean writeFile(InputStream input, File newFile) throws IOException {
+		FileOutputStream output = null;
+		try {
+			output = new FileOutputStream(newFile);
+
+			int r = 0;
+			while ((r = input.read()) != -1) {
+				output.write(r);
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Boolean.FALSE;
+		} finally {
+			if (output != null) {
+				output.close();
+			}
+		}
+
+		return newFile.exists();
 	}
 
 }
