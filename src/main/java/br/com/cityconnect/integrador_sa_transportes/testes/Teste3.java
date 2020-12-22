@@ -19,7 +19,7 @@ public class Teste3 {
 
 		 MainController controller = new CorVeiculoController();
 		 controller.sincAllMainThread(false);//.startMainThreadSinc();
-		 controller.startMainThreadSinc();
+		 //controller.startMainThreadSinc();
 
 //		controller.startMainThreadSinc();
 

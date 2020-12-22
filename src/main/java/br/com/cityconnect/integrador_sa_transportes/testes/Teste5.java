@@ -30,7 +30,7 @@ public class Teste5 {
 		
 
 		
-		permissionarioService.sendUpdatePhoto(file, "445");
+//		permissionarioService.sendUpdatePhoto(file, "445");
 		
 		//System.out.println(p);
 		

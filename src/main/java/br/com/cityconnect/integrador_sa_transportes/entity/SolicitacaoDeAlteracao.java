@@ -90,6 +90,23 @@ public class SolicitacaoDeAlteracao implements Serializable {
 
 	private String campo25;
 
+	@SerializedName(value = "arquivo1_uid")
+	@Column(name = "arquivo1_uid")
+	private String arquivo1UID;
+
+	@SerializedName(value = "arquivo2_uid")
+	@Column(name = "arquivo2_uid")
+	private String arquivo2UID;
+
+	@SerializedName(value = "arquivo3_uid")
+	@Column(name = "arquivo3_uid")
+	private String arquivo3UID;
+
+	@SerializedName(value = "arquivo4_uid")
+	@Column(name = "arquivo4_uid")
+	private String arquivo4UID;
+
+
 	@SerializedName(value = "tipo_solicitacao_id")
 	@Column(name = "tipo_solicitacao_id")
 	private String tipoSolicitacaoId;

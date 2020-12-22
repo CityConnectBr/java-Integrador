@@ -120,8 +120,8 @@ public class Permissionario implements Serializable {
 	@Column(name = "Foto")
 	private Blob foto;
 	
-	@SerializedName(value = "foto_url")
-	@Column(name = "foto_url")
-	private String fotoUrl;
+	@SerializedName(value = "foto_uid")
+	@Column(name = "foto_uid")
+	private String fotoUID;
 
 }
