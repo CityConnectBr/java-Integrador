@@ -19,7 +19,6 @@ public class HistoricoDeSincronizacaoDAO extends GenericDao<HistoricoDeSincroniz
 	public static final String PERMISSIONARIOS_TABLE = "permissionarios";
 	public static final String TIPOSCOMBUSTIVEIS_TABLE = "tiposcombustiveis";
 	public static final String TIPOSVEICULOS_TABLE = "tiposveiculos";
-	public static final String ONIBUS_TABLE = "onibus";
 	public static final String VEICULOS_TABLE = "veiculos";
 
 	public HistoricoDeSincronizacaoDAO() {
