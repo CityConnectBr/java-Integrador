@@ -1,7 +1,6 @@
 package br.com.cityconnect.integrador_sa_transportes.dao;
 
 import java.io.Serializable;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.List;

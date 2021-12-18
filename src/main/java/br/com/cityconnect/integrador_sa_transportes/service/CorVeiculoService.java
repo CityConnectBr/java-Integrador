@@ -1,7 +1,6 @@
 package br.com.cityconnect.integrador_sa_transportes.service;
 
 import br.com.cityconnect.integrador_sa_transportes.entity.CorVeiculo;
-import br.com.cityconnect.integrador_sa_transportes.entity.MarcaModeloCarroceria;
 
 public class CorVeiculoService extends MainService<CorVeiculo> {
 

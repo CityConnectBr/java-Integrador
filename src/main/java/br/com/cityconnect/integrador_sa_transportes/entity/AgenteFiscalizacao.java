@@ -9,6 +9,7 @@ import javax.persistence.Table;
 
 import com.google.gson.annotations.SerializedName;
 
+import br.com.cityconnect.integrador_sa_transportes.util.Util;
 import lombok.Data;
 
 @Data
@@ -67,4 +68,8 @@ public class AgenteFiscalizacao implements Serializable {
 	@Column(name = "Cargo")
 	private String cargo;// Celular
 
+	public void prepare() {
+		Util util = new Util();
+		this.telefone = util.formatTelephone(this.DDD, this.telefone);
+	}
 }

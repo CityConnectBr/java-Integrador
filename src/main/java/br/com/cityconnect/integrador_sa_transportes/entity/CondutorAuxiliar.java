@@ -15,6 +15,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import com.google.gson.annotations.SerializedName;
 
 import br.com.cityconnect.integrador_sa_transportes.util.ScapeComparator;
+import br.com.cityconnect.integrador_sa_transportes.util.Util;
 import lombok.Data;
 
 @Data
@@ -107,5 +108,12 @@ public class CondutorAuxiliar implements Serializable {
 	@SerializedName(value = "foto_uid")
 	@Column(name = "foto_uid")
 	private String fotoUID;
+	
+	public void prepare() {
+		Util util = new Util();
+		this.telefone = util.formatTelephone(this.DDD, this.telefone);
+		this.celular = util.formatTelephone(this.DDD, this.celular);
+		this.RG = util.clearNumber(this.RG, 9);
+	}
 
 }

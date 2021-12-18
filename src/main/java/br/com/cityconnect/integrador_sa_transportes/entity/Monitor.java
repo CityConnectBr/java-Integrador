@@ -12,6 +12,7 @@ import javax.persistence.Transient;
 import com.google.gson.annotations.SerializedName;
 
 import br.com.cityconnect.integrador_sa_transportes.util.ScapeComparator;
+import br.com.cityconnect.integrador_sa_transportes.util.Util;
 import lombok.Data;
 
 @Data
@@ -89,5 +90,11 @@ public class Monitor implements Serializable {
 	@SerializedName(value = "foto_uid")
 	@Column(name = "foto_uid")
 	private String fotoUID;
+	
+	public void prepare() {
+		Util util = new Util();
+		this.telefone = util.formatTelephone(null, this.telefone);
+		this.RG = util.clearNumber(this.RG, 9);
+	}
 
 }

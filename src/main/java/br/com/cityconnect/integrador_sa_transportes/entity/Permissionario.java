@@ -12,6 +12,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import br.com.cityconnect.integrador_sa_transportes.util.ScapeComparator;
+import br.com.cityconnect.integrador_sa_transportes.util.Util;
 import lombok.Data;
 
 @Data
@@ -26,6 +27,7 @@ public class Permissionario implements Serializable {
 	@Column(name = "NumeroCadastro")
 	private Long id;// NumeroCadastro
 
+	@SerializedName(value = "nome_razao_social")
 	@Column(name = "Nome")
 	private String nome;// Nome
 
@@ -115,6 +117,26 @@ public class Permissionario implements Serializable {
 	@SerializedName(value = "vencimento_cnh")
 	@Column(name = "VencimentoCNH")
 	private String vencimentoCNH;// VencimentoCNH
+
+	@SerializedName(value = "estado_civil")
+	@Column(name = "EstadoCivil")
+	private String estadoCivil;
+	
+	@SerializedName(value = "data_emissao")
+	@Column(name = "DataEmissaoAlvara")
+	private String dataEmissaoAlvara;
+	
+	@SerializedName(value = "data_vencimento")
+	@Column(name = "DataVencimentoAlvara")
+	private String dataVencimentoAlvara;
+	
+	@SerializedName(value = "data_retorno")
+	@Column(name = "DataRetorno")
+	private String dataRetorno;
+	
+	@SerializedName(value = "observacao_retorno")
+	@Column(name = "ObservacaoRetorno")
+	private String observacaoRetorno;
 	
 	@ScapeComparator
 	@Column(name = "Foto")
@@ -123,5 +145,13 @@ public class Permissionario implements Serializable {
 	@SerializedName(value = "foto_uid")
 	@Column(name = "foto_uid")
 	private String fotoUID;
+	
+	public void prepare() {
+		Util util = new Util();
+		this.telefone = util.formatTelephone(this.DDD, this.telefone);
+		this.telefone2 = util.formatTelephone(this.DDD, this.telefone2);
+		this.celular = util.formatTelephone(this.DDD, this.celular);
+		this.RG = util.clearNumber(this.RG, 9);
+	}
 
 }

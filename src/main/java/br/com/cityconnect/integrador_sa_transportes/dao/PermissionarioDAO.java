@@ -3,7 +3,6 @@ package br.com.cityconnect.integrador_sa_transportes.dao;
 import java.util.List;
 
 import br.com.cityconnect.integrador_sa_transportes.entity.Permissionario;
-import br.com.cityconnect.integrador_sa_transportes.util.Util;
 
 public class PermissionarioDAO extends GenericDao<Permissionario, Long> {
 
@@ -15,8 +14,8 @@ public class PermissionarioDAO extends GenericDao<Permissionario, Long> {
 		return super.findAll();
 	}
 
-	public boolean update(Permissionario permissionario) {
+	/*public boolean update(Permissionario permissionario) {
 		return super.update((Permissionario) new Util().copy(permissionario, findById(permissionario.getId())));
-	}
+	}*/
 
 }

@@ -180,4 +180,59 @@ public class Util {
 		return newFile.exists();
 	}
 
+	public String formatTelephone(String ddd, String numero) {
+		try {
+			if (numero == null || numero.trim().isEmpty())
+				return "";
+
+			String nFormated = "";
+
+			nFormated = ddd != null && !ddd.isEmpty() ? "(" + ddd.trim() + ") " : "(xx) ";
+
+			numero = numero.replace(" ", "");
+			if (numero.contains("-")) {
+				nFormated += numero;
+			} else {
+				Integer part2 = new Integer(numero.substring(numero.length() - 4, numero.length()));
+				String part1 = numero.substring(0, numero.indexOf(part2));
+				nFormated += part1 + "-" + part2;
+			}
+
+			return nFormated;
+		} catch (Exception e) {
+			//System.out.println(e);
+			return "";
+		}
+	}
+
+	public String clearNumber(String number, int limit) {
+		try {
+			number = number.replace(".", "").replace("-", "");
+			
+			if(number.length()>9) {
+				number = number.substring(0, 8);
+			}
+			
+			return number;
+		} catch (Exception e) {
+			return "";
+		}
+
+	}
+
+	public String limit(String number, int limit) {
+		try {
+			number = number.replace(".", "").replace("-", "");
+			
+			if(number.length()>9) {
+				number = number.substring(0, 8);
+			}
+			
+			return number;
+		} catch (Exception e) {
+			return "";
+		}
+
+	}
+
 }
