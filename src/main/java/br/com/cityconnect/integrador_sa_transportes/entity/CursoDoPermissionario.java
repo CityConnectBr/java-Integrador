@@ -17,17 +17,13 @@ import lombok.Data;
 public class CursoDoPermissionario implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
-
-	@Id
-	@SerializedName(value = "nao_usado")
-	@Column(name = "permissionario_id")
-	private Long id;
 	
+	@Id
 	@SerializedName(value = "permissionario_id")
 	@Column(name = "Permissionario")
 	private String permissionario;
 
+	@Id
 	@SerializedName(value = "tipo_do_curso_id")
 	@Column(name = "TipoCurso")
 	private String tipoCurso;

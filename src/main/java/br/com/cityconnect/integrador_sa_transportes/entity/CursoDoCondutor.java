@@ -18,16 +18,12 @@ public class CursoDoCondutor implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-
-	@Id
-	@SerializedName(value = "nao_usado")
-	@Column(name = "condutor_id")
-	private Long id;
-	
+	@Id	
 	@SerializedName(value = "condutor_id")
 	@Column(name = "CondutorAuxiliar")
 	private String condutor;
 
+	@Id	
 	@SerializedName(value = "tipo_do_curso_id")
 	@Column(name = "TipoCurso")
 	private String tipoCurso;

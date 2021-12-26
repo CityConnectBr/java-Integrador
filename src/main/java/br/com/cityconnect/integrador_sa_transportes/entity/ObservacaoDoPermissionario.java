@@ -19,14 +19,10 @@ public class ObservacaoDoPermissionario implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@SerializedName(value = "id_integracao")
-	@Column(name = "Codigo")
-	private Long id;
-
 	@Column(name = "Titulo")
 	private String titulo;
 
+	@Id
 	@SerializedName(value = "permissionario_id")
 	@Column(name = "Permissionario")
 	private String permissionarioId;
@@ -34,6 +30,7 @@ public class ObservacaoDoPermissionario implements Serializable {
 	@Column(name = "Observacao")
 	private String observacao;
 
+	@Id
 	@Column(name = "Data")
 	private String data;
 

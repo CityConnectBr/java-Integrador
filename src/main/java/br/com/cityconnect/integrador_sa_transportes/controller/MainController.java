@@ -1,6 +1,9 @@
 package br.com.cityconnect.integrador_sa_transportes.controller;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.io.Serializable;
 import java.sql.Blob;
 import java.util.ArrayList;
@@ -49,13 +52,15 @@ import br.com.cityconnect.integrador_sa_transportes.util.Util;
 
 public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 
+	static int threadsRunning = 0;
+
 	private Util util = new Util();
 
 	private T_DAO dao;
 	private T_SERVICE service;
 
 	private static List<String> errors = new ArrayList<String>();
-	
+
 	private static Thread mainThread = null;
 
 	private static Integer refreshTime = 60;// 3600;// uma hora
@@ -90,28 +95,27 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 			put(EmpresaVistoriadoraDAO.class.toString(), new EmpresaVistoriadoraDAO());
 			put(EntidadeCursoDAO.class.toString(), new EntidadeCursoDAO());
 			put(FMPDAO.class.toString(), new FMPDAO());
-			put(VistoriadorDAO.class.toString(), new VistoriadorDAO());
+			put(VistoriadorDAO.class.toString(), new VistoriadorDAO());*/
 			put(AgenteFiscalizacaoDAO.class.toString(), new AgenteFiscalizacaoDAO());
-			put(TalaoDoFiscalDAO.class.toString(), new TalaoDoFiscalDAO());
+			/*put(TalaoDoFiscalDAO.class.toString(), new TalaoDoFiscalDAO());
 			put(PermissionarioDAO.class.toString(), new PermissionarioDAO());
 			put(ObservacaoPermissionarioDAO.class.toString(), new ObservacaoPermissionarioDAO());
-			put(CondutoreAuxiliareDAO.class.toString(), new CondutoreAuxiliareDAO());	
+			put(CursoDoPermissionarioDAO.class.toString(), new CursoDoPermissionarioDAO());
+			put(CondutoreAuxiliareDAO.class.toString(), new CondutoreAuxiliareDAO());
+			put(CursoDoCondutorDAO.class.toString(), new CursoDoCondutorDAO());
 			put(MonitorDAO.class.toString(), new MonitorDAO());
 			put(VeiculoDAO.class.toString(), new VeiculoDAO());
-			put(CursoDoPermissionarioDAO.class.toString(), new CursoDoPermissionarioDAO());
-			put(CursoDoCondutorDAO.class.toString(), new CursoDoCondutorDAO());
 			put(CertidaoDAO.class.toString(), new CertidaoDAO());
-			put(CoordenadorDePontoDAO.class.toString(), new CoordenadorDePontoDAO());*/
-			put(OnibusDAO.class.toString(), new OnibusDAO());
-			
-			
-			
-			//put(ObservacaoPermissionarioDAO.class.toString(), new ObservacaoPermissionarioDAO());depende de permissionario
+			put(CoordenadorDePontoDAO.class.toString(), new CoordenadorDePontoDAO());
+			put(OnibusDAO.class.toString(), new OnibusDAO());*/
 
-			/* put(HistoricoDeSincronizacaoDAO.MONITORES_TABLE,
-			 * new MonitorDAO()); put(HistoricoDeSincronizacaoDAO.CONDUTOR_TABLE, new
-			 * CondutoreAuxiliareDAO()); put(HistoricoDeSincronizacaoDAO.VEICULOS_TABLE, new
-			 * VeiculoDAO());
+			// put(ObservacaoPermissionarioDAO.class.toString(), new
+			// ObservacaoPermissionarioDAO());depende de permissionario
+
+			/*
+			 * put(HistoricoDeSincronizacaoDAO.MONITORES_TABLE, new MonitorDAO());
+			 * put(HistoricoDeSincronizacaoDAO.CONDUTOR_TABLE, new CondutoreAuxiliareDAO());
+			 * put(HistoricoDeSincronizacaoDAO.VEICULOS_TABLE, new VeiculoDAO());
 			 */
 		}
 	};
@@ -119,7 +123,7 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 	private static Map<String, MainController> controllerMap = new LinkedHashMap<String, MainController>() {
 		{
 			/*put(CorVeiculoController.class.toString(), new CorVeiculoController());
-			put(EmpresaController.class.toString(), new EmpresaController());			
+			put(EmpresaController.class.toString(), new EmpresaController());
 			put(MarcaModeloCarroceriaController.class.toString(), new MarcaModeloCarroceriaController());
 			put(MarcaModeloChassiController.class.toString(), new MarcaModeloChassiController());
 			put(MarcaModeloVeiculoController.class.toString(), new MarcaModeloVeiculoController());
@@ -133,28 +137,26 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 			put(EmpresaVistoriadoraController.class.toString(), new EmpresaVistoriadoraController());
 			put(EntidadeCursoController.class.toString(), new EntidadeCursoController());
 			put(FMPController.class.toString(), new FMPController());
-			put(VistoriadorController.class.toString(), new VistoriadorController());
+			put(VistoriadorController.class.toString(), new VistoriadorController());*/
 			put(AgenteFiscalizacaoController.class.toString(), new AgenteFiscalizacaoController());
-			put(TalaoDoFiscalController.class.toString(), new TalaoDoFiscalController());
+			/*put(TalaoDoFiscalController.class.toString(), new TalaoDoFiscalController());
 			put(PermissionarioController.class.toString(), new PermissionarioController());
 			put(ObservacaoPermissionarioController.class.toString(), new ObservacaoPermissionarioController());
+			put(CursoDoPermissionarioController.class.toString(), new CursoDoPermissionarioController());
 			put(CondutorAuxiliarController.class.toString(), new CondutorAuxiliarController());
+			put(CursoDoCondutorController.class.toString(), new CursoDoCondutorController());
 			put(MonitorController.class.toString(), new MonitorController());
 			put(VeiculoController.class.toString(), new VeiculoController());
-			put(CursoDoPermissionarioController.class.toString(), new CursoDoPermissionarioController());		
-			put(CursoDoCondutorController.class.toString(), new CursoDoCondutorController());	
 			put(CertidaoController.class.toString(), new CertidaoController());
-			put(CoordenadorDePontoController.class.toString(), new CoordenadorDePontoController());*/
-			put(OnibusController.class.toString(), new OnibusController());
-			
-			
-			
-			
-			//put(ObservacaoPermissionarioController.class.toString(), new ObservacaoPermissionarioController());depende de permissionario
+			put(CoordenadorDePontoController.class.toString(), new CoordenadorDePontoController());
+			put(OnibusController.class.toString(), new OnibusController());*/
+
+			// put(ObservacaoPermissionarioController.class.toString(), new
+			// ObservacaoPermissionarioController());depende de permissionario
 
 			/*
-			 * put(HistoricoDeSincronizacaoDAO.MONITORES_TABLE,
-			 * new MonitorController()); put(HistoricoDeSincronizacaoDAO.CONDUTOR_TABLE, new
+			 * put(HistoricoDeSincronizacaoDAO.MONITORES_TABLE, new MonitorController());
+			 * put(HistoricoDeSincronizacaoDAO.CONDUTOR_TABLE, new
 			 * CondutorAuxiliarController());
 			 * put(HistoricoDeSincronizacaoDAO.VEICULOS_TABLE, new VeiculoController());
 			 */
@@ -170,6 +172,8 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 	public void sincAllIgnoreChanges() throws Exception {
 
 		int contErros = 0;
+		final int maxThreads = 5;
+		int totalProcessed = 0;
 
 		//
 		// CADASTRO E ATUALIZACAO
@@ -178,35 +182,47 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 
 		List<T> objectList = (List<T>) dao.getClass().getMethod("findAll").invoke(dao, null);
 		for (T obj : objectList) {
-			try {
+			System.out.println("Processed: "+totalProcessed+"/"+objectList.size());
+			System.out.println(">>>"+threadsRunning+"/"+maxThreads);
+			boolean processed = false;
+			while (!processed) {
+				//System.out.println(">>>"+threadsRunning+"/"+maxThreads);
+				if (threadsRunning < maxThreads) {
+					threadsRunning++;
+					new Thread(new Runnable() {
+						@Override
+						public void run() {
+							try {
 
-				//chamando metodo de preparo quando existir
-				try {
-					obj.getClass().getMethod("prepare").invoke(obj);
-				} catch (Exception e) {
+								// chamando metodo de preparo quando existir
+								try {
+									obj.getClass().getMethod("prepare").invoke(obj);
+								} catch (Exception e) {
+								}
+
+								sendToAPI(obj);
+							} catch (Exception e) {
+								errors.add(obj.toString() + ">>>>>" + e.getCause());
+								System.err.println(obj);
+
+								Logger.sendLog(MainController.class, Logger.ERROR, e);
+							}finally {
+								threadsRunning--;
+							}
+						}
+					}).start();
+					processed = true;
 				}
-
-				sendToAPI(obj);
-
-				contErros = 0;
-			} catch (Exception e) {
-				this.errors.add(obj.toString() + ">>>>>" +e.getCause());
-				System.err.println(obj);
-
-				Logger.sendLog(MainController.class, Logger.ERROR, e);
-
-				contErros++;
-				if (contErros > 3) {
-					//imprimindo erros
-					//throw e;
-				}
+				Thread.sleep(50);
 			}
+			totalProcessed++;
 			System.out.println("\n");
 		}
 		
-		//imprimindo erros
-		for(String error : this.errors) {
-			System.out.println(">>>"+error);
+		//aguardando todos os processos terminarem
+		while (threadsRunning!=0) {
+			System.out.println("awating >>>"+threadsRunning+"/"+maxThreads);
+			Thread.sleep(50);
 		}
 
 	}
@@ -217,6 +233,26 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 			//
 			for (MainController controller : controllerMap.values()) {
 				controller.sincAllIgnoreChanges();
+			}
+			
+			// imprimindo erros
+			if(errors.size()>0) {
+				File f  = new File("/Users/elongomesvieira/Aux/City Connect/SA_TRANS/logerrors.txt");
+				
+				if(f.exists()) {
+					f.deleteOnExit();
+				}
+				
+				f.createNewFile();
+			    FileWriter fw = new FileWriter(f);
+			    PrintWriter pw = new PrintWriter(fw);
+
+				for (String error : errors) {
+					pw.printf(error+"\n");
+
+					System.out.println(">>>" + error);
+				}
+				pw.close();
 			}
 
 		} catch (Exception e) {

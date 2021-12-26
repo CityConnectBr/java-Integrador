@@ -19,18 +19,15 @@ public class FMP implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@SerializedName(value = "nao_usado")
-	@Column(name = "Codigo")
-	private Long id;
-
 	@Column(name = "Descricao")
 	private String descricao;
 
+	@Id
 	@SerializedName(value = "data_inicial")
 	@Column(name = "DataInicial")
 	private String dataInicial;
 
+	@Id
 	@SerializedName(value = "data_final")
 	@Column(name = "DataFinal")
 	private String dataFinal;
@@ -38,6 +35,7 @@ public class FMP implements Serializable {
 	@Column(name = "Valor")
 	private String valor;
 
+	@Id
 	@SerializedName(value = "moeda_id")
 	@Column(name = "CodMoeda")
 	private String moedaId;

@@ -188,19 +188,16 @@ public class Util {
 			String nFormated = "";
 
 			nFormated = ddd != null && !ddd.isEmpty() ? "(" + ddd.trim() + ") " : "(xx) ";
-
 			numero = numero.replace(" ", "");
 			if (numero.contains("-")) {
 				nFormated += numero;
 			} else {
-				Integer part2 = new Integer(numero.substring(numero.length() - 4, numero.length()));
-				String part1 = numero.substring(0, numero.indexOf(part2));
+				String part2 = numero.substring(numero.length() - 4, numero.length());
+				Integer part1 = new Integer(numero.substring(0, numero.indexOf(part2)));
 				nFormated += part1 + "-" + part2;
 			}
-
 			return nFormated;
 		} catch (Exception e) {
-			//System.out.println(e);
 			return "";
 		}
 	}
@@ -208,11 +205,11 @@ public class Util {
 	public String clearNumber(String number, int limit) {
 		try {
 			number = number.replace(".", "").replace("-", "");
-			
-			if(number.length()>9) {
+
+			if (number.length() > 9) {
 				number = number.substring(0, 8);
 			}
-			
+
 			return number;
 		} catch (Exception e) {
 			return "";
@@ -220,14 +217,23 @@ public class Util {
 
 	}
 
+	public Boolean toBoolean(String str) {
+		try {
+			return str != null ? str.equalsIgnoreCase("S") : null;
+		} catch (Exception e) {
+			return null;
+		}
+
+	}
+
 	public String limit(String number, int limit) {
 		try {
 			number = number.replace(".", "").replace("-", "");
-			
-			if(number.length()>9) {
+
+			if (number.length() > 9) {
 				number = number.substring(0, 8);
 			}
-			
+
 			return number;
 		} catch (Exception e) {
 			return "";

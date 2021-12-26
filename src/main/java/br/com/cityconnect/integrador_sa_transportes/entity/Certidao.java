@@ -26,10 +26,10 @@ public class Certidao implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SerializedName(value = "nao_usado")
 	@Column(name = "Ano")
-	private String id;
+	private String ano;
 	
+	@Id
 	@Column(name = "Numero")
 	private String numero;
 	

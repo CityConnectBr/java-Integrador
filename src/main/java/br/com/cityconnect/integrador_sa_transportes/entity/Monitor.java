@@ -42,10 +42,6 @@ public class Monitor implements Serializable {
 	@Column(name = "CPF")
 	private String CPF;// CPF
 
-	@SerializedName(value = "situacao")
-	@Column(name = "Situacao")
-	private String situacao;// I, A, C
-
 	@SerializedName(value = "cep")
 	@Column(name = "CEP")
 	private String CEP;// CEP
@@ -82,6 +78,22 @@ public class Monitor implements Serializable {
 	@SerializedName(value = "permissionario_id")
 	@Column(name = "NumCadastroPermissionario")
 	private Integer permissionarioId;// NumCadastroPermissionario
+
+	@SerializedName(value = "curso_de_primeiro_socorros")
+	@Column(name = "CursoPrimSocorros")
+	private String cursoPrimSocorros;
+
+	@SerializedName(value = "emissao_curso_de_primeiro_socorros")
+	@Column(name = "EmissaoCursoPrimSocorros")
+	private String emissaoCursoPrimSocorros;
+
+	@SerializedName(value = "certidao_negativa")
+	@Column(name = "CertidaoNegativa")
+	private String certidaoNegativa;
+
+	@SerializedName(value = "validade_da_certidao_negativa")
+	@Column(name = "ValidadeCertidaoNegativa")
+	private String validadeCertidaoNegativa;
 	
 	@ScapeComparator
 	@Column(name = "Foto")

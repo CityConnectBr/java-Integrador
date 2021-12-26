@@ -28,7 +28,7 @@ public class CondutorAuxiliar implements Serializable {
 	@Id
 	@SerializedName(value = "id_integracao")
 	@Column(name = "CPF")
-	private String id;// NumeroCadastro
+	private String id;
 
 	@SerializedName(value = "cpf")
 	@Transient
@@ -101,6 +101,42 @@ public class CondutorAuxiliar implements Serializable {
 	@Column(name = "NumCadastroPermissionario")
 	private Integer permissionarioId;// NumCadastroPermissionario
 
+	@SerializedName(value = "validade_certidao_negativa")
+	@Column(name = "ValidadeCertidaoNegativa")
+	private String validadeCertidaoNegativa;
+
+	@SerializedName(value = "emissao_primeiros_socorros")
+	@Column(name = "EmissaoCursoPrimSocorros")
+	private String emissaoCursoPrimSocorros;
+
+	@SerializedName(value = "motivo_afastamento")
+	@Column(name = "MotivoAfastamento")
+	private String motivoAfastamento;
+
+	@SerializedName(value = "atestado_de_saude")
+	@Column(name = "AtestadoSaude")
+	private String atestadoSaude;
+
+	@SerializedName(value = "certidao_negativa")
+	@Column(name = "CertidaoNegativa")
+	private String certidaoNegativa;
+
+	@SerializedName(value = "registro_ctps")
+	@Column(name = "RegistroCTPS")
+	private String registroCTPS;
+
+	@SerializedName(value = "primeiros_socorros")
+	@Column(name = "CursoPrimSocorros")
+	private String cursoPrimSocorros;
+
+	@SerializedName(value = "data_inicio_afastamento")
+	@Column(name = "DataInicioAfastamento")
+	private String dataInicioAfastamento;
+
+	@SerializedName(value = "data_termino_afastamento")
+	@Column(name = "DataTerminoAfastamento")
+	private String dataTerminoAfastamento;
+
 	@ScapeComparator
 	@Column(name = "Foto")
 	private Blob foto;
@@ -114,6 +150,7 @@ public class CondutorAuxiliar implements Serializable {
 		this.telefone = util.formatTelephone(this.DDD, this.telefone);
 		this.celular = util.formatTelephone(this.DDD, this.celular);
 		this.RG = util.clearNumber(this.RG, 9);
+		this.CPF = this.id;
 	}
 
 }

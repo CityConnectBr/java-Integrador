@@ -22,7 +22,7 @@ public class AgenteFiscalizacao implements Serializable {
 	@Id
 	@SerializedName(value = "id_integracao")
 	@Column(name = "Codigo")
-	private Long id;// NumeroCadastro
+	private Long id;// Codigo
 
 	@Column(name = "Nome")
 	private String nome;// Nome

@@ -6,9 +6,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.google.gson.annotations.SerializedName;
 
+import br.com.cityconnect.integrador_sa_transportes.util.Util;
 import lombok.Data;
 
 @Data
@@ -30,6 +32,9 @@ public class ValoresDaInfracao implements Serializable {
 	@Column(name = "Qtde")
 	private Integer quantidade;
 
+	@Transient
+	private String descricao;
+
 	@SerializedName(value = "natureza_infracao_id")
 	@Column(name = "natureza")
 	private String naturezaId;
@@ -37,5 +42,9 @@ public class ValoresDaInfracao implements Serializable {
 	@SerializedName(value = "moeda_id")
 	@Column(name = "TipoMoeda")
 	private String moedaId;
+	
+	public void prepare() {
+		descricao = modalidadeTransporte;
+	}
 
 }

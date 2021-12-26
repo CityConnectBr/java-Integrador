@@ -1,5 +1,7 @@
 package br.com.cityconnect.integrador_sa_transportes.testes;
 
+import java.util.List;
+
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -7,19 +9,24 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import com.google.gson.Gson;
+
+import br.com.cityconnect.integrador_sa_transportes.dao.MonitorDAO;
+import br.com.cityconnect.integrador_sa_transportes.entity.Monitor;
 import br.com.cityconnect.integrador_sa_transportes.util.Util;
 
 public class Teste1 {
 
 	public static void main(String args[]) {
-		Util util = new Util();
+		MonitorDAO monitorDAO = new MonitorDAO();
+		
+		List<Monitor> monitores = monitorDAO.findAll();
+		for(Monitor m : monitores) {
+			String json = new Gson().toJson(m);
 
-		System.out.println(util.formatTelephone("24", null));
-		System.out.println(util.formatTelephone(null, "12345678"));
-		System.out.println(util.formatTelephone("24", "12345678"));
-		System.out.println(util.formatTelephone("24", "912345678"));
-		System.out.println(util.formatTelephone("24", "2222-4444"));
-		System.out.println(util.formatTelephone("24", "92222-4444"));
+			System.out.println(json);
+		}
+		
 	}
 	
 	private static void teste1() {

@@ -23,7 +23,7 @@ public class TipoDeCurso implements Serializable {
 	@Column(name = "Codigo")
 	private Long id;
 
-	@Column(name = "Descicao")
+	@Column(name = "Descricao")
 	private String descricao;
 
 	@Column(name = "ModalidadeTransporte")

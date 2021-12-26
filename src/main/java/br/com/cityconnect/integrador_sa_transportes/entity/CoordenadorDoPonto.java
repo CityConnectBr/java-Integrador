@@ -23,10 +23,12 @@ public class CoordenadorDoPonto implements Serializable {
 	@Column(name = "Ponto")
 	private String id;
 	
+	@Id
 	@SerializedName(value = "permissionario_id")
 	@Column(name = "Coordenador")
 	private String permissionario;
 
+	@Id
 	@SerializedName(value = "data_inicial")
 	@Column(name = "DataInicial")
 	private String dataInicial;
