@@ -10,7 +10,6 @@ public class OpservacaoDoPermissionarioService extends MainService<ObservacaoDoP
 
 	@Override
 	protected ObservacaoDoPermissionario jsonToObj(String json) {
-		System.out.println(json);
 		return gson.fromJson(json.toString(), ObservacaoDoPermissionario.class);
 	}
 

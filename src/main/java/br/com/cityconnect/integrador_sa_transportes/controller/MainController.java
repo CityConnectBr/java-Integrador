@@ -80,7 +80,7 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 
 	private static Map<String, GenericDao> daoMap = new LinkedHashMap<String, GenericDao>() {
 		{
-			/*put(CorVeiculoDAO.class.toString(), new CorVeiculoDAO());
+			put(CorVeiculoDAO.class.toString(), new CorVeiculoDAO());
 			put(EmpresaDAO.class.toString(), new EmpresaDAO());
 			put(MarcaModeloCarroceriaDAO.class.toString(), new MarcaModeloCarroceriaDAO());
 			put(MarcaModeloChassiDAO.class.toString(), new MarcaModeloChassiDAO());
@@ -95,9 +95,9 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 			put(EmpresaVistoriadoraDAO.class.toString(), new EmpresaVistoriadoraDAO());
 			put(EntidadeCursoDAO.class.toString(), new EntidadeCursoDAO());
 			put(FMPDAO.class.toString(), new FMPDAO());
-			put(VistoriadorDAO.class.toString(), new VistoriadorDAO());*/
+			put(VistoriadorDAO.class.toString(), new VistoriadorDAO());
 			put(AgenteFiscalizacaoDAO.class.toString(), new AgenteFiscalizacaoDAO());
-			/*put(TalaoDoFiscalDAO.class.toString(), new TalaoDoFiscalDAO());
+			put(TalaoDoFiscalDAO.class.toString(), new TalaoDoFiscalDAO());
 			put(PermissionarioDAO.class.toString(), new PermissionarioDAO());
 			put(ObservacaoPermissionarioDAO.class.toString(), new ObservacaoPermissionarioDAO());
 			put(CursoDoPermissionarioDAO.class.toString(), new CursoDoPermissionarioDAO());
@@ -107,22 +107,13 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 			put(VeiculoDAO.class.toString(), new VeiculoDAO());
 			put(CertidaoDAO.class.toString(), new CertidaoDAO());
 			put(CoordenadorDePontoDAO.class.toString(), new CoordenadorDePontoDAO());
-			put(OnibusDAO.class.toString(), new OnibusDAO());*/
-
-			// put(ObservacaoPermissionarioDAO.class.toString(), new
-			// ObservacaoPermissionarioDAO());depende de permissionario
-
-			/*
-			 * put(HistoricoDeSincronizacaoDAO.MONITORES_TABLE, new MonitorDAO());
-			 * put(HistoricoDeSincronizacaoDAO.CONDUTOR_TABLE, new CondutoreAuxiliareDAO());
-			 * put(HistoricoDeSincronizacaoDAO.VEICULOS_TABLE, new VeiculoDAO());
-			 */
+			put(OnibusDAO.class.toString(), new OnibusDAO());
 		}
 	};
 
 	private static Map<String, MainController> controllerMap = new LinkedHashMap<String, MainController>() {
 		{
-			/*put(CorVeiculoController.class.toString(), new CorVeiculoController());
+			put(CorVeiculoController.class.toString(), new CorVeiculoController());
 			put(EmpresaController.class.toString(), new EmpresaController());
 			put(MarcaModeloCarroceriaController.class.toString(), new MarcaModeloCarroceriaController());
 			put(MarcaModeloChassiController.class.toString(), new MarcaModeloChassiController());
@@ -137,9 +128,9 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 			put(EmpresaVistoriadoraController.class.toString(), new EmpresaVistoriadoraController());
 			put(EntidadeCursoController.class.toString(), new EntidadeCursoController());
 			put(FMPController.class.toString(), new FMPController());
-			put(VistoriadorController.class.toString(), new VistoriadorController());*/
+			put(VistoriadorController.class.toString(), new VistoriadorController());
 			put(AgenteFiscalizacaoController.class.toString(), new AgenteFiscalizacaoController());
-			/*put(TalaoDoFiscalController.class.toString(), new TalaoDoFiscalController());
+			put(TalaoDoFiscalController.class.toString(), new TalaoDoFiscalController());
 			put(PermissionarioController.class.toString(), new PermissionarioController());
 			put(ObservacaoPermissionarioController.class.toString(), new ObservacaoPermissionarioController());
 			put(CursoDoPermissionarioController.class.toString(), new CursoDoPermissionarioController());
@@ -149,17 +140,7 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 			put(VeiculoController.class.toString(), new VeiculoController());
 			put(CertidaoController.class.toString(), new CertidaoController());
 			put(CoordenadorDePontoController.class.toString(), new CoordenadorDePontoController());
-			put(OnibusController.class.toString(), new OnibusController());*/
-
-			// put(ObservacaoPermissionarioController.class.toString(), new
-			// ObservacaoPermissionarioController());depende de permissionario
-
-			/*
-			 * put(HistoricoDeSincronizacaoDAO.MONITORES_TABLE, new MonitorController());
-			 * put(HistoricoDeSincronizacaoDAO.CONDUTOR_TABLE, new
-			 * CondutorAuxiliarController());
-			 * put(HistoricoDeSincronizacaoDAO.VEICULOS_TABLE, new VeiculoController());
-			 */
+			put(OnibusController.class.toString(), new OnibusController());
 		}
 	};
 
@@ -172,7 +153,7 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 	public void sincAllIgnoreChanges() throws Exception {
 
 		int contErros = 0;
-		final int maxThreads = 5;
+		final int maxThreads = 1;
 		int totalProcessed = 0;
 
 		//
@@ -284,10 +265,10 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 
 	private void sendPhoto(T obj) throws Exception {
 
-		String id = obj.getClass().getMethod("getId").invoke(obj, null).toString();
-
 		// atualizando foto
 		if (obj instanceof Permissionario || obj instanceof Monitor || obj instanceof CondutorAuxiliar) {
+			String id = obj.getClass().getMethod("getId").invoke(obj, null).toString();
+
 			Blob fotoBlob = (Blob) obj.getClass().getMethod("getFoto").invoke(obj, null);
 			if (fotoBlob != null && fotoBlob.length() > 0) {
 				System.out.println("ATUALIZANDO FOTO");
