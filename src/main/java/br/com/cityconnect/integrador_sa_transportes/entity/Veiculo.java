@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -25,6 +26,10 @@ public class Veiculo implements Serializable {
 	@SerializedName(value = "id_integracao")
 	@Column(name = "Placa")
 	private String id;
+	
+	@SerializedName(value = "placa")
+	@Transient
+	private String placa;
 	
 	@SerializedName(value = "cod_renavam")
 	@Column(name = "CodRenavam")
@@ -79,5 +84,9 @@ public class Veiculo implements Serializable {
 	@SerializedName(value = "permissionario_id")
 	@Column(name = "NumCadastroPermissionario")
 	private Integer permissionarioId;
+	
+	public void prepare() {
+		this.placa = this.id;
+	}
 
 }
