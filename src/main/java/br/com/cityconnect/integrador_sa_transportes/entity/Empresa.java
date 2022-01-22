@@ -98,6 +98,9 @@ public class Empresa implements Serializable {
 	@Column(name = "Bairro")
 	private String bairro;// Bairro
 
+	@Column(name = "UF")
+	private String uf;// uf
+
 	@Column(name = "Municipio")
 	private String municipio;// Municipio
 

@@ -80,7 +80,7 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 
 	private static Map<String, GenericDao> daoMap = new LinkedHashMap<String, GenericDao>() {
 		{
-			/*put(CorVeiculoDAO.class.toString(), new CorVeiculoDAO());
+			put(CorVeiculoDAO.class.toString(), new CorVeiculoDAO());
 			put(EmpresaDAO.class.toString(), new EmpresaDAO());
 			put(MarcaModeloCarroceriaDAO.class.toString(), new MarcaModeloCarroceriaDAO());
 			put(MarcaModeloChassiDAO.class.toString(), new MarcaModeloChassiDAO());
@@ -103,17 +103,17 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 			put(CursoDoPermissionarioDAO.class.toString(), new CursoDoPermissionarioDAO());
 			put(CondutoreAuxiliareDAO.class.toString(), new CondutoreAuxiliareDAO());
 			put(CursoDoCondutorDAO.class.toString(), new CursoDoCondutorDAO());
-			put(MonitorDAO.class.toString(), new MonitorDAO());*/
+			put(MonitorDAO.class.toString(), new MonitorDAO());
 			put(VeiculoDAO.class.toString(), new VeiculoDAO());
-			/*put(CertidaoDAO.class.toString(), new CertidaoDAO());
+			put(CertidaoDAO.class.toString(), new CertidaoDAO());
 			put(CoordenadorDePontoDAO.class.toString(), new CoordenadorDePontoDAO());
-			put(OnibusDAO.class.toString(), new OnibusDAO());*/
+			put(OnibusDAO.class.toString(), new OnibusDAO());
 		}
 	};
 
 	private static Map<String, MainController> controllerMap = new LinkedHashMap<String, MainController>() {
 		{
-			/*put(CorVeiculoController.class.toString(), new CorVeiculoController());
+			put(CorVeiculoController.class.toString(), new CorVeiculoController());
 			put(EmpresaController.class.toString(), new EmpresaController());
 			put(MarcaModeloCarroceriaController.class.toString(), new MarcaModeloCarroceriaController());
 			put(MarcaModeloChassiController.class.toString(), new MarcaModeloChassiController());
@@ -136,11 +136,11 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 			put(CursoDoPermissionarioController.class.toString(), new CursoDoPermissionarioController());
 			put(CondutorAuxiliarController.class.toString(), new CondutorAuxiliarController());
 			put(CursoDoCondutorController.class.toString(), new CursoDoCondutorController());
-			put(MonitorController.class.toString(), new MonitorController());*/
+			put(MonitorController.class.toString(), new MonitorController());
 			put(VeiculoController.class.toString(), new VeiculoController());
-			/*put(CertidaoController.class.toString(), new CertidaoController());
+			put(CertidaoController.class.toString(), new CertidaoController());
 			put(CoordenadorDePontoController.class.toString(), new CoordenadorDePontoController());
-			put(OnibusController.class.toString(), new OnibusController());*/
+			put(OnibusController.class.toString(), new OnibusController());
 		}
 	};
 
