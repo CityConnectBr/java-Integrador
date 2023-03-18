@@ -85,7 +85,7 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 			put(MarcaModeloCarroceriaDAO.class.toString(), new MarcaModeloCarroceriaDAO());
 			put(MarcaModeloChassiDAO.class.toString(), new MarcaModeloChassiDAO());
 			put(MarcaModeloVeiculoDAO.class.toString(), new MarcaModeloVeiculoDAO());
-			put(MunicipioDAO.class.toString(), new MunicipioDAO());
+			/*put(MunicipioDAO.class.toString(), new MunicipioDAO());
 			put(PontoDAO.class.toString(), new PontoDAO());
 			put(QuadrodeInfracaoDAO.class.toString(), new QuadrodeInfracaoDAO());
 			put(TipoCombustivelDAO.class.toString(), new TipoCombustivelDAO());
@@ -107,13 +107,13 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 			put(VeiculoDAO.class.toString(), new VeiculoDAO());
 			put(CertidaoDAO.class.toString(), new CertidaoDAO());
 			put(CoordenadorDePontoDAO.class.toString(), new CoordenadorDePontoDAO());
-			put(OnibusDAO.class.toString(), new OnibusDAO());
+			put(OnibusDAO.class.toString(), new OnibusDAO());*/
 		}
 	};
 
 	private static Map<String, MainController> controllerMap = new LinkedHashMap<String, MainController>() {
 		{
-			put(CorVeiculoController.class.toString(), new CorVeiculoController());
+			/*put(CorVeiculoController.class.toString(), new CorVeiculoController());
 			put(EmpresaController.class.toString(), new EmpresaController());
 			put(MarcaModeloCarroceriaController.class.toString(), new MarcaModeloCarroceriaController());
 			put(MarcaModeloChassiController.class.toString(), new MarcaModeloChassiController());
@@ -130,7 +130,7 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 			put(FMPController.class.toString(), new FMPController());
 			put(VistoriadorController.class.toString(), new VistoriadorController());
 			put(AgenteFiscalizacaoController.class.toString(), new AgenteFiscalizacaoController());
-			put(TalaoDoFiscalController.class.toString(), new TalaoDoFiscalController());
+			put(TalaoDoFiscalController.class.toString(), new TalaoDoFiscalController());*/
 			put(PermissionarioController.class.toString(), new PermissionarioController());
 			put(ObservacaoPermissionarioController.class.toString(), new ObservacaoPermissionarioController());
 			put(CursoDoPermissionarioController.class.toString(), new CursoDoPermissionarioController());

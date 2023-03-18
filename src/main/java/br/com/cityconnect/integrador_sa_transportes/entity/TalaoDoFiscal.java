@@ -28,7 +28,7 @@ public class TalaoDoFiscal implements Serializable {
 	private String tipoDocumento;
 
 	@SerializedName(value = "serie_documento")
-	@Column(name = "SerieDocumeto")
+	@Column(name = "SerieDocumento")
 	private String serie;
 
 	@SerializedName(value = "numero_primeira_folha")

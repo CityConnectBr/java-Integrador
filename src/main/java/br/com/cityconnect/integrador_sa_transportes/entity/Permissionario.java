@@ -341,8 +341,8 @@ public class Permissionario implements Serializable {
 	private String taximetro;
 	
 	@SerializedName(value = "taximetro_tacografo_afericao")
-	@Column(name = "DataAfericaoDaximetro")
-	private String dataAfericaoDaximetro;
+	@Column(name = "DataAfericaoTaximetro")
+	private String dataAfericaoTaximetro;
 	
 	/*@SerializedName(value = "entidade_associativa_id")
 	@Column(name = "UltimoAnoAlvara")

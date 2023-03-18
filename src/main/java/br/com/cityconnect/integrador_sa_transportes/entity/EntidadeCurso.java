@@ -28,7 +28,7 @@ public class EntidadeCurso implements Serializable {
 	private String descricao;
 
 	@SerializedName(value = "base_legal")
-	@Column(name = "BseLegal")
+	@Column(name = "BaseLegal")
 	private String baseLegal;
 
 }
