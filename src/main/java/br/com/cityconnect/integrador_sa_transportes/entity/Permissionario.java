@@ -14,9 +14,11 @@ import com.google.gson.annotations.SerializedName;
 import br.com.cityconnect.integrador_sa_transportes.util.ScapeComparator;
 import br.com.cityconnect.integrador_sa_transportes.util.Util;
 import lombok.Data;
+import lombok.ToString;
 
 @Data
 @Entity
+@ToString
 @Table(name = "permissionarios")
 public class Permissionario implements Serializable {
 

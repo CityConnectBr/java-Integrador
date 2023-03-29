@@ -19,8 +19,8 @@ public class FMP implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@Column(name = "Descricao")
-	private String descricao;
+	/*@Column(name = "Descricao")
+	private String descricao;*/
 
 	@Id
 	@SerializedName(value = "data_inicial")

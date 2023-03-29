@@ -85,7 +85,7 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 			put(MarcaModeloCarroceriaDAO.class.toString(), new MarcaModeloCarroceriaDAO());
 			put(MarcaModeloChassiDAO.class.toString(), new MarcaModeloChassiDAO());
 			put(MarcaModeloVeiculoDAO.class.toString(), new MarcaModeloVeiculoDAO());
-			/*put(MunicipioDAO.class.toString(), new MunicipioDAO());
+			put(MunicipioDAO.class.toString(), new MunicipioDAO());
 			put(PontoDAO.class.toString(), new PontoDAO());
 			put(QuadrodeInfracaoDAO.class.toString(), new QuadrodeInfracaoDAO());
 			put(TipoCombustivelDAO.class.toString(), new TipoCombustivelDAO());
@@ -107,7 +107,7 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 			put(VeiculoDAO.class.toString(), new VeiculoDAO());
 			put(CertidaoDAO.class.toString(), new CertidaoDAO());
 			put(CoordenadorDePontoDAO.class.toString(), new CoordenadorDePontoDAO());
-			put(OnibusDAO.class.toString(), new OnibusDAO());*/
+			put(OnibusDAO.class.toString(), new OnibusDAO());
 		}
 	};
 
@@ -116,23 +116,23 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 			/*put(CorVeiculoController.class.toString(), new CorVeiculoController());
 			put(EmpresaController.class.toString(), new EmpresaController());
 			put(MarcaModeloCarroceriaController.class.toString(), new MarcaModeloCarroceriaController());
-			put(MarcaModeloChassiController.class.toString(), new MarcaModeloChassiController());
-			put(MarcaModeloVeiculoController.class.toString(), new MarcaModeloVeiculoController());
-			put(MunicipioController.class.toString(), new MunicipioController());
-			put(PontoController.class.toString(), new PontoController());
-			put(QuadroDeInfracaoController.class.toString(), new QuadroDeInfracaoController());
-			put(TipoCombustivelController.class.toString(), new TipoCombustivelController());
-			put(TipoDeCursoController.class.toString(), new TipoDeCursoController());
-			put(TipoVeiculoController.class.toString(), new TipoVeiculoController());
-			put(ValoresDainfracaoController.class.toString(), new ValoresDainfracaoController());
-			put(EmpresaVistoriadoraController.class.toString(), new EmpresaVistoriadoraController());
-			put(EntidadeCursoController.class.toString(), new EntidadeCursoController());
-			put(FMPController.class.toString(), new FMPController());
-			put(VistoriadorController.class.toString(), new VistoriadorController());
-			put(AgenteFiscalizacaoController.class.toString(), new AgenteFiscalizacaoController());
-			put(TalaoDoFiscalController.class.toString(), new TalaoDoFiscalController());*/
+			put(MarcaModeloChassiController.class.toString(), new MarcaModeloChassiController());//OK
+			put(MarcaModeloVeiculoController.class.toString(), new MarcaModeloVeiculoController());//OK
+			put(MunicipioController.class.toString(), new MunicipioController());//OK
+			put(PontoController.class.toString(), new PontoController());//OK
+			put(QuadroDeInfracaoController.class.toString(), new QuadroDeInfracaoController());//OK
+			put(TipoCombustivelController.class.toString(), new TipoCombustivelController());//OK
+			put(TipoDeCursoController.class.toString(), new TipoDeCursoController());//OK
+			put(TipoVeiculoController.class.toString(), new TipoVeiculoController());//OK
+			put(ValoresDainfracaoController.class.toString(), new ValoresDainfracaoController());//OK
+			put(EmpresaVistoriadoraController.class.toString(), new EmpresaVistoriadoraController());//OK
+			put(EntidadeCursoController.class.toString(), new EntidadeCursoController());//OK
+			put(FMPController.class.toString(), new FMPController());//OK
+			put(VistoriadorController.class.toString(), new VistoriadorController());//OK
+			put(AgenteFiscalizacaoController.class.toString(), new AgenteFiscalizacaoController());//OK
+			put(TalaoDoFiscalController.class.toString(), new TalaoDoFiscalController());//OK*/
 			put(PermissionarioController.class.toString(), new PermissionarioController());
-			put(ObservacaoPermissionarioController.class.toString(), new ObservacaoPermissionarioController());
+			/*put(ObservacaoPermissionarioController.class.toString(), new ObservacaoPermissionarioController());
 			put(CursoDoPermissionarioController.class.toString(), new CursoDoPermissionarioController());
 			put(CondutorAuxiliarController.class.toString(), new CondutorAuxiliarController());
 			put(CursoDoCondutorController.class.toString(), new CursoDoCondutorController());
@@ -140,7 +140,7 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 			put(VeiculoController.class.toString(), new VeiculoController());
 			put(CertidaoController.class.toString(), new CertidaoController());
 			put(CoordenadorDePontoController.class.toString(), new CoordenadorDePontoController());
-			put(OnibusController.class.toString(), new OnibusController());
+			put(OnibusController.class.toString(), new OnibusController());*/
 		}
 	};
 
@@ -163,6 +163,8 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 
 		List<T> objectList = (List<T>) dao.getClass().getMethod("findAll").invoke(dao, null);
 		for (T obj : objectList) {
+			System.out.println(">>>>>>>>>>>>>>>>>>");
+			System.out.println(obj.toString());
 			System.out.println("Processed: "+totalProcessed+"/"+objectList.size());
 			System.out.println(">>>"+threadsRunning+"/"+maxThreads);
 			boolean processed = false;
@@ -180,13 +182,14 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 									obj.getClass().getMethod("prepare").invoke(obj);
 								} catch (Exception e) {
 								}
-
+								System.out.println(obj.toString());
 								sendToAPI(obj);
 							} catch (Exception e) {
 								errors.add(obj.toString() + ">>>>>" + e.getCause());
 								System.err.println(obj);
 
 								Logger.sendLog(MainController.class, Logger.ERROR, e);
+								System.exit(0);
 							}finally {
 								threadsRunning--;
 							}

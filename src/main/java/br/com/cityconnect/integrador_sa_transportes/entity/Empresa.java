@@ -63,11 +63,11 @@ public class Empresa implements Serializable {
 	private String nomeDoGerente;
 
 	@SerializedName(value = "nome_do_encarregado_vistoriador")
-	@Column(name = "NomeEncarregadoVistoriadorMecanica")
+	@Column(name = "NomeEncarregadoVistoriaMecanica")
 	private String nomeDoEncarregadoVistoriador;
 
 	@SerializedName(value = "portaria_diretor")
-	@Column(name = "PertariaDiretor")
+	@Column(name = "PortariaDiretor")
 	private String portariaDiretor;
 
 	@SerializedName(value = "data_nomeacao_diretor")
@@ -75,7 +75,7 @@ public class Empresa implements Serializable {
 	private String dataNomecaoDiretor;
 
 	@SerializedName(value = "decreto_municipal_taxi")
-	@Column(name = "DecretoMunicipalTaxo")
+	@Column(name = "DecretoMunicipalTaxi")
 	private String decretoMunicipalTaxi;
 
 	@SerializedName(value = "decreto_municipal_escolar")

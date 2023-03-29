@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -69,11 +70,12 @@ public class Ponto implements Serializable {
 	private String bairro;// Bairro
 
 	@Column(name = "Municipio")
-	private String municipio;// Municipio
+	@Transient
+	private String municipio = "Santo André";// Municipio
 
 	@SerializedName(value = "uf")
-	@Column(name = "UF")
-	private String UF;// UF
+	@Transient
+	private String UF = "SP";// UF
 	
 	public void prepare() {
 		Util util = new Util();
