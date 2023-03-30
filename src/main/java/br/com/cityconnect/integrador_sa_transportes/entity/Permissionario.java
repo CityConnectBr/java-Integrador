@@ -8,9 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import br.com.cityconnect.integrador_sa_transportes.annotations.ExcludeGson;
 import br.com.cityconnect.integrador_sa_transportes.util.ScapeComparator;
 import br.com.cityconnect.integrador_sa_transportes.util.Util;
 import lombok.Data;
@@ -364,6 +364,7 @@ public class Permissionario implements Serializable {
 	
 	@ScapeComparator
 	@Column(name = "Foto")
+	@ExcludeGson
 	private Blob foto;
 	
 	@SerializedName(value = "foto_uid")

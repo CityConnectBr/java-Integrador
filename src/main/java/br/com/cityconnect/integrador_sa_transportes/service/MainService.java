@@ -17,12 +17,28 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import br.com.cityconnect.integrador_sa_transportes.annotations.ExcludeGson;
 import br.com.cityconnect.integrador_sa_transportes.util.PropertiesUtil;
 import br.com.cityconnect.integrador_sa_transportes.util.Util;
 
 public abstract class MainService<T extends Serializable> {
+
+	private ExclusionStrategy strategyExclusion = new ExclusionStrategy() {
+		@Override
+		public boolean shouldSkipClass(Class<?> clazz) {
+			return false;
+		}
+
+		@Override
+		public boolean shouldSkipField(FieldAttributes field) {
+			return field.getAnnotation(ExcludeGson.class) != null;
+		}
+	};
 
 	private Util util = new Util();
 
@@ -48,7 +64,7 @@ public abstract class MainService<T extends Serializable> {
 	protected String token = null;// "$2y$10$3.Cnop0hlPRgK1GA.RVR2uN1pZgpBrd.vCHWrERLiECPMaBF6UWzi";
 
 	protected RestTemplate restTemplate = new RestTemplate();
-	protected Gson gson = new Gson();
+	protected Gson gson = new GsonBuilder().addSerializationExclusionStrategy(strategyExclusion).create();
 	protected HttpHeaders headers = new HttpHeaders();
 
 	protected String url = "";
@@ -111,7 +127,6 @@ public abstract class MainService<T extends Serializable> {
 	}
 
 	public String send(Object obj) {
-
 		String permissionarioJson = gson.toJson(obj);
 
 		return new JSONObject(restTemplate.postForObject(url,

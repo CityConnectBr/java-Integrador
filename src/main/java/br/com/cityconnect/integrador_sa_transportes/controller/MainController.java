@@ -163,8 +163,6 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 
 		List<T> objectList = (List<T>) dao.getClass().getMethod("findAll").invoke(dao, null);
 		for (T obj : objectList) {
-			System.out.println(">>>>>>>>>>>>>>>>>>");
-			System.out.println(obj.toString());
 			System.out.println("Processed: "+totalProcessed+"/"+objectList.size());
 			System.out.println(">>>"+threadsRunning+"/"+maxThreads);
 			boolean processed = false;
@@ -182,7 +180,6 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 									obj.getClass().getMethod("prepare").invoke(obj);
 								} catch (Exception e) {
 								}
-								System.out.println(obj.toString());
 								sendToAPI(obj);
 							} catch (Exception e) {
 								errors.add(obj.toString() + ">>>>>" + e.getCause());
