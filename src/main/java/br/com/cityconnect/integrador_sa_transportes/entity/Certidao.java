@@ -1,20 +1,14 @@
 package br.com.cityconnect.integrador_sa_transportes.entity;
 
 import java.io.Serializable;
-import java.sql.Blob;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Transient;
-
-import org.hibernate.annotations.UpdateTimestamp;
 
 import com.google.gson.annotations.SerializedName;
 
-import br.com.cityconnect.integrador_sa_transportes.util.ScapeComparator;
 import br.com.cityconnect.integrador_sa_transportes.util.Util;
 import lombok.Data;
 
