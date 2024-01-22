@@ -52,6 +52,10 @@ public class Ponto implements Serializable {
 	@SerializedName(value = "modalidade_transporte")
 	@Column(name = "ModalidadeTransporte")
 	private String modalidadeTransporte;
+	
+	@SerializedName(value = "modalidade_id")
+	@Transient
+	private Integer modalidade_id;	
 
 	@SerializedName(value = "cep")
 	@Column(name = "CEP")
@@ -80,6 +84,7 @@ public class Ponto implements Serializable {
 	public void prepare() {
 		Util util = new Util();
 		this.telefone = util.formatTelephone(this.ddd, this.telefone);
+		this.modalidade_id = util.getModalidadeId(modalidadeTransporte);
 	}
 
 }

@@ -6,9 +6,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.google.gson.annotations.SerializedName;
 
+import br.com.cityconnect.integrador_sa_transportes.util.Util;
 import lombok.Data;
 
 @Data
@@ -29,6 +31,10 @@ public class TipoVeiculo implements Serializable {
 	@SerializedName(value = "modalidade_transporte")
 	@Column(name = "ModalidadeTransporte")
 	private String modalidadeTransporte;
+	
+	@SerializedName(value = "modalidade_id")
+	@Transient
+	private Integer modalidade_id;	
 
 	@SerializedName(value = "idade_limite_ingresso")
 	@Column(name = "IdadeLimiteIngresso")
@@ -37,5 +43,10 @@ public class TipoVeiculo implements Serializable {
 	@SerializedName(value = "idade_limite_permanencia")
 	@Column(name = "IdadeLimitePermanencia")
 	private Integer idadeLimitePermanencia;
+	
+	public void prepare() {
+		Util util = new Util();
+		this.modalidade_id = util.getModalidadeId(modalidadeTransporte);
+	}
 
 }

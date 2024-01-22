@@ -144,15 +144,15 @@ public class Util {
 		String string = "";
 		for (int cont = 0; cont < qtd; cont++) {
 			switch (random.nextInt(3)) {
-			case 0:
-				string = string + (char) (random.nextInt(9) + '1');
-				break;
-			case 1:
-				string = string + (char) (random.nextInt(26) + 'A');
-				break;
-			case 2:
-				string = string + (char) (random.nextInt(26) + 'a');
-				break;
+				case 0:
+					string = string + (char) (random.nextInt(9) + '1');
+					break;
+				case 1:
+					string = string + (char) (random.nextInt(26) + 'A');
+					break;
+				case 2:
+					string = string + (char) (random.nextInt(26) + 'a');
+					break;
 			}
 		}
 		return string;
@@ -239,6 +239,20 @@ public class Util {
 			return "";
 		}
 
+	}
+
+	public Integer getModalidadeId(String modalidade) {
+		if (modalidade == null) {
+			return null;
+		} else if (modalidade.toUpperCase().equals("E")) {
+			return 1;
+		} else if (modalidade.toUpperCase().equals("G")) {
+			return 2;
+		} else if (modalidade.toUpperCase().equals("T")) {
+			return 3;
+		} else {
+			return null;
+		}
 	}
 
 }

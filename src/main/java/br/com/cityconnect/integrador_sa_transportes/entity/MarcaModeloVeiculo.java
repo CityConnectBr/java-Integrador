@@ -21,7 +21,7 @@ public class MarcaModeloVeiculo implements Serializable {
 	@Id
 	@SerializedName(value = "id_integracao")
 	@Column(name = "Codigo")
-	private Long id;
+	private String id;
 
 	@Column(name = "Descricao")
 	private String descricao;

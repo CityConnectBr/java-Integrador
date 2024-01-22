@@ -28,6 +28,10 @@ public class ValoresDaInfracao implements Serializable {
 	@SerializedName(value = "modalidade_transporte")
 	@Column(name = "ModalidadeTransporte")
 	private String modalidadeTransporte;
+	
+	@SerializedName(value = "modalidade_id")
+	@Transient
+	private Integer modalidade_id;	
 
 	@Column(name = "Qtde")
 	private Integer quantidade;
@@ -44,7 +48,9 @@ public class ValoresDaInfracao implements Serializable {
 	private String moedaId;
 	
 	public void prepare() {
+		Util util = new Util();
 		descricao = modalidadeTransporte;
+		this.modalidade_id = util.getModalidadeId(modalidadeTransporte);
 	}
 
 }
