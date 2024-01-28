@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -28,7 +29,8 @@ public class AgenteFiscalizacao implements Serializable {
 	private String nome;// Nome
 
 	@SerializedName(value = "cpf")
-	@Column(name = "CPF")
+	//@Column(name = "CPF")
+	@Transient
 	private String CPF;
 	
 	@Column(name = "Endereco")

@@ -91,9 +91,9 @@ public class CondutorAuxiliar implements Serializable {
 	@Column(name = "CategoriaCNH")
 	private String categoriaCNH;// CategoriaCNH
 	
-	@SerializedName(value = "vencimento_cnh")
+	/*@SerializedName(value = "vencimento_cnh")
 	@Column(name = "VencimentoCNH")
-	private String vencimentoCNH;// VencimentoCNH
+	private String vencimentoCNH;// VencimentoCNH*/
 
 	@SerializedName(value = "permissionario_id")
 	@Column(name = "NumCadastroPermissionario")
@@ -140,9 +140,9 @@ public class CondutorAuxiliar implements Serializable {
 	@ExcludeGson
 	private Blob foto;
 	
-	@SerializedName(value = "foto_uid")
+	/*@SerializedName(value = "foto_uid")
 	@Column(name = "foto_uid")
-	private String fotoUID;
+	private String fotoUID;*/
 	
 	public void prepare() {
 		Util util = new Util();

@@ -113,7 +113,7 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 
 	private static Map<String, MainController> controllerMap = new LinkedHashMap<String, MainController>() {
 		{
-			/*put(CorVeiculoController.class.toString(), new CorVeiculoController());
+			put(CorVeiculoController.class.toString(), new CorVeiculoController());
 			put(EmpresaController.class.toString(), new EmpresaController());
 			put(MarcaModeloCarroceriaController.class.toString(), new MarcaModeloCarroceriaController());
 			put(MarcaModeloChassiController.class.toString(), new MarcaModeloChassiController());//OK
@@ -128,12 +128,12 @@ public abstract class MainController<T extends Serializable, T_DAO, T_SERVICE> {
 			put(EmpresaVistoriadoraController.class.toString(), new EmpresaVistoriadoraController());//OK
 			put(EntidadeCursoController.class.toString(), new EntidadeCursoController());//OK
 			put(FMPController.class.toString(), new FMPController());//OK
-			put(VistoriadorController.class.toString(), new VistoriadorController());//OK*/
+			put(VistoriadorController.class.toString(), new VistoriadorController());//OK
 			put(AgenteFiscalizacaoController.class.toString(), new AgenteFiscalizacaoController());//OK
 			put(TalaoDoFiscalController.class.toString(), new TalaoDoFiscalController());//OK
 			put(PermissionarioController.class.toString(), new PermissionarioController());//OK
 			put(ObservacaoPermissionarioController.class.toString(), new ObservacaoPermissionarioController());//OK
-			put(CursoDoPermissionarioController.class.toString(), new CursoDoPermissionarioController());//OK
+			put(CursoDoPermissionarioController.class.toString(), new CursoDoPermissionarioController());//OK*/
 			put(CondutorAuxiliarController.class.toString(), new CondutorAuxiliarController());//OK
 			put(CursoDoCondutorController.class.toString(), new CursoDoCondutorController());//OK
 			put(MonitorController.class.toString(), new MonitorController());//OK

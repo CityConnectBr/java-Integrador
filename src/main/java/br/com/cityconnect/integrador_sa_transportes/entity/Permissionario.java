@@ -367,9 +367,9 @@ public class Permissionario implements Serializable {
 	@ExcludeGson
 	private Blob foto;
 	
-	@SerializedName(value = "foto_uid")
+	/*@SerializedName(value = "foto_uid")
 	@Column(name = "foto_uid")
-	private String fotoUID;
+	private String fotoUID;*/
 	
 	public void prepare() {
 		Util util = new Util();

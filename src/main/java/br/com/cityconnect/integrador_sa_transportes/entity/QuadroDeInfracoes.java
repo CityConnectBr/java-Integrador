@@ -42,9 +42,11 @@ public class QuadroDeInfracoes implements Serializable {
 	@Column(name = "ModalidadeTransporte")
 	private String modalidadeTransporte;
 
-	@SerializedName(value = "modalidade_id")
-	@Transient
-	private Integer modalidade_id;
+	/*
+	 * @SerializedName(value = "modalidade_id")
+	 * 
+	 * @Transient private Integer modalidade_id;
+	 */
 
 	@SerializedName(value = "qtd_reincidencia")
 	@Column(name = "QtdeReincidencia")
@@ -61,7 +63,10 @@ public class QuadroDeInfracoes implements Serializable {
 
 	public void prepare() {
 		Util util = new Util();
-		this.modalidade_id = util.getModalidadeId(modalidadeTransporte);
+		// this.modalidade_id = util.getModalidadeId(modalidadeTransporte);
+		if (this.modalidadeTransporte != null) {
+			this.modalidadeTransporte = this.modalidadeTransporte.toLowerCase();
+		}
 		this.idIntegracao = this.id;
 	}
 
